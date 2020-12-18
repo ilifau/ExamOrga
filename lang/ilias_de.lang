@@ -1,0 +1,43 @@
+//
+// Copyright (c) 2019 Institut fuer Lern-Innovation, Friedrich-Alexander-Universitaet Erlangen-Nuernberg
+// GPLv3, see LICENSE
+//
+// @author Fred Neumann <fred.neumann@fau.de>
+// @version $Id$
+//
+
+<!-- language file start -->
+obj_xamo#:#Exam Orga Objekt
+objs_xamo#:#Exam Orga Objekte
+obj_xamo_duplicate#:#Kopieren
+objs_xamo_duplicate#:#Kopiere Exam Orga Objekt
+obj_xamo_select#:#Wähle Exam Orga Objekt
+xamo_add#:#Exam Orga Objekt hinzufügen
+xamo_new#:#Neues Exam Orga Objekt
+xamo_read#:#Lesezugriff auf Exam Orga Objekt
+xamo_write#:#Exam Orga Objekt bearbeiten
+xamo_delete#:#Exam Orga Objekt löschen
+xamo_visible#:#Exam Orga Objekt ist sichtbar
+xamo_edit_permission#:#Zugriffsrecht bearbeiten
+crs_create_xamo#:#Erstelle Exam Orga Objekt
+grp_create_xamo#:#Erstelle Exam Orga Objekt
+fold_create_xamo#:#Erstelle Exam Orga Objekt
+root_create_xamo#:#Erstelle Exam Orga Objekt
+cat_create_xamo#:#Erstelle Exam Orga Objekt
+title#:#Titel
+description#:#Beschreibung
+status#:#Status
+online#:#Online
+offline#:#Offline
+save#:#Speichern
+update#:#Update
+properties#:#Eigenschaften
+content#:#Inhalt
+copy#:#Kopieren
+edit#:#Bearbeiten
+export#:#Export
+basic_configuration#:#Grund-Konfiguration
+config_base#:#Grundfunktionen
+config_base_info#:#Hier stellen Sie die Grundfunktionen des Plugins ein
+exam_admin_tab#:#Prüfung
+overview#:#Übersicht

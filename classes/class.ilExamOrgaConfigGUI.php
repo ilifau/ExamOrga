@@ -42,7 +42,7 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
         $this->lng = $DIC->language();
         $this->tabs = $DIC->tabs();
         $this->ctrl = $DIC->ctrl();
-        $this->tpl = $DIC['tpl'];
+        $this->tpl = $DIC->ui()->mainTemplate();
 
         $this->tabs->addTab('basic', $this->plugin->txt('basic_configuration'), $this->ctrl->getLinkTarget($this, 'configure'));
 

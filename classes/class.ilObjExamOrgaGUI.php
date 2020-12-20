@@ -5,11 +5,15 @@ require_once(__DIR__ . "/class.ilExamOrgaPlugin.php");
 /**
  * @ilCtrl_isCalledBy ilObjExamOrgaGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
  * @ilCtrl_Calls ilObjExamOrgaGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilExportGUI
+ * @ilCtrl_Calls ilObjExamOrgaGUI: ilExamOrgaRecordGUI
  */
 class ilObjExamOrgaGUI extends ilObjectPluginGUI
 {
     /** @var ilObjExamOrga */
 	public $object;
+
+	/** @var ilExamOrgaPlugin */
+	public $plugin;
 
 	/**
 	 * Initialisation
@@ -46,23 +50,37 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	 */
 	function performCommand($cmd)
 	{
-		switch ($cmd)
-		{
-            // list all commands that need write permission here
-			case "editProperties":
-			case "updateProperties":
-			case "saveProperties":
-                $this->checkPermission("write");
-                $this->$cmd();
-                break;
+        $next_class = $this->ctrl->getNextClass();
+        if (!empty($next_class)) {
 
-            // list all commands that need read permission here
-			case "showContent":
-			default:
-				$this->checkPermission("read");
-				$this->$cmd();
-				break;
-		}
+            switch ($next_class) {
+                case 'ilexamorgarecordgui':
+                    $this->checkPermission('read');
+                    $this->tabs->activateTab("content");
+                    require_once(__DIR__ . '/record/class.ilExamOrgaRecordGUI.php');
+                    $this->ctrl->forwardCommand(new ilExamOrgaRecordGUI($this));
+                    break;
+            }
+        }
+        else {
+            switch ($cmd)
+            {
+                // list all commands that need write permission here
+                case "editProperties":
+                case "updateProperties":
+                case "saveProperties":
+                    $this->checkPermission("write");
+                    $this->$cmd();
+                    break;
+
+                // list all commands that need read permission here
+                case "showContent":
+                default:
+                    $this->checkPermission("read");
+                    $this->$cmd();
+                    break;
+            }
+        }
 	}
 
 	/**
@@ -165,12 +183,9 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 		$this->tpl->setContent($form->getHTML());
 	}
 
-	protected function showContent() {
-
-		$this->tabs->activateTab("content");
-
-
-		$this->tpl->setContent('hello world');
+	protected function showContent()
+    {
+        $this->ctrl->redirectByClass('ilexamorgarecordgui');
 	}
 
 
@@ -188,5 +203,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 
 		return;
 	}
+
+
 
 }

@@ -121,4 +121,21 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
 		global $ilUser;
 		$ilUser->writePref($this->getId().'_'.$name, $value);
 	}
+
+
+    /**
+     * Get a plugin text and use the variable, if not translated
+     *
+     * @param string $a_var
+     * @return string
+     */
+    public function txt(string $a_var) : string
+    {
+        $txt = parent::txt($a_var);
+        if (substr($txt, 0, 4) == 'rep_') {
+            return $a_var;
+        }
+        return $txt;
+    }
+
 }

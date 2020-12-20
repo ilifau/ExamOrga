@@ -3,7 +3,7 @@
 /**
  * Base Representation of an Exam
  */
-class ilExamRecord extends ActiveRecord
+class ilExamOrgaRecord extends ActiveRecord
 {
 
     /**
@@ -323,7 +323,7 @@ class ilExamRecord extends ActiveRecord
      * @var integer
      * @con_has_field        true
      * @con_is_notnull       true
-     * @con_fieldtype        integer
+     * @con_fieldtype        timestamp
      * @con_length           4
      */
     protected $created_at = 0;
@@ -341,7 +341,7 @@ class ilExamRecord extends ActiveRecord
      * @var integer
      * @con_has_field        true
      * @con_is_notnull       true
-     * @con_fieldtype        integer
+     * @con_fieldtype        timestamp
      * @con_length           4
      */
     protected $modified_at = 0;

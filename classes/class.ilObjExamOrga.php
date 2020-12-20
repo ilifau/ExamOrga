@@ -130,6 +130,14 @@ class ilObjExamOrga extends ilObjectPlugin
     }
 
     /**
+     * Check if the current user can view all records
+     * @return bool
+     */
+    public function canEditAllRecords() {
+        return $this->access->checkAccess('write', '', $this->getRefId());
+    }
+
+    /**
      * Check if the current user can add a record
      */
     public function canAddRecord() {
@@ -170,5 +178,20 @@ class ilObjExamOrga extends ilObjectPlugin
             $name = (string) $definition['name'];
             $this->fields[$name] = ilExamOrgaField::factory($this->plugin, $definition);
         }
+    }
+
+    /**
+     * Get the fields that are available for a user
+     * @return ilExamOrgaField[] (indexed by name)
+     */
+    public function getAvailableFields() {
+        $available = [];
+
+        foreach ($this->fields as $field) {
+            if ($this->canEditAllRecords() || $field->status !== ilExamOrgaField::STATUS_HIDDEN) {
+                $available[$field->name] = $field;
+            }
+        }
+        return $available;
     }
 }

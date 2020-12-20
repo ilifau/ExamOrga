@@ -354,4 +354,26 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_length           4
      */
     protected $modified_by = 0;
+
+    /**
+     * Get the value of a property
+     * @param string $name
+     * @return mixed
+     */
+    public function getValue($name) {
+        if (property_exists($this, $name)) {
+            return $this->{$name};
+        }
+    }
+
+    /**
+     * Set the value of a property
+     * @param $name
+     * @param $value
+     */
+    public function setValue($name, $value) {
+        if (property_exists($this, $name)) {
+            $this->{$name} = $value;
+        }
+    }
 }

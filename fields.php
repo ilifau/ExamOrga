@@ -9,7 +9,8 @@ $fields = [
       'name' => 'id',
       'type' => ilExamOrgaField::TYPE_INFO,
       'title' => 'ID',
-      'info' => 'interne ID dieses Datensatzes. Hat keine Beziehung zur Prüfungsnummer'
+      'info' => 'interne ID dieses Datensatzes. Hat keine Beziehung zur Prüfungsnummer',
+      'default' => true
   ],
   [
       'name' => 'fau_unit',
@@ -61,21 +62,26 @@ $fields = [
           'Tech / Maschinenbau (MB)',
           'Tech / Werkstoffwissenschaften (WW)',
           'Zentrale / Spachenzentrum'
-      ]
+      ],
+      'default' => true
   ],
   [
       'name' => 'fau_chair',
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Lehrstuhl',
       'info' => 'Bitte die volle Lehrstuhl-Bezeichnung angeben',
-      'limit' => 200
+      'limit' => 200,
+      'default' => true,
+      'filter' => true,
   ],
   [
       'name' => 'fau_lecturer',
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Dozent',
       'limit' => 200,
-      'required' => true
+      'required' => true,
+      'default' => true,
+      'filter' => true
   ],
   [
       'name' => 'mail_address',
@@ -102,7 +108,9 @@ $fields = [
         'monitored' => 'Fernklausur mit Videoaufsicht',
         'oral' => 'Mündliche Prüfung per Videokonferenz'
       ],
-      'required' => true
+      'required' => true,
+      'default' => true,
+      'filter' => true
   ],
   [
       'name' => 'exam_method',
@@ -112,7 +120,9 @@ $fields = [
       'options' => [
           'test' => 'Test (kontinuierliche Bearbeitung auf der Prüfungsplattform)',
           'exercise' => 'Übung (Offline-Bearbeitung mit anschließendem Upload)'
-      ]
+      ],
+      'default' => true,
+      'filter' => true,
   ],
   [
       'name' => 'exam_type',
@@ -123,18 +133,24 @@ $fields = [
           'exam' => 'Klausur',
           'review' => 'Einsichtnahme',
           'retry' => 'Nachholklausur'
-      ]
+      ],
+      'default' => true,
+      'filter' => true,
   ],
   [
       'name' => 'exam_title',
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Prüfungstitel',
+      'default' => true,
+      'filter' => true
   ],
   [
       'name' => 'exam_date',
       'type' => ilExamOrgaField::TYPE_DATE,
       'title' => 'Datum',
-      'required' => true
+      'required' => true,
+      'default' => true,
+      'filter' => true
   ],
   [
       'name' => 'alternative_dates',
@@ -161,7 +177,9 @@ $fields = [
       'title' => 'Teilnehmerzahl',
       'info' => 'Bitte geben Sie die reine Prüfungsdauer pro Durchgang in Minuten an. Bei Fernprüfungen Angabe bitte inkl. Pufferzeit von 20 Minuten für Upload und technische Verzögerungen.',
       'size' => 4,
-      'required' => true
+      'required' => true,
+      'default' => true,
+      'filter' => true,
   ],
   [
       'name' => 'test_ref_id',

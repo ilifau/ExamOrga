@@ -26,37 +26,43 @@ class ilExamOrgaField
 
 
     /** @var ilExamOrgaPlugin */
-    protected $plugin;
+    public $plugin;
 
     /** @var string */
-    protected $name;
+    public $name;
 
     /** @var string */
-    protected $type;
+    public $type;
 
     /** @var string */
-    protected $title;
+    public $title;
 
     /** @var string */
-    protected $info;
+    public $info;
 
     /** @var array */
-    protected $options;
+    public $options;
 
     /** @var int */
-    protected $size;
+    public $size;
 
     /** @var int */
-    protected $limit;
+    public $limit;
 
     /** @var bool */
-    protected $multi;
+    public $multi;
 
     /** @var bool */
-    protected $required;
+    public $required;
+
+    /** @var bool */
+    public $filter;
+
+    /** @var bool */
+    public $efault;
 
     /** @var string */
-    protected $status;
+    public $status;
 
     /**
      * Get a new field object according to the definition
@@ -88,6 +94,8 @@ class ilExamOrgaField
         $this->limit = (int) $definition['limit'];
         $this->required = (bool) $definition['required'];
         $this->multi = (bool) $definition['required'];
+        $this->filter = (bool) $definition['filter'];
+        $this->default = (bool) $definition['default'];
 
         if (isset($definition['title'])) {
             $this->title =  $definition['title'];
@@ -124,10 +132,7 @@ class ilExamOrgaField
      * @return mixed
      */
     public function getValue($record) {
-        if (property_exists($record, $this->name)) {
-            return $record->{$this->name};
-        }
-        return null;
+        return $record->getValue($this->name);
     }
 
     /**
@@ -136,10 +141,7 @@ class ilExamOrgaField
      * @return mixed
      */
     public function setValue($record, $value) {
-        if (property_exists($record, $this->name)) {
-            $record->{$this->name} = $value;
-        }
-        return null;
+       $record->setValue($this->name, $value);
     }
 
 
@@ -151,6 +153,16 @@ class ilExamOrgaField
     public function getListHTML($record) {
         return ilUtil::stripSlashes((string) $this->getValue($record));
     }
+
+    /**
+     * Get the HTML code for display in a table
+     * @param ilExamOrgaRecord $record
+     * @return string
+     */
+    public function getDetailsHTML($record) {
+        return ilUtil::stripSlashes((string) $this->getValue($record));
+    }
+
 
     /**
      * Get the form item with the value from a record
@@ -174,6 +186,7 @@ class ilExamOrgaField
         return $item;
     }
 
+
     /**
      * Set the value of the record by form input
      * @param ilExamOrgaRecord $record
@@ -183,6 +196,34 @@ class ilExamOrgaField
         $value = $form->getInput($this->getPostvar());
         $this->setValue($record, $value);
     }
+
+    /**
+     * Get the item for a record filter
+     * @return ilFormPropertyGUI|null
+     * @see \ilTable2GUI::addFilterItemByMetaType
+     */
+    public function getFilterItem() {
+        $item = new ilTextInputGUI($this->title, $this->getPostvar());
+        $item->setMaxLength(64);
+        $item->setSize(20);
+        return $item;
+    }
+
+    /**
+     * Set the query condition for a table filter
+     * @param ActiveRecordList $list
+     * @param ilTable2GUI      $table
+     * @throws Exception
+     */
+    public function setFilterCondition($list, $table) {
+        /** @var ilTextInputGUI $item */
+        $item = $table->getFilterItemByPostVar($this->getPostvar());
+
+        if (isset($item) && !empty($item->getValue())) {
+            $list->where([$this->name => $item->getValue() . '%'], 'LIKE');
+        }
+    }
+
 
     /**
      * Get the data for the external REST API

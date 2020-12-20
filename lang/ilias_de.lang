@@ -42,3 +42,5 @@ config_base_info#:#Hier stellen Sie die Grundfunktionen des Plugins ein
 exam_admin_tab#:#Prüfung
 overview#:#Übersicht
 no_record_access#:#Sie haben keinen Zugriff auf die Einträge.
+exams#:#Prüfungen
+show_details#:#Details anzeigen

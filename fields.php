@@ -7,10 +7,11 @@ require_once (__DIR__ . '/classes/field/class.ilExamOrgaField.php');
 $fields = [
   [
       'name' => 'id',
-      'type' => ilExamOrgaField::TYPE_INFO,
+      'type' => ilExamOrgaField::TYPE_INTEGER,
       'title' => 'ID',
-      'info' => 'interne ID dieses Datensatzes. Hat keine Beziehung zur Prüfungsnummer',
-      'default' => true
+      'info' => 'interne ID dieses Datensatzes. Hat keine Beziehung zur Prüfungsnummer.',
+      'default' => true,
+      'status' => ilExamOrgaField::STATUS_FIXED
   ],
   [
       'name' => 'fau_unit',
@@ -29,7 +30,7 @@ $fields = [
           'Phil / Psychologie',
           'Phil / Sozialwissenschaften und Philosophie',
           'Phil / Sportwissenschaft und Sport',
-          'Phil /  Theologie',
+          'Phil / Theologie',
           'RW / Rechtsgeschichte',
           'RW / Strafrecht, Strafprozessrecht, Kriminologie',
           'RW / Deutsches und Internationales Privatrecht und Zivilverfahrensrecht',
@@ -40,7 +41,7 @@ $fields = [
           'RW / Recht und Technik',
           'RW / Anwaltsrecht und Anwaltspraxis',
           'RW / Arbeitsmarkt und Sozialökonomik (IAS)',
-          'RW /  Finance, Auditing, Controlling, Taxation (FACT)',
+          'RW / Finance, Auditing, Controlling, Taxation (FACT)',
           'RW / Globalisierung und Internationale Unternehmensführung (IBUG)',
           'RW / Management (IFM)',
           'RW / Marketing (IFMA)',
@@ -86,14 +87,14 @@ $fields = [
   [
       'name' => 'mail_address',
       'type' => ilExamOrgaField::TYPE_TEXT,
-      'title' => 'Mail Adresse',
+      'title' => 'Mail-Adresse',
       'info' => 'Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.',
       'limit' => 200
   ],
   [
       'name' => 'mail_title',
       'type' => ilExamOrgaField::TYPE_TEXT,
-      'title' => 'Betreff',
+      'title' => 'Mail-Betreff',
       'info' => 'Dieser Betreff wird für automatisch generierte E-Mails verwendet.',
       'limit' => 200
   ],
@@ -115,8 +116,8 @@ $fields = [
   [
       'name' => 'exam_method',
       'type' => ilExamOrgaField::TYPE_SELECT,
-      'title' => 'Prüfungsmethode [nur bei Fernprüfungen]',
-      'info' => 'Geben Sie bitte an, ob Sie Ihre Prüfung mit dem Objekt Übung (Vorrangig für Essayfragen I Studierende laden von der Prüfungsplattform eine Aufgabenstellung herunter, bearbeiten diese offline und laden sie anschließend wieder in das Übungsobjekt auf der Prüfungsplattform hoch) oder mit dem Objekt Test (Vorrangig für Antwort-Wahl-Verfahren I Studierende bearbeiten alle Aufgaben im Test auf der Prüfungsplattform) umsetzen möchten.',
+      'title' => 'Prüfungsmethode',
+      'info' => '[Nur bei Fernprüfungen] Geben Sie bitte an, ob Sie Ihre Prüfung mit dem Objekt Übung (Vorrangig für Essayfragen I Studierende laden von der Prüfungsplattform eine Aufgabenstellung herunter, bearbeiten diese offline und laden sie anschließend wieder in das Übungsobjekt auf der Prüfungsplattform hoch) oder mit dem Objekt Test (Vorrangig für Antwort-Wahl-Verfahren I Studierende bearbeiten alle Aufgaben im Test auf der Prüfungsplattform) umsetzen möchten.',
       'options' => [
           'test' => 'Test (kontinuierliche Bearbeitung auf der Prüfungsplattform)',
           'exercise' => 'Übung (Offline-Bearbeitung mit anschließendem Upload)'
@@ -128,7 +129,7 @@ $fields = [
       'name' => 'exam_type',
       'type' => ilExamOrgaField::TYPE_SELECT,
       'title' => 'Typ',
-      'info' => 'Bitte immer korrekt auswählen',
+      'info' => 'Bitte immer korrekt auswählen!',
       'options' => [
           'exam' => 'Klausur',
           'review' => 'Einsichtnahme',
@@ -310,7 +311,7 @@ $fields = [
   ],
   [
       'name' => 'created_at',
-      'type' => ilExamOrgaField::TYPE_DATETIME,
+      'type' => ilExamOrgaField::TYPE_TIMESTAMP,
       'title' => 'Erstellt am',
       'status' => ilExamOrgaField::STATUS_FIXED
   ],
@@ -322,7 +323,7 @@ $fields = [
   ],
   [
       'name' => '$modified_at',
-      'type' => ilExamOrgaField::TYPE_DATETIME,
+      'type' => ilExamOrgaField::TYPE_TIMESTAMP,
       'title' => 'Bearbeitet am',
       'status' => ilExamOrgaField::STATUS_FIXED
   ],

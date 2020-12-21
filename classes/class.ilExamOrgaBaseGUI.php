@@ -10,7 +10,7 @@ abstract class ilExamOrgaBaseGUI
 	/** @var  ilObjExamOrga */
 	public $object;
 
-	/** @var  ilExamOrgaPluginPlugin */
+	/** @var  ilExamOrgaPlugin */
 	public $plugin;
 
 	/** @var  ilCtrl */
@@ -24,9 +24,6 @@ abstract class ilExamOrgaBaseGUI
 
 	/** @var ilLanguage */
 	public $lng;
-
-	/** @var ilPropertyFormGUI */
-	protected $form;
 
 	/** @var ilToolbarGUI */
 	protected $toolbar;

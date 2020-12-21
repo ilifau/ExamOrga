@@ -24,6 +24,7 @@ grp_create_xamo#:#Erstelle Exam Orga Objekt
 fold_create_xamo#:#Erstelle Exam Orga Objekt
 root_create_xamo#:#Erstelle Exam Orga Objekt
 cat_create_xamo#:#Erstelle Exam Orga Objekt
+view_entries#:#Alle Einträge sehen
 title#:#Titel
 description#:#Beschreibung
 status#:#Status
@@ -41,6 +42,13 @@ config_base#:#Grundfunktionen
 config_base_info#:#Hier stellen Sie die Grundfunktionen des Plugins ein
 exam_admin_tab#:#Prüfung
 overview#:#Übersicht
-no_record_access#:#Sie haben keinen Zugriff auf die Einträge.
+message_no_list_records#:#Sie haben keinen Zugriff auf die Einträge!
+message_no_add_record#:#Sie können keinen Eintrag hinzufügen!
+message_no_edit_record#:#Sie können den Eintrag nicht bearbeiten!
+message_no_view_record#:#Sie können den Eintrag nicht betrachten!
 exams#:#Prüfungen
-show_details#:#Details anzeigen
+add_record#:#Prüfung hinzufügen
+view_details#:#Details anzeigen
+edit_record#:#Prüfung bearbeiten
+record_created#:#Der Eintrag wurde erstellt.
+record_updated#:#Der Eintrag wurde aktualisiert.

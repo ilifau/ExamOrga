@@ -2,7 +2,6 @@
 
 class ilExamOrgaField
 {
-    const TYPE_INFO = 'info';
     const TYPE_TEXT = 'text';
     const TYPE_TEXTAREA = 'textarea';
     const TYPE_INTEGER = 'integer';
@@ -10,7 +9,7 @@ class ilExamOrgaField
     const TYPE_SELECT = 'select';
     const TYPE_RADIO = 'radio';
     const TYPE_DATE = 'date';
-    const TYPE_DATETIME = 'datetime';
+    const TYPE_TIMESTAMP = 'timestamp';
     const TYPE_TIMES = 'times';
     const TYPE_USERS = 'users';
     const TYPE_EXAMS = 'exams';
@@ -24,6 +23,9 @@ class ilExamOrgaField
     const STATUS_LOCKED  = 'locked';    // visible to all users, read-only for owner, editable for admins
     const STATUS_FIXED = 'fixed';       // visible to all users, not editable
 
+
+    /** @var ilObjExamOrga */
+    public $object;
 
     /** @var ilExamOrgaPlugin */
     public $plugin;
@@ -66,27 +68,28 @@ class ilExamOrgaField
 
     /**
      * Get a new field object according to the definition
-     * @param ilExamOrgaPlugin $plugin
+     * @param ilObjExamOrga $object
      * @param array $definition
      * @return self
      */
-    public static function factory($plugin, $definition) {
+    public static function factory($object, $definition) {
         switch ($definition['type']) {
 
 
             default:
-                return new self($plugin, $definition);
+                return new self($object, $definition);
         }
     }
 
     /**
      * ilExamOrgaField constructor.
-     * @param ilExamOrgaPlugin $plugin
+     * @param ilObjExamOrga $object
      * @param array $definition
      */
-    public function __construct($plugin, $definition)
+    public function __construct($object, $definition)
     {
-        $this->plugin = $plugin;
+        $this->object = $object;
+        $this->plugin = $object->plugin;
 
         $this->name = (string) $definition['name'];
         $this->type =  (string) $definition['type'];
@@ -163,17 +166,19 @@ class ilExamOrgaField
         return ilUtil::stripSlashes((string) $this->getValue($record));
     }
 
-
     /**
-     * Get the form item with the value from a record
-     * @param ilExamOrgaRecord $record
-     * @param ilPropertyFormGUI $form
-     */
-    public function getFormItem($record, $form) {
+      * Build the form item with the value from a record
+      * @param ilExamOrgaRecord $record
+      * @return ilFormPropertyGUI
+      */
+    public function getFormItem($record)
+    {
         $item = new ilTextInputGUI($this->title, $this->getPostvar());
         $item->setRequired($this->required);
-        if ($this->status == self::STATUS_FIXED || $this->status == self::STATUS_LOCKED) {
-            $item->setDisabled(true);
+        $item->setDisabled(!$this->object->canEditField($this));
+
+        if (isset($this->info)) {
+            $item->setInfo($this->info);
         }
         if (isset($this->size)) {
             $item->setSuffix($this->size);
@@ -181,18 +186,18 @@ class ilExamOrgaField
         if (isset($this->limit)) {
             $item->setMaxLength($this->limit);
         }
-        $item->setValue($this->getValue());
 
+        $item->setValue($this->getValue($record));
         return $item;
     }
-
 
     /**
      * Set the value of the record by form input
      * @param ilExamOrgaRecord $record
      * @param ilPropertyFormGUI $form
      */
-    public function setByForm($record, $form) {
+    public function setByForm($record, $form)
+    {
         $value = $form->getInput($this->getPostvar());
         $this->setValue($record, $value);
     }

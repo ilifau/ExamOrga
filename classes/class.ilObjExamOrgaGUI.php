@@ -185,7 +185,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 
 	protected function showContent()
     {
-        $this->ctrl->redirectByClass('ilexamorgarecordgui');
+        //$this->ctrl->redirectByClass('ilexamorgarecordgui');
 	}
 
 

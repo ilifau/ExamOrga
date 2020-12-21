@@ -6,25 +6,16 @@
  */
 class ilExamOrgaRecordTableGUI extends ilTable2GUI
 {
-    /**
-     * @var object $parent_obj
-     */
+    /** @var ilExamOrgaRecordGUI */
     protected $parent_obj;
 
-    /**
-     * @var string $parent_cmd
-     */
+    /** @var string $parent_cmd */
     protected $parent_cmd;
 
-
-    /**
-     * @var ilObjExamOrga
-     */
+    /** @var ilObjExamOrga */
     protected $object;
 
-    /**
-     * @var ilExamOrgaPlugin
-     */
+    /** @var ilExamOrgaPlugin */
     protected $plugin;
 
     /** @var ilExamOrgaField[] */
@@ -32,8 +23,8 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
     /**
      * Constructor
-     * @param   ilExamOrgaRecordGUI $a_parent_obj
-     * @param   string                          $a_parent_cmd
+     * @param ilExamOrgaRecordGUI $a_parent_obj
+     * @param string $a_parent_cmd
      */
     public function __construct($a_parent_obj, $a_parent_cmd)
     {
@@ -56,10 +47,11 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $this->setTitle($this->plugin->txt('exams'));
         $this->setStyle('table', 'fullwidth');
 
-        foreach ($this->getSelectableColumns() as $name => $settings)
-        {
-            if ($this->isColumnSelected($name))
-            {
+        // todo: show the checkbox column
+
+        // selected columns
+        foreach ($this->getSelectableColumns() as $name => $settings) {
+            if ($this->isColumnSelected($name)) {
                 $this->addColumn(
                     $settings['txt'],
                     $settings['sortable'] ? $name : '',
@@ -73,8 +65,12 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         // action column
         $this->addColumn('');
 
-        $this->setRowTemplate("tpl.il_xamo_record_row.html", $this->plugin->getDirectory());
+        $this->setTitle($this->plugin->txt('exams'));
+        $this->setFormName('exams');
         $this->setFormAction($this->ctrl->getFormAction($a_parent_obj, $a_parent_cmd));
+
+        $this->setStyle('table', 'fullwidth');
+        $this->setRowTemplate("tpl.il_xamo_record_row.html", $this->plugin->getDirectory());
 
         $this->setExternalSorting(true);
         $this->setExternalSegmentation(true);
@@ -85,25 +81,8 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         $this->enable('sort');
         $this->enable('header');
-        $this->disable('select_all');
         $this->initFilter();
     }
-
-	/**
-	 * Initialize the filter controls
-	 */
-	public function initFilter()
-	{
-	    foreach ($this->fields as $name => $field) {
-	        if ($field->filter) {
-	            $item = $field->getFilterItem();
-	            if (isset($item)) {
-                    $this->addFilterItem($item, true);
-                    $item->readFromSession();
-                }
-            }
-        }
-	}
 
     /**
      * Get selectable columns
@@ -123,6 +102,23 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
     }
 
     /**
+     * Initialize the filter controls
+     */
+    public function initFilter()
+    {
+        foreach ($this->fields as $name => $field) {
+            if ($field->filter) {
+                $item = $field->getFilterItem();
+                if (isset($item)) {
+                    $this->addFilterItem($item, true);
+                    $item->readFromSession();
+                }
+            }
+        }
+    }
+
+
+    /**
      * Query for the data to be shown
      * @throws Exception
      */
@@ -130,11 +126,11 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
     {
         global $DIC;
 
-        $this->determineOffsetAndOrder();
-        $this->determineLimit();
+        /** @var ilExamOrgaRecord $record */
+        $recordList = ilExamOrgaRecord::getCollection();
+        $recordList->where(['obj_id' => $this->object->getId()]);
 
         // limit to owned records
-        $recordList = ilExamOrgaRecord::getCollection();
         if (!$this->object->canViewAllRecords()) {
             $recordList->where(['owner_id' => $DIC->user()->getId()]);
         }
@@ -146,14 +142,16 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
             }
         }
 
+        // paging
+        $this->determineOffsetAndOrder();
+        $this->determineLimit();
         $this->setMaxCount($recordList->count());
         $recordList->orderBy($this->getOrderField(), $this->getOrderDirection());
         $recordList->limit($this->getOffset(), $this->getLimit());
 
+        // prepare row data (fillRow expects array)
        $data = [];
-       /** @var ilExamOrgaRecord $record */
         foreach ($recordList->get() as $record) {
-            // fillRow expects the row being an array
             $row = [];
             $row['id'] = $record->getValue('id');
             $row['record'] = $record;
@@ -164,9 +162,9 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
 
     /**
-	 * Should this field be sorted numeric?
+	 * Define ordering mode for a field (not neeed, if externally sorted)
      * @param string $a_field
-	 * @return    boolean        numeric ordering; default is false
+	 * @return boolean  numeric ordering; default is false
 	 */
 	function numericOrdering($a_field)
 	{
@@ -208,11 +206,13 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $list->setId('actl_'.$id.'_'.$this->getId());
         $list->setListTitle($this->lng->txt('actions'));
 
+        // add actions
         $this->ctrl->setParameter($this->parent_obj, 'id', $id);
-        $list->addItem($this->plugin->txt('show_details'), '', $this->ctrl->getLinkTarget($this->parent_obj,'showDetails'));
+        $list->addItem($this->plugin->txt('view_details'), '', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
         if ($this->object->canEditRecord($record)) {
-            $list->addItem($this->plugin->txt('show_details'), '', $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
+            $list->addItem($this->plugin->txt('edit_record'), '', $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
         }
+
         $this->tpl->setCurrentBlock('column');
         $this->tpl->setVariable('CONTENT', $list->getHtml());
         $this->tpl->parseCurrentBlock();

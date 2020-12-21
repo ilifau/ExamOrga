@@ -15,7 +15,6 @@ class ilExamOrgaRecord extends ActiveRecord
         return 'xamo_record';
     }
 
-
     /**
      * @var integer
      * @con_has_field        true
@@ -25,7 +24,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $id = 0;
+    public $id;
 
     /**
      * @var integer
@@ -34,7 +33,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $obj_id = 0;
+    public $obj_id;
 
 
     /**
@@ -43,7 +42,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $fau_unit = '';
+    public $fau_unit;
 
 
     /**
@@ -52,7 +51,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $fau_chair = '';
+    public $fau_chair;
 
     /**
      * @var string
@@ -61,7 +60,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_is_notnull       true
      * @con_length           200
      */
-    protected $fau_lecturer = '';
+    public $fau_lecturer;
 
 
     /**
@@ -70,7 +69,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $mail_address = '';
+    public $mail_address;
 
 
     /**
@@ -79,7 +78,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $mail_title = '';
+    public $mail_title;
 
     /**
      * @var string
@@ -88,7 +87,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_is_notnull       true
      * @con_length           20
      */
-    protected $exam_format = '';
+    public $exam_format;
 
     /**
      * @var string
@@ -96,7 +95,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           20
      */
-    protected $exam_method = '';
+    public $exam_method;
 
     /**
      * @var string
@@ -104,7 +103,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           20
      */
-    protected $exam_type = '';
+    public $exam_type;
 
     /**
      * @var string
@@ -113,7 +112,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_is_notnull       true
      * @con_length           200
      */
-    protected $exam_title = '';
+    public $exam_title;
 
     /**
      * @var string
@@ -121,7 +120,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        date
      * @con_is_notnull       true
      */
-    protected $exam_date = '';
+    public $exam_date;
 
     /**
      * @var string
@@ -129,7 +128,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $alternative_dates = '';
+    public $alternative_dates;
 
     /**
      * @var string
@@ -137,7 +136,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $exam_runs = '';
+    public $exam_runs;
 
     /**
      * @var integer
@@ -145,7 +144,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $run_minutes = '';
+    public $run_minutes;
 
     /**
      * @var integer
@@ -153,7 +152,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $num_participants = '';
+    public $num_participants;
 
     /**
      * @var integer
@@ -161,7 +160,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $test_ref_id = '';
+    public $test_ref_id;
 
     /**
      * @var string
@@ -169,7 +168,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           1000
      */
-    protected $admins = '';
+    public $admins;
 
     /**
      * @var string
@@ -177,7 +176,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           1000
      */
-    protected $monitors = '';
+    public $monitors;
 
     /**
      * @var string
@@ -185,7 +184,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $room = '';
+    public $room;
 
 
     /**
@@ -194,7 +193,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           2000
      */
-    protected $remarks = '';
+    public $remarks;
 
     /**
      * @var integer
@@ -202,7 +201,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $booking_in_process = '';
+    public $booking_in_process;
 
     /**
      * @var integer
@@ -210,7 +209,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $booking_approved = '';
+    public $booking_approved;
 
     /**
      * @var integer
@@ -218,7 +217,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $finally_approved = '';
+    public $finally_approved;
 
     /**
      * @var string
@@ -226,7 +225,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           20
      */
-    protected $team_agent = '';
+    public $team_agen;
 
     /**
      * @var integer
@@ -234,7 +233,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $room_approved = '';
+    public $room_approved;
 
     /**
      * @var integer
@@ -242,7 +241,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $room_in_univis = '';
+    public $room_in_univis;
 
 
     /**
@@ -251,7 +250,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $quality_checked = '';
+    public $quality_checked;
 
     /**
      * @var string
@@ -259,7 +258,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           20
      */
-    protected $reg_code = '';
+    public $reg_code;
 
     /**
      * @var string
@@ -267,7 +266,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $team_students = '';
+    public $team_students;
 
 
     /**
@@ -276,7 +275,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           200
      */
-    protected $team_standby = '';
+    public $team_standby;
 
     /**
      * @var integer
@@ -284,7 +283,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $ips_active = '';
+    public $ips_active;
 
     /**
      * @var string
@@ -292,7 +291,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           2000
      */
-    protected $tech_details = '';
+    public $tech_details;
 
     /**
      * @var integer
@@ -300,7 +299,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $settings_checked = '';
+    public $settings_checked;
 
     /**
      * @var integer
@@ -308,7 +307,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $seb_checked = '';
+    public $seb_checked;
 
     /**
      * @var integer
@@ -317,16 +316,16 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $owner_id = 0;
+    public $owner_id;
 
     /**
-     * @var integer
+     * @var string
      * @con_has_field        true
      * @con_is_notnull       true
-     * @con_fieldtype        timestamp
+     * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $created_at = 0;
+    public $created_at;
 
     /**
      * @var integer
@@ -335,16 +334,16 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $created_by = 0;
+    public $created_by;
 
     /**
-     * @var integer
+     * @var string
      * @con_has_field        true
      * @con_is_notnull       true
-     * @con_fieldtype        timestamp
+     * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $modified_at = 0;
+    public $modified_at;
 
     /**
      * @var integer
@@ -353,7 +352,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        integer
      * @con_length           4
      */
-    protected $modified_by = 0;
+    public $modified_by;
 
     /**
      * Get the value of a property
@@ -375,5 +374,55 @@ class ilExamOrgaRecord extends ActiveRecord
         if (property_exists($this, $name)) {
             $this->{$name} = $value;
         }
+    }
+
+    /**
+     * Check if record is not yet saved
+     * @return bool
+     */
+    public function isNew()
+    {
+        return empty($this->id);
+    }
+
+    /**
+     * Check if the current user is the owner of the record
+     */
+    public function isOwner()
+    {
+        global $DIC;
+        return ($this->owner_id == $DIC->user()->getId());
+    }
+
+    /**
+     * Set creation info and create record
+     */
+    public function create()
+    {
+        global $DIC;
+
+        $time = new ilDateTime();
+        $this->created_at = $time->get(IL_CAL_DATETIME);
+        $this->created_by = $DIC->user();
+        $this->modified_at = $time->get(IL_CAL_DATETIME);
+        $this->modified_by = $DIC->user();
+
+        $this->owner_id = $DIC->user();
+
+        parent::create();
+    }
+
+    /**
+     * Set modification info and update record
+     */
+    public function update()
+    {
+        global $DIC;
+
+        $time = new ilDateTime();
+        $this->modified_at = $time->get(IL_CAL_DATETIME);
+        $this->modified_by = $DIC->user();
+
+        parent::update();
     }
 }

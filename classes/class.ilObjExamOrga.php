@@ -126,7 +126,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * @return bool
      */
     public function canViewAllRecords() {
-        return $this->access->checkAccess('write', '', $this->getRefId());
+        return $this->access->checkAccess('view_entries', '', $this->getRefId());
     }
 
     /**
@@ -141,7 +141,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * Check if the current user can add a record
      */
     public function canAddRecord() {
-        return $this->access->checkAccess('write', '', $this->getRefId());
+        return $this->access->checkAccess('add_entry', '', $this->getRefId());
     }
 
     /**
@@ -149,15 +149,16 @@ class ilObjExamOrga extends ilObjectPlugin
      * @param ilExamOrgaRecord $record
      */
     public function canViewRecord($record) {
-        return $this->access->checkAccess('read', '', $this->getRefId());
+        return ($this->canViewAllRecords() || $record->isOwner());
     }
 
     /**
      * Check if the current user can edit a certain record
      * @param ilExamOrgaRecord $record
+     * @return bool
      */
     public function canEditRecord($record) {
-        return $this->access->checkAccess('write', '', $this->getRefId());
+        return ($this->canEditAllRecords() || $record->isOwner());
     }
 
     /**
@@ -165,7 +166,25 @@ class ilObjExamOrga extends ilObjectPlugin
      * @param ilExamOrgaRecord $record
      */
     public function canDeleteRecord($record) {
-        return $this->access->checkAccess('write', '', $this->getRefId());
+        return ($this->canEditAllRecords() || $record->isOwner());
+    }
+
+    /**
+     * Check if a field can be edited
+     * @var ilExamOrgaField $field
+     * @return bool
+     */
+    public function canEditField($field) {
+        switch ($field->status) {
+            case ilExamOrgaField::STATUS_PUBLIC:
+                return true;
+            case ilExamOrgaField::STATUS_FIXED:
+            case ilExamOrgaField::STATUS_HIDDEN:
+                return false;
+            case ilExamOrgaField::STATUS_LOCKED:
+               return $this->canEditAllRecords();
+        }
+        return false;
     }
 
     /**
@@ -176,7 +195,7 @@ class ilObjExamOrga extends ilObjectPlugin
 
         foreach ($fields as $definition) {
             $name = (string) $definition['name'];
-            $this->fields[$name] = ilExamOrgaField::factory($this->plugin, $definition);
+            $this->fields[$name] = ilExamOrgaField::factory($this, $definition);
         }
     }
 

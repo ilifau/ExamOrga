@@ -104,6 +104,10 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
      */
     public function initFilter()
     {
+        // needed for filter reset with select fields
+        $this->filters = [];
+        $this->optional_filters = [];
+
         foreach ($this->fields as $name => $field) {
             if ($field->filter) {
                 $item = $field->getFilterItem();

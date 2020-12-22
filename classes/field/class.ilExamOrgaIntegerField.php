@@ -66,14 +66,38 @@ class ilExamOrgaIntegerField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getFilterItem() {
-        return parent::getFilterItem();
+        $item = new ilCombinationInputGUI($this->title, $this->getPostvar());
+        $from = new ilNumberInputGUI("", $this->getPostvar() . "_from");
+        $from->allowDecimals(false);
+        $item->addCombinationItem("from", $from, $this->plugin->txt("from"));
+        $to = new ilNumberInputGUI("", $this->getPostvar() . "_to");
+        $to->allowDecimals(false);
+        $item->addCombinationItem("to", $to, $this->plugin->txt("to"));
+        $item->setComparisonMode(ilCombinationInputGUI::COMPARISON_ASCENDING);
+        $item->setMaxLength(7);
+        $item->setSize(20);
+        return $item;
     }
 
     /**
      * @inheritdoc
      */
     public function setFilterCondition($list, $table) {
-        parent::setFilterCondition($list, $table);
+        /** @var ilCombinationInputGUI $item */
+        $item = $table->getFilterItemByPostVar($this->getPostvar());
+        if (isset($item)) {
+            /** @var ilNumberInputGUI $from */
+            $from = $item->getCombinationItem('from');
+            /** @var ilNumberInputGUI $to */
+            $to = $item->getCombinationItem('to');
+
+            if(isset($from) && !empty($from->getValue())) {
+                $list->where([$this->name => $from->getValue()], '>=');
+            }
+            if (isset($to) && !empty($to->getValue())) {
+                $list->where([$this->name => $to->getValue()], '<=');
+            }
+        }
     }
 
     /**

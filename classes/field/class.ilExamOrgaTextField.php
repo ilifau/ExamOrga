@@ -56,7 +56,12 @@ class ilExamOrgaTextField extends ilExamOrgaField
      * @inheritdoc
      */
     public function setFilterCondition($list, $table) {
-        parent::setFilterCondition($list, $table);
+        /** @var ilTextInputGUI $item */
+        $item = $table->getFilterItemByPostVar($this->getPostvar());
+
+        if (isset($item) && !empty($item->getValue())) {
+            $list->where([$this->name => $item->getValue() . '%'], 'LIKE');
+        }
     }
 
     /**

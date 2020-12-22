@@ -39,7 +39,11 @@ class ilExamOrgaData
 
         // online status
         $params[] = ilExamOrgaParam::_create(
-            'online', $this->plugin->txt('online'), '', ilExamOrgaParam::TYPE_BOOLEAN, 1
+            'online', $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 1
+        );
+        // test data
+        $params[] = ilExamOrgaParam::_create(
+            'testdata', $this->plugin->txt('testdata'), $this->plugin->txt('testdata_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
         );
 
         foreach ($params as $param)

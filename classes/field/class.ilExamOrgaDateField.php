@@ -75,14 +75,43 @@ class ilExamOrgaDateField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getFilterItem() {
-        return parent::getFilterItem();
+        $item = new ilCombinationInputGUI($this->title, $this->getPostvar());
+        $from = new ilDateTimeInputGUI("", $this->getPostvar() . "_from");
+        $item->addCombinationItem("from", $from, $this->plugin->txt("from"));
+        $to = new ilDateTimeInputGUI("", $this->getPostvar() . "_to");
+        $item->addCombinationItem("to", $to, $this->plugin->txt("to"));
+        $item->setComparisonMode(ilCombinationInputGUI::COMPARISON_ASCENDING);
+        return $item;
     }
 
     /**
      * @inheritdoc
      */
     public function setFilterCondition($list, $table) {
-        parent::setFilterCondition($list, $table);
+        /** @var ilCombinationInputGUI $item */
+        $item = $table->getFilterItemByPostVar($this->getPostvar());
+        if (isset($item)) {
+            /** @var ilDateTimeInputGUI $from */
+            $from = $item->getCombinationItem('from');
+            /** @var ilDateTimeInputGUI $to */
+            $to = $item->getCombinationItem('to');
+
+            if(isset($from)) {
+                /** @var ilDate $date */
+                $date = $from->getDate();
+                if (isset($date)) {
+                    $list->where([$this->name => $date->get(IL_CAL_DATE)], '>=');
+                }
+            }
+            if(isset($to)) {
+                /** @var ilDate $date */
+                $date = $to->getDate();
+                if (isset($date)) {
+                    $list->where([$this->name => $date->get(IL_CAL_DATE)], '<=');
+                }
+            }
+        }
+
     }
 
     /**

@@ -29,7 +29,10 @@ title#:#Titel
 description#:#Beschreibung
 status#:#Status
 online#:#Online
+online_info#:#Das Tool muss online sein, damit es auch Nutzer ohne Recht zur Bearbeitung der Einstellungen einsehen können. Außerdem werden externe Abfragen (Zoom-Einrichtung, Prüfungsplattform) nur für online-Tools durchgeführt.
 offline#:#Offline
+testdata#:#Testdaten
+testdata_info#:#Das Tool enthält Testdaten, die bei externen Abfragen (Zoom-Einrichtung, Prüfungsplattform) gesondert behandelt werden.
 save#:#Speichern
 update#:#Update
 properties#:#Eigenschaften
@@ -58,3 +61,6 @@ yes#:#ja
 no#:#nein
 time_delim#:#&nbsp;:&nbsp;
 time_suffix#:# Uhr
+filter_all#:#Alle
+from#:#Von
+to#:#Bis

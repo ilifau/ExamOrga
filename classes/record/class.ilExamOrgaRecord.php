@@ -409,13 +409,15 @@ class ilExamOrgaRecord extends ActiveRecord
     {
         global $DIC;
 
-        $time = new ilDateTime(time(), IL_CAL_UNIX);
-        $this->created_at = $time->get(IL_CAL_UNIX);
-        $this->created_by = $DIC->user();
-        $this->modified_at = $time->get(IL_CAL_UNIX);
+        $time = time();
+        $this->created_at = $time;
+        $this->created_by = $DIC->user()->getId();
+        $this->modified_at = $time;
         $this->modified_by = $DIC->user()->getId();
 
-        $this->owner_id = $DIC->user();
+        if (empty($this->owner_id)) {
+            $this->owner_id = $DIC->user()->getId();
+        }
 
         parent::create();
     }
@@ -427,8 +429,8 @@ class ilExamOrgaRecord extends ActiveRecord
     {
         global $DIC;
 
-        $time = new ilDateTime(time(), IL_CAL_UNIX);
-        $this->modified_at = $time->get(IL_CAL_UNIX);
+        $time = time();
+        $this->modified_at = $time;
         $this->modified_by = $DIC->user()->getId();
 
         parent::update();

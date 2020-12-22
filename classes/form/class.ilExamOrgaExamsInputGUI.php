@@ -57,10 +57,11 @@ class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
         $fetchall = $_REQUEST['fetchall'];
 
         $cnt = 0;
-
         $result[$cnt]['value'] = 'value';
         $result[$cnt]['label'] = 'label';
         $result[$cnt]['id'] = 'id';
+
+        $result = [];
 
         $result_json['items'] = $result;
         $result_json['hasMoreResults'] = false;

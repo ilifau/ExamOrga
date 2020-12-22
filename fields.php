@@ -141,6 +141,7 @@ $fields = [
       'name' => 'exam_ids',
       'type' => ilExamOrgaField::TYPE_EXAMS,
       'title' => 'Prüfungen in mein campus',
+      'info' => 'Geben Sie hier die "ID für Organisation elektronischer Prüfungen" aus der Funktion "Prüfungsorganisation" in "mein campus" an. Diese Angabe hilft Ihnen später bei der Notenverbuchung.',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [
@@ -241,8 +242,8 @@ $fields = [
   [
       'name' => 'booking_in_process',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'Buchung abgeschlossen',
-      'info' => 'Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.',
+      'title' => 'In Bearbeitung',
+      'info' => 'Wird vom Exam-Team ausgefüllt. Ihre Anfrage ist bei uns eingegangen und wird von uns bearbeitet.',
       'status' => ilExamOrgaField::STATUS_LOCKED
   ],
   [

@@ -69,7 +69,10 @@ class ilExamOrgaRadioField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getFilterItem() {
-        return parent::getFilterItem();
+        $item = new ilSelectInputGUI($this->title, $this->getPostvar());
+        $options = array_merge(['' => $this->plugin->txt('filter_all')], $this->options);
+        $item->setOptions($options);
+        return $item;
     }
 
     /**

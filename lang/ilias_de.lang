@@ -50,5 +50,11 @@ exams#:#Prüfungen
 add_record#:#Prüfung hinzufügen
 view_details#:#Details anzeigen
 edit_record#:#Prüfung bearbeiten
+create_record#:#Eintrag speichern
+update_record#:#Eintrag aktualisieren
 record_created#:#Der Eintrag wurde erstellt.
 record_updated#:#Der Eintrag wurde aktualisiert.
+yes#:#ja
+no#:#nein
+time_delim#:#&nbsp;:&nbsp;
+time_suffix#:# Uhr

@@ -135,6 +135,11 @@ if (!$ilDB->tableExists('xamo_data'))
             'type' => 'date',
 
         ),
+        'exam_ids' => array(
+            'type' => 'text',
+            'length' => '1000',
+
+        ),
         'alternative_dates' => array(
             'type' => 'text',
             'length' => '200',
@@ -289,7 +294,8 @@ if (!$ilDB->tableExists('xamo_data'))
         if (! $ilDB->sequenceExists('xamo_record')) {
             $ilDB->createSequence('xamo_record');
         }
-    }
+
+}
 ?>
 <#6>
 <?php

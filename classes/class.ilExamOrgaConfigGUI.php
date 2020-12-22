@@ -75,10 +75,10 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 	 */
 	protected function configure()
 	{
-//	    require_once (__DIR__ . '/record/class.ilExamOrgaRecord.php');
-//        $arBuilder = new arBuilder(new ilExamOrgaRecord());
-//        $arBuilder->generateDBUpdateForInstallation();
-//        return;
+	    require_once (__DIR__ . '/record/class.ilExamOrgaRecord.php');
+        $arBuilder = new arBuilder(new ilExamOrgaRecord());
+        $arBuilder->generateDBUpdateForInstallation();
+        return;
 
 		$form = $this->initBasicConfigurationForm();
 		$this->tpl->setContent($form->getHTML());

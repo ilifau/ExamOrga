@@ -6,14 +6,6 @@ require_once (__DIR__ . '/classes/field/class.ilExamOrgaField.php');
  */
 $fields = [
   [
-      'name' => 'id',
-      'type' => ilExamOrgaField::TYPE_INTEGER,
-      'title' => 'ID',
-      'info' => 'interne ID dieses Datensatzes. Hat keine Beziehung zur Prüfungsnummer.',
-      'default' => true,
-      'status' => ilExamOrgaField::STATUS_FIXED
-  ],
-  [
       'name' => 'fau_unit',
       'type' => ilExamOrgaField::TYPE_SELECT,
       'title' => 'Bereich',
@@ -100,7 +92,7 @@ $fields = [
   ],
   [
       'name' => 'exam_format',
-      'type' => ilExamOrgaField::TYPE_SELECT,
+      'type' => ilExamOrgaField::TYPE_RADIO,
       'title' => 'Prüfungsformat',
       'info' => 'Geben Sie hier an, welches Format Sie durchführen möchten. Wenn Sie unsicher sind kontaktieren Sie uns gerne.',
       'options' => [
@@ -115,7 +107,7 @@ $fields = [
   ],
   [
       'name' => 'exam_method',
-      'type' => ilExamOrgaField::TYPE_SELECT,
+      'type' => ilExamOrgaField::TYPE_RADIO,
       'title' => 'Prüfungsmethode',
       'info' => '[Nur bei Fernprüfungen] Geben Sie bitte an, ob Sie Ihre Prüfung mit dem Objekt Übung (Vorrangig für Essayfragen I Studierende laden von der Prüfungsplattform eine Aufgabenstellung herunter, bearbeiten diese offline und laden sie anschließend wieder in das Übungsobjekt auf der Prüfungsplattform hoch) oder mit dem Objekt Test (Vorrangig für Antwort-Wahl-Verfahren I Studierende bearbeiten alle Aufgaben im Test auf der Prüfungsplattform) umsetzen möchten.',
       'options' => [
@@ -127,7 +119,7 @@ $fields = [
   ],
   [
       'name' => 'exam_type',
-      'type' => ilExamOrgaField::TYPE_SELECT,
+      'type' => ilExamOrgaField::TYPE_RADIO,
       'title' => 'Typ',
       'info' => 'Bitte immer korrekt auswählen!',
       'options' => [
@@ -144,6 +136,12 @@ $fields = [
       'title' => 'Prüfungstitel',
       'default' => true,
       'filter' => true
+  ],
+  [
+      'name' => 'exam_ids',
+      'type' => ilExamOrgaField::TYPE_EXAMS,
+      'title' => 'Prüfungen in mein campus',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [
       'name' => 'exam_date',
@@ -183,22 +181,35 @@ $fields = [
       'filter' => true,
   ],
   [
-      'name' => 'test_ref_id',
-      'type' => ilExamOrgaField::TYPE_REFERENCE,
-      'title' => 'Testobjekt in StudOn',
-      'info' => 'Nur für E-Prüfungen in Präsenz relevant. Hier können Sie Ihren Test aus StudOn verlinken, sobald er fertiggestellt ist.',
-  ],
-  [
       'name' => 'admins',
-      'type' => ilExamOrgaField::TYPE_USERS,
+      'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Korektoren-Accounts',
       'info' => 'Wählen Sie hier die StudOn-Accounts der Korrektoren aus. Sie erhalten automatisch Zugiff auf den Kurs in der Prüfungsplattform.',
   ],
   [
       'name' => 'monitors',
-      'type' => ilExamOrgaField::TYPE_USERS,
+      'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Aufsichten',
       'info' => 'Wählen Sie hier die StudOn-Accounts der Korrektoren aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung',
+  ],
+  [
+      'name' => 'remarks',
+      'type' => ilExamOrgaField::TYPE_TEXTAREA,
+      'title' => 'Anmerkungen',
+      'info' => 'Beschreiben Sie hier kurz eventuelle Besonderheiten zur Klausur (z.B. Einsatz von Video, Audio, Taschenrechner, Zufalls-Test, verschiedene Tests, Weiterleitung zur Umfrage etc.) ',
+  ],
+  /////////////////////////////////////////////////////////
+  [
+      'name' => 'head_presence',
+      'type' => ilExamOrgaField::TYPE_HEADLINE,
+      'title' => 'Präsenzprüfung',
+      'info' => 'Die folgenden Angaben sind nur für E-Prüfungen in Präsenz relevant',
+  ],
+  [
+      'name' => 'test_ref_id',
+      'type' => ilExamOrgaField::TYPE_REFERENCE,
+      'title' => 'Testobjekt in StudOn',
+      'info' => 'Nur für E-Prüfungen in Präsenz relevant. Hier können Sie Ihren Test aus StudOn verlinken, sobald er fertiggestellt ist.',
   ],
   [
       'name' => 'room',
@@ -207,54 +218,78 @@ $fields = [
       'info' => 'Nur für E-Prüfungen in Präsenz relevant: Hier dürfen Sie eine Raum-Präferenz angeben und finden nach Abschluss des Buchungsprozesses die für Sie verbindlich gebuchten Räume. Vermerken Sie bitte in Klammern, wenn Sie den Raum bereits selbst gebucht haben. ',
   ],
   [
-      'name' => 'remarks',
-      'type' => ilExamOrgaField::TYPE_TEXTAREA,
-      'title' => 'Anmerkungen',
-      'info' => 'Beschreiben Sie hier kurz eventuelle Besonderheiten zur Klausur (z.B. Einsatz von Video, Audio, Taschenrechner, Zufalls-Test, verschiedene Tests, Weiterleitung zur Umfrage etc.) ',
-  ],
-  [
-      'name' => 'booking_in_process',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'Buchung abgeschlossen',
-      'info' => 'Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
-  [
-      'name' => 'finally_approved',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'Finale Abnahme',
-      'info' => 'Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmer importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
-  [
-      'name' => 'team_agent',
-      'type' => ilExamOrgaField::TYPE_SELECT,
-      'title' => 'Agentin',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
-  [
       'name' => 'room_approved',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'title' => 'Raumbuchung bestätigt',
+      'info' => 'Für Exam-Team',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [
       'name' => 'room_in_univis',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'title' => 'UnivIS Eintrag',
+      'info' => 'Für Exam-Team',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
+  ],
+  //////////////////////////////////////////////////////////
+  [
+      'name' => 'head_process',
+      'type' => ilExamOrgaField::TYPE_HEADLINE,
+      'title' => 'Status',
+      'info' => 'Die folgenden Angaben werden vom Exam-Team ausgefüllt',
+  ],
+  [
+      'name' => 'booking_in_process',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Buchung abgeschlossen',
+      'info' => 'Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
+  [
+      'name' => 'booking_approved',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Buchung abgeschlossen',
+      'info' => 'Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
+  [
+      'name' => 'finally_approved',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Finale Abnahme',
+      'info' => 'Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmer importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
+  [
+      'name' => 'reg_code',
+      'type' => ilExamOrgaField::TYPE_TEXT,
+      'title' => 'Registrierungscode',
+      'info' => 'Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
+
+  //////////////////////////////////////////////////////////
+  [
+      'name' => 'head_internal',
+      'type' => ilExamOrgaField::TYPE_HEADLINE,
+      'title' => 'Intern',
+      'info' => 'Die folgenden Angaben sind nur für das Exam-Team sichtbar',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
+  ],
+  [
+      'name' => 'team_agent',
+      'type' => ilExamOrgaField::TYPE_SELECT,
+      'title' => 'Agentin',
+      'options' => [
+        'Silvana',
+        'Mona',
+        'Steffi'
+      ],
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [
       'name' => 'quality_checked',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'title' => 'Qualitätscheck',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
-  [
-      'name' => 'reg_code',
-      'type' => ilExamOrgaField::TYPE_TEXT,
-      'title' => 'Reg.-Code',
-      'info' => 'Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [
@@ -265,9 +300,8 @@ $fields = [
   ],
   [
       'name' => 'team_standby',
-      'type' => ilExamOrgaField::TYPE_SELECT,
+      'type' => ilExamOrgaField::TYPE_MULTISELECT,
       'title' => 'Bereitschaft',
-      'multi' => true,
       'options' => [
         'Mona (D)',
         'Silvana (D)',
@@ -302,12 +336,19 @@ $fields = [
       'title' => 'Exam-Check 2 SEB',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
+  /////////////////////////////////////////////////////////////
   [
-      'name' => 'owner_id',
-      'type' => ilExamOrgaField::TYPE_USER_ID,
-      'title' => 'Besitzer',
-      'info' => 'Der Besirter kann diesen Eintrag bearbeiten',
-      'status' => ilExamOrgaField::STATUS_LOCKED
+      'name' => 'head_record',
+      'type' => ilExamOrgaField::TYPE_HEADLINE,
+      'title' => 'Angaben zu diesem Eintrag',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
+  ],
+  [
+      'name' => 'id',
+      'type' => ilExamOrgaField::TYPE_INTEGER,
+      'title' => 'ID',
+      'info' => 'Interne ID dieses Datensatzes. Hat keine Beziehung zur Prüfungsnummer.',
+      'status' => ilExamOrgaField::STATUS_FIXED
   ],
   [
       'name' => 'created_at',
@@ -322,7 +363,7 @@ $fields = [
       'status' => ilExamOrgaField::STATUS_FIXED
   ],
   [
-      'name' => '$modified_at',
+      'name' => 'modified_at',
       'type' => ilExamOrgaField::TYPE_TIMESTAMP,
       'title' => 'Bearbeitet am',
       'status' => ilExamOrgaField::STATUS_FIXED
@@ -333,4 +374,13 @@ $fields = [
       'title' => 'Bearbeitet von',
       'status' => ilExamOrgaField::STATUS_FIXED
   ],
+  [
+      'name' => 'owner_id',
+      'type' => ilExamOrgaField::TYPE_USER_ID,
+      'title' => 'Besitzer',
+      'info' => 'Der Besitzer kann diesen Eintrag bearbeiten',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
+  ],
 ];
+
+return $fields;

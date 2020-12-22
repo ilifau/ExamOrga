@@ -43,10 +43,6 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         parent::__construct($a_parent_obj, $a_parent_cmd);
 
-        $this->setFormName('exams');
-        $this->setTitle($this->plugin->txt('exams'));
-        $this->setStyle('table', 'fullwidth');
-
         // todo: show the checkbox column
 
         // selected columns
@@ -91,12 +87,14 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
     {
         $columns = [];
         foreach($this->fields as $name => $field) {
-            $columns[$name] = [
-                'txt' => $field->title,
-                'tooltip' => $field->info,
-                'default' => $field->default,
-                'sortable' => true
-            ];
+            if ($field->isForList()) {
+                $columns[$name] = [
+                    'txt' => $field->title,
+                    'tooltip' => $field->info,
+                    'default' => $field->default,
+                    'sortable' => true
+                ];
+            }
         }
         return $columns;
     }
@@ -146,7 +144,9 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $this->determineOffsetAndOrder();
         $this->determineLimit();
         $this->setMaxCount($recordList->count());
-        $recordList->orderBy($this->getOrderField(), $this->getOrderDirection());
+        if (isset($this->fields[$this->getOrderField()])) {
+            $recordList->orderBy($this->getOrderField(), $this->getOrderDirection());
+        }
         $recordList->limit($this->getOffset(), $this->getLimit());
 
         // prepare row data (fillRow expects array)

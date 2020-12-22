@@ -126,6 +126,14 @@ class ilExamOrgaRecord extends ActiveRecord
      * @var string
      * @con_has_field        true
      * @con_fieldtype        text
+     * @con_length           1000
+     */
+    public $exam_ids;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        text
      * @con_length           200
      */
     public $alternative_dates;
@@ -401,11 +409,11 @@ class ilExamOrgaRecord extends ActiveRecord
     {
         global $DIC;
 
-        $time = new ilDateTime();
-        $this->created_at = $time->get(IL_CAL_DATETIME);
+        $time = new ilDateTime(time(), IL_CAL_UNIX);
+        $this->created_at = $time->get(IL_CAL_UNIX);
         $this->created_by = $DIC->user();
-        $this->modified_at = $time->get(IL_CAL_DATETIME);
-        $this->modified_by = $DIC->user();
+        $this->modified_at = $time->get(IL_CAL_UNIX);
+        $this->modified_by = $DIC->user()->getId();
 
         $this->owner_id = $DIC->user();
 
@@ -419,9 +427,9 @@ class ilExamOrgaRecord extends ActiveRecord
     {
         global $DIC;
 
-        $time = new ilDateTime();
-        $this->modified_at = $time->get(IL_CAL_DATETIME);
-        $this->modified_by = $DIC->user();
+        $time = new ilDateTime(time(), IL_CAL_UNIX);
+        $this->modified_at = $time->get(IL_CAL_UNIX);
+        $this->modified_by = $DIC->user()->getId();
 
         parent::update();
     }

@@ -13,6 +13,8 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     /** @var ilExamOrgaConfig */
     protected $config;
 
+    /** @var self */
+    protected static $instance;
 
     /**
      * Get the Plugin name
@@ -52,6 +54,16 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
         $ilDB->dropTable('xamo_data');
     }
 
+    /**
+     * Get the plugin instance
+     * @return ilExamOrgaPlugin
+     */
+    public static function getInstance() {
+        if (!isset(self::$instance)) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
 
     /**
      * Get the data set for an object
@@ -132,7 +144,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     public function txt(string $a_var) : string
     {
         $txt = parent::txt($a_var);
-        if (substr($txt, 0, 4) == 'rep_') {
+        if (substr($txt, 0, 5) == '-rep_') {
             return $a_var;
         }
         return $txt;

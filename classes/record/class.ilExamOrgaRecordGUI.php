@@ -6,6 +6,8 @@ require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
 
 /**
  * Class ilExamOrgaRecordGUI
+ *
+ * @ilCtrl_Calls: ilExamOrgaRecordGUI: ilPropertyFormGUI
  */
 class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
 {
@@ -15,25 +17,37 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     public function executeCommand()
     {
-        $cmd = $this->ctrl->getCmd('listRecords');
-        switch ($cmd)
-        {
-            case 'listRecords':
-            case 'applyFilter':
-            case 'resetFilter':
-            case 'viewDetails':
-            case 'addRecord':
-            case 'createRecord':
-            case 'editRecord':
-            case 'updateRecord':
-                $this->$cmd();
-                break;
+        $next_class = $this->ctrl->getNextClass();
+        if (!empty($next_class)) {
 
-            default:
-                // show unknown command
-                $this->tpl->setContent('unknown command: ' . $cmd);
-                return;
+            switch ($next_class) {
+                case 'ilpropertyformgui':
+                    $this->ctrl->forwardCommand($this->initRecordForm(new ilExamOrgaRecord($_GET['id'])));
+                    break;
+            }
         }
+        else {
+            $cmd = $this->ctrl->getCmd('listRecords');
+            switch ($cmd)
+            {
+                case 'listRecords':
+                case 'applyFilter':
+                case 'resetFilter':
+                case 'viewDetails':
+                case 'addRecord':
+                case 'createRecord':
+                case 'editRecord':
+                case 'updateRecord':
+                    $this->$cmd();
+                    break;
+
+                default:
+                    // show unknown command
+                    $this->tpl->setContent('Unknown command: ' . $cmd);
+                    return;
+            }
+        }
+
     }
 
     /**
@@ -94,9 +108,13 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $form->setFormAction($this->ctrl->getFormAction($this));
 
         foreach ($this->object->getAvailableFields() as $field) {
-            $item = $field->getFormItem($record);
-            $item->setDisabled(true);
-            $form->addItem($item);
+            if ($field->isForDetails()) {
+                $item = $field->getFormItem($record);
+                if (method_exists($item, 'setDisabled')) {
+                    $item->setDisabled(true);
+                }
+                $form->addItem($item);
+            }
         }
 
         $form->addCommandButton('listRecords', $this->lng->txt('cancel'));
@@ -111,7 +129,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $this->checkAddRecord();
         $record = new ilExamOrgaRecord();
         $form = $this->initRecordForm($record);
-        $this->tpl->show($form->getHTML());
+        $this->tpl->setContent($form->getHTML());
     }
 
     /**
@@ -133,7 +151,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
             $record->create();
 
-            ilUtil::sendSuccess($this->lng->txt("record_created"), true);
+            ilUtil::sendSuccess($this->plugin->txt("record_created"), true);
+            $this->ctrl->setParameter($this, 'id', $record->id);
             $this->ctrl->redirect($this, "editRecord");
         }
         $this->tpl->setContent($form->getHTML());
@@ -144,6 +163,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function editRecord()
     {
+        $this->ctrl->saveParameter($this, 'id');
+
         /** @var ilExamOrgaRecord $record */
         $record = ilExamOrgaRecord::find((int) $_GET['id']);
         $this->checkEditRecord($record);
@@ -157,6 +178,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function updateRecord()
     {
+        $this->ctrl->saveParameter($this, 'id');
+
         /** @var ilExamOrgaRecord $record */
         $record = ilExamOrgaRecord::find((int) $_GET['id']);
         $this->checkEditRecord($record);
@@ -171,7 +194,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
             $record->update();
 
-            ilUtil::sendSuccess($this->lng->txt("record_created"), true);
+            ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);
             $this->ctrl->redirect($this, "editRecord");
         }
         $this->tpl->setContent($form->getHTML());
@@ -189,16 +212,18 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $form->setFormAction($this->ctrl->getFormAction($this));
 
         foreach ($this->object->getAvailableFields() as $field) {
-            $form->addItem($field->getFormItem($record));
+            if ($field->isForForm()) {
+                $form->addItem($field->getFormItem($record));
+            }
         }
 
         if ($record->isNew()) {
-            $form->addCommandButton('saveRecord', $this->plugin->txt('save_record'));
+            $form->addCommandButton('createRecord', $this->plugin->txt('create_record'));
         }
         else {
             $form->addCommandButton('updateRecord', $this->plugin->txt('update_record'));
         }
-        $form->addCommandButton('listRecords', $this->lng->txt('cancel'));
+        $form->addCommandButton('listRecords', $this->lng->txt('close'));
 
         return $form;
     }
@@ -210,7 +235,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     protected function setListToolbar() {
         if ($this->object->canAddRecord()) {
             $button = ilLinkButton::getInstance();
-            $button->setCaption($this->plugin->txt('add_record'));
+            $button->setCaption($this->plugin->txt('add_record'), false);
             $button->setUrl($this->ctrl->getLinkTarget($this, 'addRecord'));
             $this->toolbar->addButtonInstance($button);
         }

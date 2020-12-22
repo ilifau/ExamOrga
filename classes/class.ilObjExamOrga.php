@@ -69,6 +69,7 @@ class ilObjExamOrga extends ilObjectPlugin
     protected function doRead()
 	{
 	    $this->data->read();
+	    $this->initFields();
 	}
 
 	/**
@@ -179,8 +180,8 @@ class ilObjExamOrga extends ilObjectPlugin
             case ilExamOrgaField::STATUS_PUBLIC:
                 return true;
             case ilExamOrgaField::STATUS_FIXED:
-            case ilExamOrgaField::STATUS_HIDDEN:
                 return false;
+            case ilExamOrgaField::STATUS_HIDDEN:
             case ilExamOrgaField::STATUS_LOCKED:
                return $this->canEditAllRecords();
         }
@@ -191,7 +192,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * Init the list of available fields
      */
     protected function initFields() {
-        $fields = (array) include_once(__DIR__ . '../fields.php');
+        $fields = include_once(__DIR__ . '/../fields.php');
 
         foreach ($fields as $definition) {
             $name = (string) $definition['name'];

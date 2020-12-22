@@ -61,7 +61,7 @@ if (!$ilDB->tableExists('xamo_data'))
 <#4>
 <?php
     require_once('Services/Migration/DBUpdate_3560/classes/class.ilDBUpdateNewObjectType.php');
-    $type_id = ilDBUpdateNewObjectType::getObjectTypeId('xamo');
+    $type_id = ilDBUpdateNewObjectType::addNewType('xamo', 'Exam Orga');
     $ops_id = ilDBUpdateNewObjectType::addCustomRBACOperation('add_entry', 'Add Entry', 'object', 3200);
     ilDBUpdateNewObjectType::addRBACOperation($type_id, $ops_id);
     $ops_id = ilDBUpdateNewObjectType::addCustomRBACOperation('view_entries', 'View All Entries', 'object', 3210);

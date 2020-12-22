@@ -39,7 +39,7 @@ class ilExamOrgaData
 
         // online status
         $params[] = ilExamOrgaParam::_create(
-            'online', $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 1
+            'online', $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
         );
         // test data
         $params[] = ilExamOrgaParam::_create(
@@ -184,6 +184,7 @@ class ilExamOrgaData
     {
         global $DIC;
         $ilDB = $DIC->database();
+
 
         $query = "SELECT param_value FROM xamo_data WHERE obj_id = ". $ilDB->quote($obj_id, 'integer')
             . " AND param_name = " . $ilDB->quote($name, 'text');

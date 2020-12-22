@@ -28,6 +28,10 @@ class ilObjExamOrgaAccess extends ilObjectPluginAccess
 			$a_user_id = $DIC->user()->getId();
 		}
 
+		if (empty($a_obj_id)) {
+		    $a_obj_id  = ilObject::_lookupObjectId($a_ref_id);
+        }
+
 		switch ($a_permission)
 		{
 			case "read":

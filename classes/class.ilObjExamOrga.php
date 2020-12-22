@@ -41,9 +41,6 @@ class ilObjExamOrga extends ilObjectPlugin
         $this->access = $DIC->access();
 
 		parent::__construct($a_ref_id);
-
-		// data will be read by doRead
-		$this->data = $this->plugin->getData(($this->getId()));
 	}
 
 
@@ -60,6 +57,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	 */
 	protected function doCreate()
 	{
+        $this->data = $this->plugin->getData($this->getId());
 		$this->data->write();
 	}
 
@@ -68,6 +66,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	 */
     protected function doRead()
 	{
+        $this->data = $this->plugin->getData($this->getId());
 	    $this->data->read();
 	    $this->initFields();
 	}
@@ -208,7 +207,8 @@ class ilObjExamOrga extends ilObjectPlugin
         $available = [];
 
         foreach ($this->fields as $field) {
-            if ($this->canEditAllRecords() || $field->status !== ilExamOrgaField::STATUS_HIDDEN) {
+            if ($this->canEditAllRecords() || $field->status !== ilExamOrgaField::STATUS_HIDDEN
+                && $field->status !== ilExamOrgaField::STATUS_FIXED) {
                 $available[$field->name] = $field;
             }
         }

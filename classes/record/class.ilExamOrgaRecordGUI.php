@@ -118,7 +118,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
         }
 
-        $form->addCommandButton('listRecords', $this->lng->txt('cancel'));
+        $form->addCommandButton('listRecords', $this->lng->txt('close'));
         $this->tpl->setContent($form->getHTML());
     }
 

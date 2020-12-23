@@ -233,7 +233,7 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_fieldtype        text
      * @con_length           20
      */
-    public $team_agen;
+    public $team_agent;
 
     /**
      * @var integer

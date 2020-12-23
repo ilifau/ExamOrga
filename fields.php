@@ -283,7 +283,8 @@ $fields = [
       'options' => [
         'Silvana',
         'Mona',
-        'Steffi'
+        'Steffi',
+        'Inke'
       ],
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
@@ -316,7 +317,7 @@ $fields = [
   [
       'name' => 'ips_active',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'ILI-Hiwi',
+      'title' => 'IP Freigabe',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [

@@ -23,6 +23,7 @@ class ilExamOrgaDateField extends ilExamOrgaField
     public function getListHTML($record) {
         if (!empty($this->getValue($record))) {
             $date = new ilDate($this->getValue($record), IL_CAL_DATE);
+            ilDatePresentation::setUseRelativeDates(false);
             return ilDatePresentation::formatDate($date);
         }
         return '';
@@ -48,7 +49,7 @@ class ilExamOrgaDateField extends ilExamOrgaField
             $item->setInfo($this->info);
         }
 
-        $value = (int) $this->getValue($record);
+        $value =  $this->getValue($record);
         if (!empty($value)) {
             $date = new ilDateTime($value, IL_CAL_DATE);
             $item->setDate($date);

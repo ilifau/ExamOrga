@@ -22,10 +22,10 @@ class ilExamOrgaSelectField extends ilExamOrgaField
      */
     public function getListHTML($record) {
         if (isset($this->options[$this->getValue($record)])) {
-            return $this->options[$this->getValue($record)];
+            return (string) $this->options[$this->getValue($record)];
         }
         else {
-            return $this->getValue($record);
+            return (string) $this->getValue($record);
         }
     }
 

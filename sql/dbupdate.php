@@ -200,7 +200,7 @@ if (!$ilDB->tableExists('xamo_data'))
             'length' => '4',
 
         ),
-        'team_agen' => array(
+        'team_agent' => array(
             'type' => 'text',
             'length' => '20',
 

@@ -435,4 +435,16 @@ class ilExamOrgaRecord extends ActiveRecord
 
         parent::update();
     }
+
+    /**
+     * Get a title for the record
+     * @return string
+     */
+    public function getTitle() {
+
+        $date = new ilDate($this->exam_date, IL_CAL_DATE);
+
+        ilDatePresentation::setUseRelativeDates(false);
+        return $this->fau_lecturer . ' / ' . (!empty($this->exam_title) ? $this->exam_title . ' / ' : ''). ilDatePresentation::formatDate($date);
+    }
 }

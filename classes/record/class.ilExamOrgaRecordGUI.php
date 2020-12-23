@@ -38,6 +38,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 case 'createRecord':
                 case 'editRecord':
                 case 'updateRecord':
+                case 'confirmDeleteRecords':
+                case 'deleteRecords':
                     $this->$cmd();
                     break;
 
@@ -241,6 +243,54 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $this->toolbar->addButtonInstance($button);
         }
     }
+
+
+    /**
+     * Confirm the deletion of records
+     */
+    protected function confirmDeleteRecords()
+    {
+        if (empty($_POST['ids'])) {
+            ilUtil::sendFailure($this->lng->txt('select_at_least_one_object'), true);
+            $this->ctrl->redirect($this,'listRecords');
+        }
+
+        $conf_gui = new ilConfirmationGUI();
+        $conf_gui->setFormAction($this->ctrl->getFormAction($this));
+        $conf_gui->setHeaderText($this->plugin->txt('confirm_delete_records'));
+        $conf_gui->setConfirm($this->lng->txt('delete'),'deleteRecords');
+        $conf_gui->setCancel($this->lng->txt('cancel'), 'listRecords');
+
+        /** @var ilExamOrgaRecord[] $records */
+        $records = ilExamOrgaRecord::where(['id' => $_POST['ids']])->get();
+
+        foreach($records as $record) {
+            if ($this->object->canDeleteRecord($record)) {
+                $conf_gui->addItem('ids[]', $record->id, $record->getTitle());
+            }
+        }
+
+        $this->tpl->setContent($conf_gui->getHTML());
+    }
+
+    /**
+     * Delete confirmed items
+     */
+    protected function deleteRecords()
+    {
+        /** @var ilExamOrgaRecord[] $records */
+        $records = ilExamOrgaRecord::where(['id' => $_POST['ids']])->get();
+
+        foreach($records as $record) {
+            if ($this->object->canDeleteRecord($record)) {
+                $record->delete();
+            }
+        }
+
+        ilUtil::sendSuccess($this->plugin->txt('records_deleted'), true);
+        $this->ctrl->redirect($this, 'listRecords');
+    }
+
 
 
     /**

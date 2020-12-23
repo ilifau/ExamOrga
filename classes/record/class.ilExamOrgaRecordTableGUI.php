@@ -43,7 +43,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         parent::__construct($a_parent_obj, $a_parent_cmd);
 
-        // todo: show the checkbox column
+        $this->addColumn('', '', '1%', true);
 
         // selected columns
         foreach ($this->getSelectableColumns() as $name => $settings) {
@@ -59,7 +59,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
             }
         }
         // action column
-        $this->addColumn('');
+        $this->addColumn($this->lng->txt('actions'));
 
         $this->setTitle($this->plugin->txt('exams'));
         $this->setFormName('exams');
@@ -77,6 +77,9 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         $this->enable('sort');
         $this->enable('header');
+
+        $this->setSelectAllCheckbox('ids');
+        $this->addMultiCommand('confirmDeleteRecords', $this->plugin->txt('delete_records'));
         $this->initFilter();
     }
 
@@ -187,15 +190,18 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 		$id = $data['id'];
 		$record = $data['record'];
 
-		// todo: show the checkbox column
+		// checkbox
+        if ($this->object->canDeleteRecord($record)) {
+            $this->tpl->setVariable('ID', $id);
+        }
 
-		// show the columns
+        // show the columns
         foreach ($this->getSelectedColumns() as $name)
         {
             $content = '';
             $field = $this->fields[$name];
             if (isset($field)) {
-                $content = $field->getListHTML($record);
+                $content = (string) $field->getListHTML($record);
             }
 
             $this->tpl->setCurrentBlock('column');

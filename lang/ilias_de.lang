@@ -57,6 +57,9 @@ create_record#:#Eintrag speichern
 update_record#:#Eintrag aktualisieren
 record_created#:#Der Eintrag wurde erstellt.
 record_updated#:#Der Eintrag wurde aktualisiert.
+delete_records#:#Einträge löschen
+confirm_delete_records#:#Möchten Sie die ausgewählten Einträge löschen?
+records_deleted#:#Die Einträge wurden gelöscht.
 yes#:#ja
 no#:#nein
 time_delim#:#&nbsp;:&nbsp;

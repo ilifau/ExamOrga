@@ -209,7 +209,7 @@ class ilExamOrgaParam
      * Get the post variable
      * @return string
      */
-    protected function getPostvar() {
+    public function getPostvar() {
         return 'param_' . $this->name;
     }
 

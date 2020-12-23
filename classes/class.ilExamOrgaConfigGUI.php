@@ -75,10 +75,10 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 	 */
 	protected function configure()
 	{
-	    require_once (__DIR__ . '/record/class.ilExamOrgaRecord.php');
-        $arBuilder = new arBuilder(new ilExamOrgaRecord());
-        $arBuilder->generateDBUpdateForInstallation();
-        return;
+//	    require_once (__DIR__ . '/record/class.ilExamOrgaRecord.php');
+//        $arBuilder = new arBuilder(new ilExamOrgaRecord());
+//        $arBuilder->generateDBUpdateForInstallation();
+//        return;
 
 		$form = $this->initBasicConfigurationForm();
 		$this->tpl->setContent($form->getHTML());
@@ -99,7 +99,7 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 
         foreach($this->config->getParams() as $param)
         {
-            $param->setValue((int) $this->config->get($param->name));
+            $param->setValue($this->config->get($param->name));
             $form->addItem($param->getFormItem());
         }
 
@@ -117,7 +117,7 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 		{
 		    foreach ($this->config->getParams() as $param)
             {
-                $this->config->set($param->name, $form->getInput($param->name));
+                $this->config->set($param->name, $form->getInput($param->getPostvar()));
             }
             $this->config->write();
 

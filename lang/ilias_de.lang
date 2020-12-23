@@ -64,3 +64,5 @@ time_suffix#:# Uhr
 filter_all#:#Alle
 from#:#Von
 to#:#Bis
+api_token#:#API Token
+api_token_info#:#Token zum Aufruf der API

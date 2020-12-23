@@ -105,15 +105,15 @@ class ilExamOrgaServer extends Slim\App
             return false;
         }
 
-        // Authentication
-//        $this->token = $this->plugin->getConfig()->get('access_token');
-//        if (!empty($this->token)) {
-//            $authorization = $this->request->getHeaderLine('Authorization');
-//            if ($authorization != 'Bearer ' . $this->token) {
-//                $this->setResponse(StatusCode::HTTP_UNAUTHORIZED, 'unauthorized');
-//                return false;
-//            }
-//        }
+        // Authorization
+        $this->token = $this->plugin->getConfig()->get('api_token');
+        if (!empty($this->token)) {
+            $authorization = $this->request->getHeaderLine('Authorization');
+            if ($authorization != 'Bearer ' . $this->token) {
+                $this->setResponse(StatusCode::HTTP_UNAUTHORIZED, 'unauthorized');
+                return false;
+            }
+        }
 
         // Determine the mode
         switch((string) $this->params['mode']) {

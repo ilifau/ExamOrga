@@ -26,12 +26,13 @@ class ilExamOrgaConfig
 		/** @var ilExamOrgaParam[] $params */
 		$params = array();
 
-//        $params[] = ilExamOrgaParam::_create(
-//            'global_admin_role',
-//            $this->plugin->txt('cat_global_admin_role'),
-//            $this->plugin->txt('cat_global_admin_info'),
-//            ilExamOrgaParam::TYPE_ROLE
-//        );
+        $params[] = ilExamOrgaParam::_create(
+            'api_token',
+            $this->plugin->txt('api_token'),
+            $this->plugin->txt('api_token_info'),
+            ilExamOrgaParam::TYPE_TEXT,
+            ''
+        );
 
         foreach ($params as $param)
         {

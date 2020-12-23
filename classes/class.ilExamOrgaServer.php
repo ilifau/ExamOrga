@@ -93,7 +93,7 @@ class ilExamOrgaServer extends Slim\App
      * @param array $args
      * @return bool
      */
-    public function prepare(Request $request, Response $response, array $args)
+    protected function prepare(Request $request, Response $response, array $args)
     {
         $this->request = $request;
         $this->response = $response;
@@ -294,8 +294,40 @@ class ilExamOrgaServer extends Slim\App
      * @param array $args
      * @return Response
      */
-    protected function putLinks(Request $request, Response $response, array $args)
+    public function putLinks(Request $request, Response $response, array $args)
     {
+        // common checks and initializations
+        if (!$this->prepare($request, $response, $args)) {
+            return $this->response;
+        }
+
+        $entries = $this->request->getParsedBody();
+
+        if (!is_array($entries)) {
+            return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'list of json objects expected');
+        }
+
+        $parsed = [];
+        foreach ($entries as $entry) {
+
+            if (!empty($entry['id'])  && !empty($entry['links'])
+                && is_int($entry['id']) && is_array($entry['links'])) {
+
+                $links = [];
+                foreach ($entry['links'] as $link) {
+                    $links[] = (string) $link;
+                }
+                $parsed[] = [
+                    'id' => (int) $entry['id'],
+                    'links' => $links,
+                ];
+            }
+            else {
+                return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'wrong entry format');
+            }
+        }
+
+        return $this->setResponse(StatusCode::HTTP_OK, $parsed);
 
     }
 
@@ -307,8 +339,36 @@ class ilExamOrgaServer extends Slim\App
      * @return Response
      */
 
-    protected function putNotes(Request $request, Response $response, array $args)
+    public function putNotes(Request $request, Response $response, array $args)
     {
+        // common checks and initializations
+        if (!$this->prepare($request, $response, $args)) {
+            return $this->response;
+        }
+
+        $entries = $this->request->getParsedBody();
+
+        if (!is_array($entries)) {
+            return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'list of json objects expected');
+        }
+
+        $parsed = [];
+        foreach ($entries as $entry) {
+
+            if (!empty($entry['id'])  && !empty($entry['code']) && !empty($entry['note'])
+                && is_int($entry['id']) && is_int($entry['code']) && is_string($entry['note'])) {
+                $parsed[] = [
+                    'id' => (int) $entry['id'],
+                    'code' => (int) $entry['code'],
+                    'note' => (string) $entry['note']
+                ];
+            }
+            else {
+                return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'wrong entry format');
+            }
+        }
+
+        return $this->setResponse(StatusCode::HTTP_OK, $parsed);
     }
 
 

@@ -179,6 +179,7 @@ class ilExamOrgaData
      * Lookup a single value
      * @param int $obj_id
      * @param string $name
+     * @return string
      */
     public static function _lookup($obj_id, $name)
     {
@@ -195,5 +196,38 @@ class ilExamOrgaData
             return $row['param_value'];
         }
         return '';
+    }
+
+    /**
+     * Get the object ids for a certain mode
+     * @param string $mode  test|prod|any
+     * @return int[]
+     */
+    public static function getObjectIdsForMode($mode)
+    {
+        global $DIC;
+        $ilDB = $DIC->database();
+
+        $query = "
+            SELECT o.obj_id, d1.param_value AS `online`, d2.param_value AS `testdata` FROM object_data o
+            INNER JOIN object_reference r ON r.obj_id = o.obj_id AND r.deleted IS NULL
+            LEFT JOIN xamo_data d1 ON d1.obj_id = o.obj_id AND d1.param_name = 'online'
+            LEFT JOIN xamo_data d2 ON d2.obj_id = o.obj_id AND d2.param_name = 'testdata'
+            WHERE o.`type` = 'xamo'";
+
+        $result = $ilDB->query($query);
+
+        $obj_ids = [];
+        while ($row = $ilDB->fetchAssoc($result)) {
+            if ($row['online']) {
+                if ($row['testdata'] && ($mode == 'test' || $mode == 'any')) {
+                    $obj_ids[] = $row['obj_id'];
+                }
+                if (!$row['testdata'] && ($mode == 'prod' || $mode == 'any')) {
+                    $obj_ids[] = $row['obj_id'];
+                }
+            }
+        }
+        return $obj_ids;
     }
 }

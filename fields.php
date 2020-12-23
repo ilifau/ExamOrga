@@ -141,7 +141,7 @@ $fields = [
       'name' => 'exam_ids',
       'type' => ilExamOrgaField::TYPE_EXAMS,
       'title' => 'Prüfungen in mein campus',
-      'info' => 'Geben Sie hier die "ID für Organisation elektronischer Prüfungen" aus der Funktion "Prüfungsorganisation" in "mein campus" an. Diese Angabe hilft Ihnen später bei der Notenverbuchung.',
+      'info' => 'Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren.',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
   [

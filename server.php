@@ -1,17 +1,17 @@
 <?php
 // fau: videoPortal - entry script for video portal REST service
 
-chdir('../../..');
+chdir('../../../../../../../');
 
 // we need access handling
-include_once 'Services/Context/classes/class.ilContext.php';
+require_once('./Services/Context/classes/class.ilContext.php');
 ilContext::init(ilContext::CONTEXT_RSS);
 
-require_once("Services/Init/classes/class.ilInitialisation.php");
+require_once("./Services/Init/classes/class.ilInitialisation.php");
 ilInitialisation::initILIAS();
 
-include_once './Services/WebServices/VP/classes/class.ilVideoPortalServer.php';
-$server = new ilVideoPortalServer(
+require_once(__DIR__ . '/classes/class.ilExamOrgaServer.php');
+$server = new ilExamOrgaServer(
     [
         'settings' => [
             'displayErrorDetails' => DEVMODE ? true : false

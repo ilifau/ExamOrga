@@ -69,3 +69,15 @@ from#:#Von
 to#:#Bis
 api_token#:#API Token
 api_token_info#:#Token zum Aufruf der API
+excel_export#:#Excel-Datei exportieren
+excel_import#:#Aus Excel-Datei importieren
+excel_file#:#Excel-Datei
+excel_wrong_column_title#:#Der Spaltentitel "%s" entspricht keinem Feld.
+excel_record_not_found#:#Der Datensatz mit der ID %s wurde nicht gefunden.
+excel_record_not_writeable#:#Der datensatz mit der ID %s ist für Sie nicht schreibbar.
+excel_no_add_permission#:#Sie können keine neuen Datensätze (leere ID) hinzufügen.
+excel_wrong_value#:#Der Wert der Spalte "%s" in der Zeile %s ist nicht gültig.
+excel_records_read_error#:#Beim Einlesen der Excel-Datei wurden ein Fehler gefunden (es wurden keine Daten geschrieben):<p class="small">%s</p>
+excel_no_records_read#:#Die Datei enthält keine Einträge!
+excel_records_read#:#Es wurden die folgenden Einträge geschrieben:<p class="small"> %s</p>
+

@@ -14,7 +14,7 @@ class ilExamOrgaHeadLineField extends ilExamOrgaField
      * @inheritdoc
      */
     public function setValue($record, $value) {
-        // nothing to dio
+        // nothing to do
     }
 
 

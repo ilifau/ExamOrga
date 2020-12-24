@@ -6,20 +6,6 @@ class ilExamOrgaTimestampField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getValue($record) {
-        return parent::getValue($record);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setValue($record, $value) {
-        parent::setValue($record, $value);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getListHTML($record) {
         if (!empty($this->getValue($record))) {
             $date = new ilDateTime($this->getValue($record), IL_CAL_UNIX);
@@ -88,21 +74,21 @@ class ilExamOrgaTimestampField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getApiData($record) {
-        return parent::getApiData($record);
+    public function getExcelValue($record, $excel) {
+        if(!empty($this->getValue($record))) {
+            return new ilDateTime($this->getValue($record), IL_CAL_UNIX);
+        }
+        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function writeToExcel($record, $excel, $row, $com) {
-        parent::writeToExcel($record, $excel, $row, $com);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function readFromExcel($record, $excel, $row, $com) {
-        parent::readFromExcel($record, $excel, $row, $com);
+    public function setExcelValue($record, $excel, $value) {
+        if (!empty($value)) {
+            $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value);
+            $this->setValue($record, $date->getTimestamp());
+        }
+        return true;
     }
 }

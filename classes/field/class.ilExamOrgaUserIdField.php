@@ -8,20 +8,6 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getValue($record) {
-        return parent::getValue($record);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setValue($record, $value) {
-        parent::setValue($record, $value);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getListHTML($record) {
         return ilObjUser::_lookupLogin($this->getValue($record));
     }
@@ -30,7 +16,7 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getDetailsHTML($record) {
-        return $this->getListHTML();
+        return $this->getListHTML($record);
     }
 
     /**
@@ -78,21 +64,19 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getApiData($record) {
-        return parent::getApiData($record);
+    public function getExcelValue($record, $excel) {
+        if (!empty($this->getValue($record))) {
+            return ilObjUser::_lookupLogin($this->getValue($record));
+        }
+        return null;
     }
 
     /**
      * @inheritdoc
      */
-    public function writeToExcel($record, $excel, $row, $com) {
-        parent::writeToExcel($record, $excel, $row, $com);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function readFromExcel($record, $excel, $row, $com) {
-        parent::readFromExcel($record, $excel, $row, $com);
+    public function setExcelValue($record, $excel, $value) {
+        $user_id = ilObjUser::_lookupId($value);
+        $this->setValue($record, $user_id);
+        return true;
     }
 }

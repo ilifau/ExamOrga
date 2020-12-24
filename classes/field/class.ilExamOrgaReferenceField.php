@@ -8,20 +8,6 @@ class ilExamOrgaReferenceField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getValue($record) {
-        return parent::getValue($record);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setValue($record, $value) {
-        parent::setValue($record, $value);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getListHTML($record) {
         $ref_id = (int) $this->getValue($record);
         if ($ref_id && !ilObject::_isInTrash($ref_id)) {
@@ -82,21 +68,17 @@ class ilExamOrgaReferenceField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getApiData($record) {
-        return parent::getApiData($record);
+    public function getExcelValue($record, $excel) {
+        if (empty($this->getValue($record))) {
+            return null;
+        }
+        return $this->getValue($record);
     }
 
     /**
      * @inheritdoc
      */
-    public function writeToExcel($record, $excel, $row, $com) {
-        parent::writeToExcel($record, $excel, $row, $com);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function readFromExcel($record, $excel, $row, $com) {
-        parent::readFromExcel($record, $excel, $row, $com);
+    public function setExcelValue($record, $excel, $value) {
+        return parent::setExcelValue($record, $excel, $value);
     }
 }

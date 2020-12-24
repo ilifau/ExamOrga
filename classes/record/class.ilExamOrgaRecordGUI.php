@@ -40,6 +40,9 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 case 'updateRecord':
                 case 'confirmDeleteRecords':
                 case 'deleteRecords':
+                case 'excelExport':
+                case 'excelImportForm':
+                case 'excelImport':
                     $this->$cmd();
                     break;
 
@@ -241,6 +244,19 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $button->setCaption($this->plugin->txt('add_record'), false);
             $button->setUrl($this->ctrl->getLinkTarget($this, 'addRecord'));
             $this->toolbar->addButtonInstance($button);
+            $this->toolbar->addSeparator();
+        }
+
+        $button = ilLinkButton::getInstance();
+        $button->setCaption($this->plugin->txt('excel_export'), false);
+        $button->setUrl($this->ctrl->getLinkTarget($this, 'excelExport'));
+        $this->toolbar->addButtonInstance($button);
+
+        if ($this->object->canEditAllRecords()) {
+            $button = ilLinkButton::getInstance();
+            $button->setCaption($this->plugin->txt('excel_import'), false);
+            $button->setUrl($this->ctrl->getLinkTarget($this, 'excelImportForm'));
+            $this->toolbar->addButtonInstance($button);
         }
     }
 
@@ -291,6 +307,75 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $this->ctrl->redirect($this, 'listRecords');
     }
 
+    /**
+     * Export an excel file
+     */
+    protected function excelExport()
+    {
+        require_once (__DIR__ . '/class.ilExamOrgaRecordExcel.php');
+        $file = ilUtil::ilTempnam();
+        $excel = new ilExamOrgaRecordExcel();
+        $excel->init($this->object);
+        $excel->writeToFile($file);
+        ilUtil::deliverFile($file, $excel->getFilename(), '', false, true, true);
+    }
+
+    /**
+     * Show form to import an excel file
+     */
+    protected function excelImportForm()
+    {
+        $form = $this->initImportForm();
+        $this->tpl->setContent($form->getHTML());
+    }
+
+    /**
+     * Show form to import an excel file
+     */
+    protected function excelImport()
+    {
+        require_once (__DIR__ . '/class.ilExamOrgaRecordExcel.php');
+        $excel = new ilExamOrgaRecordExcel();
+        $excel->init($this->object);
+
+        $form = $this->initImportForm();
+        $form->setValuesByPost();
+        if (!$form->checkInput()) {
+            $this->tpl->setContent($form->getHTML());
+            return;
+        }
+
+        $temp = $_FILES["excel_file"]["tmp_name"];
+
+        if ($excel->loadFromFile($temp)) {
+            ilUtil::sendSuccess($excel->getInfo(), true);
+        }
+        else {
+            ilUtil::sendFailure($excel->getInfo(), true);
+        }
+        $this->ctrl->redirect($this, 'listRecords');
+    }
+
+    /**
+     * Init the excel import form
+     */
+    protected function initImportForm()
+    {
+        $form = new ilPropertyFormGUI();
+        $form->setMultipart(true);
+        $form->setFormAction($this->ctrl->getFormAction($this));
+        $form->setTitle($this->plugin->txt('excel_import'));
+
+        $file = new ilFileInputGUI($this->plugin->txt('excel_file'), 'excel_file');
+        $file->setSuffixes(['xls', 'xlsx']);
+        $file->setRequired(true);
+        $form->addItem($file);
+
+        $form->addCommandButton('excelImport', $this->lng->txt('import'));
+        $form->addCommandButton('listRecords', $this->lng->txt('cancel'));
+
+        return $form;
+    }
 
 
     /**

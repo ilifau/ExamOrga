@@ -6,28 +6,16 @@ class ilExamOrgaTextareaField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getValue($record) {
-        return parent::getValue($record);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function setValue($record, $value) {
-        parent::setValue($record, $value);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getListHTML($record) {
+    public function getListHTML($record)
+    {
         return parent::getListHTML($record);
     }
 
     /**
      * @inheritdoc
      */
-    public function getDetailsHTML($record) {
+    public function getDetailsHTML($record)
+    {
         return parent::getDetailsHTML($record);
     }
 
@@ -54,21 +42,24 @@ class ilExamOrgaTextareaField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function setByForm($record, $form) {
+    public function setByForm($record, $form)
+    {
         parent::setByForm($record, $form);
     }
 
     /**
      * @inheritdoc
      */
-    public function getFilterItem() {
+    public function getFilterItem()
+    {
         return parent::getFilterItem();
     }
 
     /**
      * @inheritdoc
      */
-    public function setFilterCondition($list, $table) {
+    public function setFilterCondition($list, $table)
+    {
         /** @var ilTextInputGUI $item */
         $item = $table->getFilterItemByPostVar($this->getPostvar());
 
@@ -80,21 +71,16 @@ class ilExamOrgaTextareaField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getApiData($record) {
-        return parent::getApiData($record);
+    public function getExcelValue($record, $excel)
+    {
+        return parent::getExcelValue($record, $excel);
     }
 
     /**
      * @inheritdoc
      */
-    public function writeToExcel($record, $excel, $row, $com) {
-        parent::writeToExcel($record, $excel, $row, $com);
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function readFromExcel($record, $excel, $row, $com) {
-        parent::readFromExcel($record, $excel, $row, $com);
+    public function setExcelValue($record, $excel, $value)
+    {
+        return parent::setExcelValue($record, $excel, $value);
     }
 }

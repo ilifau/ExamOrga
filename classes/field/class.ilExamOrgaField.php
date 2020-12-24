@@ -294,30 +294,27 @@ class ilExamOrgaField
 
 
     /**
-     * Get the data for the external REST API
+     * Get the value for an excel sheet
+     * @param ilExamOrgaRecord $record
+     * @param ilExcel $excel
+     * @return mixed
      */
-    public function getApiData($record) {
-        return ilUtil::stripSlashes($this->getValue($record));
+    public function getExcelValue($record, $excel) {
+        return $this->getValue($record);
     }
 
     /**
-     * Write the value to an excel sheet
+     * Set the value from an excel sheet
      * @param ilExamOrgaRecord $record
      * @param ilExcel $excel
-     * @param integer $row
-     * @param integer $col
+     * @param mixed $value
      */
-    public function writeToExcel($record, $excel, $row, $com) {
-    }
-
-    /**
-     * ReadFrom the value from an excel sheet
-     * @param ilExamOrgaRecord $record
-     * @param ilExcel $excel
-     * @param integer $row
-     * @param integer $col
-     */
-    public function readFromExcel($record, $excel, $row, $com) {
+    public function setExcelValue($record, $excel, $value) {
+        if ($this->required && !isset($value)) {
+            return false;
+        }
+        $this->setValue($record, $value);
+        return true;
     }
 
 

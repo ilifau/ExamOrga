@@ -135,7 +135,8 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Prüfungstitel',
       'default' => true,
-      'filter' => true
+      'filter' => true,
+      'required' => true,
   ],
   [
       'name' => 'exam_ids',
@@ -161,7 +162,8 @@ $fields = [
       'name' => 'exam_runs',
       'type' => ilExamOrgaField::TYPE_TIMES,
       'title' => 'Durchgänge',
-      'info' => 'Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind). Bei Fernprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 20 Minuten ein. Bei Präsenzprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 60 Minuten ein.'
+      'info' => 'Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind). Bei Fernprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 20 Minuten ein. Bei Präsenzprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 60 Minuten ein.',
+      'required' => true
   ],
   [
       'name' => 'run_minutes',

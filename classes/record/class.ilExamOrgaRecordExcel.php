@@ -85,13 +85,15 @@ class ilExamOrgaRecordExcel extends ilExcel
      * Get the filename that should be used
      * @return string
      */
-    public function getFilename() {
+    public function getFilename()
+    {
+        $name = ilUtil::getASCIIFilename($this->object->getTitle());
         switch($this->format) {
             case self::FORMAT_BIFF:
-                return "exams.xls";
+                return $name . ".xls";
             case self::FORMAT_XML:
             default:
-                return "exams.xlsx";
+                return $name .".xlsx";
         }
     }
 

@@ -74,9 +74,13 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function setExcelValue($record, $excel, $value) {
+    public function setExcelValue($record, $excel, $value)
+    {
         $user_id = ilObjUser::_lookupId($value);
-        $this->setValue($record, $user_id);
-        return true;
+        if (!empty($user_id)) {
+            $this->setValue($record, $user_id);
+            return true;
+        }
+        return !$this->required;
     }
 }

@@ -82,6 +82,12 @@ class ilExamOrgaRadioField extends ilExamOrgaField
      * @inheritdoc
      */
     public function setExcelValue($record, $excel, $value) {
-        return parent::setExcelValue($record, $excel, $value);
+        foreach ($this->options as $key => $option) {
+            if ($option == $value) {
+                $this->setValue($record, $key);
+                return true;
+            }
+        }
+        return !$this->required;
     }
 }

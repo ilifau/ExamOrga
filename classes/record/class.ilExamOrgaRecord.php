@@ -410,10 +410,18 @@ class ilExamOrgaRecord extends ActiveRecord
         global $DIC;
 
         $time = time();
-        $this->created_at = $time;
-        $this->created_by = $DIC->user()->getId();
-        $this->modified_at = $time;
-        $this->modified_by = $DIC->user()->getId();
+        if (empty($this->created_at)) {
+            $this->created_at = $time;
+        }
+        if (empty($this->created_by)) {
+            $this->created_by = $DIC->user()->getId();
+        }
+        if (empty( $this->modified_at)) {
+            $this->modified_at = $time;
+        }
+        if (empty($this->modified_by)) {
+            $this->modified_by = $DIC->user()->getId();
+        }
 
         if (empty($this->owner_id)) {
             $this->owner_id = $DIC->user()->getId();

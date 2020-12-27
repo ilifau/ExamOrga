@@ -86,9 +86,15 @@ class ilExamOrgaTimestampField extends ilExamOrgaField
      */
     public function setExcelValue($record, $excel, $value) {
         if (!empty($value)) {
-            $date = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($value);
-            $this->setValue($record, $date->getTimestamp());
+
+            $parsed = date_parse((string) $value);
+            //$parsed = date_parse_from_format('d.m.Y', (string) $value);
+
+            $string = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $parsed['year'], $parsed['month'], $parsed['day'], $parsed['hour'], $parsed['minute'], $parsed['second']);
+            $date = new ilDateTime($string, IL_CAL_DATETIME);
+            $this->setValue($record, $date->get(IL_CAL_UNIX));
+            return true;
         }
-        return true;
+        return !$this->required;
     }
 }

@@ -49,7 +49,7 @@ if (!$ilDB->tableExists('xamo_data'))
         ),
         'param_value' => array(
             'type' => 'text',
-            'length' => 255,
+            'length' => 4000,
             'notnull' => false,
             'default' => null
         )

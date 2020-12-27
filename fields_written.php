@@ -99,7 +99,6 @@ $fields = [
         'presence' => 'E-Prüfung in Präsenz',
         'open' => 'Open-Book-Prüfung mit Zeitbegrenzung',
         'monitored' => 'Fernklausur mit Videoaufsicht',
-        'oral' => 'Mündliche Prüfung per Videokonferenz'
       ],
       'required' => true,
       'default' => true,
@@ -177,7 +176,7 @@ $fields = [
       'name' => 'num_participants',
       'type' => ilExamOrgaField::TYPE_INTEGER,
       'title' => 'Teilnehmerzahl',
-      'info' => 'Bitte geben Sie die reine Prüfungsdauer pro Durchgang in Minuten an. Bei Fernprüfungen Angabe bitte inkl. Pufferzeit von 20 Minuten für Upload und technische Verzögerungen.',
+      'info' => 'Bitte geben Sie die Gesamtzahl der Teilnehmer/innen an. Zur Lastberechnung nimmt das System eine Gleichverteilung auf die Durchgänge an.',
       'size' => 4,
       'required' => true,
       'default' => true,
@@ -193,7 +192,7 @@ $fields = [
       'name' => 'monitors',
       'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Aufsichten',
-      'info' => 'Wählen Sie hier die StudOn-Accounts der Korrektoren aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung',
+      'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung',
   ],
   [
       'name' => 'remarks',

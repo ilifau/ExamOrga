@@ -37,6 +37,15 @@ class ilExamOrgaData
         /** @var ilExamOrgaParam[] $params */
         $params = [];
 
+        // purpose
+        $params[] = ilExamOrgaParam::_create(
+            'purpose', $this->plugin->txt('purpose'), $this->plugin->txt('purpose_info'), ilExamOrgaParam::TYPE_SELECT, 'written',
+            [
+                'written' => $this->plugin->txt('purpose_written'),
+                'oral' => $this->plugin->txt('purpose_oral')
+            ]
+        );
+
         // online status
         $params[] = ilExamOrgaParam::_create(
             'online', $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
@@ -45,6 +54,12 @@ class ilExamOrgaData
         $params[] = ilExamOrgaParam::_create(
             'testdata', $this->plugin->txt('testdata'), $this->plugin->txt('testdata_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
         );
+        // introduction
+        $params[] = ilExamOrgaParam::_create(
+            'intro', $this->plugin->txt('introduction'), $this->plugin->txt('introduction_info'), ilExamOrgaParam::TYPE_RICHTEXT, null
+        );
+
+
 
         foreach ($params as $param)
         {

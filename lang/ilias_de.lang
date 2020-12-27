@@ -80,4 +80,11 @@ excel_wrong_value#:#Der Wert der Spalte "%s" in der Zeile %s ist nicht gültig.
 excel_records_read_error#:#Beim Einlesen der Excel-Datei wurden ein Fehler gefunden (es wurden keine Daten geschrieben):<p class="small">%s</p>
 excel_no_records_read#:#Die Datei enthält keine Einträge!
 excel_records_read#:#Es wurden die folgenden Einträge geschrieben:<p class="small"> %s</p>
+introduction#:#Einführung
+introduction_info#:#Die Einführung wird über der Tabelle der Prüfungen angezeigt
+purpose#:#Zweck
+purpose_info#:#Geben Sie hier an, welche Art von Prüfung hier verwaltet werden soll. Danach richtet sich die Auswahl der Eingabefelder.
+purpose_written#:#E-Prüfungen in Präsenz und schriftliche Fernprüfungsformate
+purpose_oral#:#Mündliche Prüfungen mit Videoaufsicht
+
 

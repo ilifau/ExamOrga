@@ -11,11 +11,13 @@ class ilExamOrgaParam
 	 */
 	const TYPE_HEAD = 'head';
     const TYPE_TEXT = 'text';
+    const TYPE_RICHTEXT = 'richtext';
     const TYPE_BOOLEAN = 'bool';
     const TYPE_INT = 'int';
 	const TYPE_FLOAT = 'float';
 	const TYPE_REF_ID = 'ref_id';
 	const TYPE_ROLE = 'role';
+    const TYPE_SELECT = 'select';
 
 
 	/**
@@ -45,6 +47,11 @@ class ilExamOrgaParam
 	 */
 	public $value;
 
+    /**
+     * @var array       options for a select param
+     */
+	public $options;
+
 
     /**
      * Create a parameter
@@ -54,9 +61,10 @@ class ilExamOrgaParam
      * @param string $a_description
      * @param string $a_type
 	 * @param mixed $a_value
+     * @param array $a_options
      * @return ilExamOrgaParam
      */
-    public static function _create($a_name, $a_title, $a_description, $a_type = self::TYPE_TEXT, $a_value = null)
+    public static function _create($a_name, $a_title, $a_description, $a_type = self::TYPE_TEXT, $a_value = null, $a_options = [])
     {
         $param = new self;
 		$param->name = $a_name;
@@ -64,6 +72,7 @@ class ilExamOrgaParam
 		$param->description = $a_description;
 		$param->type = $a_type;
 		$param->value = $a_value;
+		$param->options = $a_options;
 		
 		return $param;
     }
@@ -77,6 +86,9 @@ class ilExamOrgaParam
         switch($this->type)
         {
             case self::TYPE_TEXT:
+                $this->value = (string) $value;
+                break;
+            case self::TYPE_RICHTEXT:
                 $this->value = (string) $value;
                 break;
             case self::TYPE_BOOLEAN:
@@ -93,6 +105,9 @@ class ilExamOrgaParam
                 break;
             case self::TYPE_ROLE:
                 $this->value = (integer) $value;
+                break;
+            case self::TYPE_SELECT:
+                $this->value = $value;
                 break;
         }
     }
@@ -117,6 +132,13 @@ class ilExamOrgaParam
 
             case self::TYPE_TEXT:
                 $item = new ilTextInputGUI($title, $postvar);
+                $item->setValue($this->value);
+                break;
+
+            case self::TYPE_RICHTEXT:
+                $item = new ilTextAreaInputGUI($title, $postvar);
+                $item->setUseRte(true);
+                $item->setRteTagSet('mini');
                 $item->setValue($this->value);
                 break;
 
@@ -151,6 +173,12 @@ class ilExamOrgaParam
                 $item->setOptions($options);
                 $item->setValue($this->value);
                 break;
+
+            case self::TYPE_SELECT:
+                $item = new ilSelectInputGUI($title, $postvar);
+                $item->setOptions($this->options);
+                $item->setValue($this->value);
+                break;
         }
 
         if (strpos($description, '-') !== 0)
@@ -183,6 +211,11 @@ class ilExamOrgaParam
                 $this->value = $item->getValue();
                 break;
 
+            case self::TYPE_RICHTEXT:
+                /** @var ilTextAreaInputGUI $item */
+                $this->value = $item->getValue();
+                break;
+
             case self::TYPE_REF_ID:
             case self::TYPE_INT:
                 /** @var ilNumberInputGUI $item */
@@ -202,6 +235,10 @@ class ilExamOrgaParam
             case self::TYPE_ROLE:
                 /** @var ilSelectInputGUI $item */
                 $this->value = (int) $item->getValue();
+
+            case self::TYPE_SELECT:
+                /** @var ilSelectInputGUI $item */
+                $this->value = $item->getValue();
         }
     }
 

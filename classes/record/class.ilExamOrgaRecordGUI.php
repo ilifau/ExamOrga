@@ -65,7 +65,9 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
 
             $table = new ilExamOrgaRecordTableGUI($this, 'listRecords');
             $table->loadData();
-            $this->tpl->setContent($table->getHTML());
+
+            $intro = $this->object->data->get('intro');
+            $this->tpl->setContent($intro . $table->getHTML());
         }
     }
 

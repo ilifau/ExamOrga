@@ -191,7 +191,17 @@ class ilObjExamOrga extends ilObjectPlugin
      * Init the list of available fields
      */
     protected function initFields() {
-        $fields = include_once(__DIR__ . '/../fields.php');
+
+        switch ($this->data->get('purpose')) {
+            case 'oral':
+                $fields = include_once(__DIR__ . '/../fields_oral.php');
+                break;
+            case 'written':
+            default:
+                $fields = include_once(__DIR__ . '/../fields_written.php');
+                break;
+        }
+
 
         foreach ($fields as $definition) {
             $name = (string) $definition['name'];

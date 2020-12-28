@@ -54,9 +54,10 @@ $fields = [
           'Tech / Informatik (INF)',
           'Tech / Maschinenbau (MB)',
           'Tech / Werkstoffwissenschaften (WW)',
-          'Zentrale / Spachenzentrum'
+          'Zentrale / Sprachenzentrum'
       ],
-      'default' => true
+      'default' => true,
+      'filter' => true
   ],
   [
       'name' => 'fau_chair',

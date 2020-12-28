@@ -386,11 +386,11 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function checkListRecords()
     {
-        if (!$this->object->canViewAllRecords() && !$this->object->canAddRecord()) {
-            // don't redirect because listRecords is default command
-            ilUtil::sendFailure($this->plugin->txt('message_no_list_records'));
-            return false;
-        }
+//        if (!$this->object->canViewAllRecords() && !$this->object->canAddRecord()) {
+//            // don't redirect because listRecords is default command
+//            ilUtil::sendFailure($this->plugin->txt('message_no_list_records'));
+//            return false;
+//        }
         return true;
     }
 

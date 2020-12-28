@@ -5,6 +5,22 @@ require_once (__DIR__ . '/classes/field/class.ilExamOrgaField.php');
  * Definition of the record fields
  */
 $fields = [
+    [
+        'name' => 'fau_unit',
+        'type' => ilExamOrgaField::TYPE_SELECT,
+        'title' => 'Fakultät',
+        'options' => [
+            'Phil',
+            'RW',
+            'Med',
+            'Nat',
+            'Tech',
+            'Zentral'
+        ],
+        'default' => true,
+        'required' => true,
+        'filter' => true,
+    ],
   [
       'name' => 'fau_chair',
       'type' => ilExamOrgaField::TYPE_TEXT,
@@ -30,13 +46,13 @@ $fields = [
       'info' => 'Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.',
       'limit' => 200
   ],
-  [
-      'name' => 'mail_title',
-      'type' => ilExamOrgaField::TYPE_TEXT,
-      'title' => 'Mail-Betreff',
-      'info' => 'Dieser Betreff wird für automatisch generierte E-Mails verwendet.',
-      'limit' => 200
-  ],
+//  [
+//      'name' => 'mail_title',
+//      'type' => ilExamOrgaField::TYPE_TEXT,
+//      'title' => 'Mail-Betreff',
+//      'info' => 'Dieser Betreff wird für automatisch generierte E-Mails verwendet.',
+//      'limit' => 200
+//  ],
   [
       'name' => 'exam_format',
       'type' => ilExamOrgaField::TYPE_SELECT,
@@ -72,14 +88,14 @@ $fields = [
       'name' => 'exam_runs',
       'type' => ilExamOrgaField::TYPE_TIMES,
       'title' => 'Durchgänge',
-      'info' => 'Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind). Bei Fernprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 20 Minuten ein. Bei Präsenzprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 60 Minuten ein.',
+      'info' => 'Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind).',
       'required' => true
   ],
   [
       'name' => 'run_minutes',
       'type' => ilExamOrgaField::TYPE_INTEGER,
       'title' => 'Prüfungsdauer',
-      'info' => 'Bitte geben Sie die reine Prüfungsdauer pro Durchgang in Minuten an. Bei Fernprüfungen Angabe bitte inkl. Pufferzeit von 20 Minuten für Upload und technische Verzögerungen.',
+      'info' => 'Bitte geben Sie die reine Prüfungsdauer pro Durchgang in Minuten an.',
       'size' => 4,
       'required' => true
   ],

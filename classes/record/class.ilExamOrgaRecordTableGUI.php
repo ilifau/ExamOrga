@@ -218,9 +218,11 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         // add actions
         $this->ctrl->setParameter($this->parent_obj, 'id', $id);
-        $list->addItem($this->plugin->txt('view_details'), '', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
         if ($this->object->canEditRecord($record)) {
             $list->addItem($this->plugin->txt('edit_record'), '', $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
+        }
+        else {
+            $list->addItem($this->plugin->txt('view_details'), '', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
         }
 
         $this->tpl->setCurrentBlock('column');

@@ -83,13 +83,13 @@ $fields = [
       'info' => 'Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.',
       'limit' => 200
   ],
-  [
-      'name' => 'mail_title',
-      'type' => ilExamOrgaField::TYPE_TEXT,
-      'title' => 'Mail-Betreff',
-      'info' => 'Dieser Betreff wird für automatisch generierte E-Mails verwendet.',
-      'limit' => 200
-  ],
+//  [
+//      'name' => 'mail_title',
+//      'type' => ilExamOrgaField::TYPE_TEXT,
+//      'title' => 'Mail-Betreff',
+//      'info' => 'Dieser Betreff wird für automatisch generierte E-Mails verwendet.',
+//      'limit' => 200
+//  ],
   [
       'name' => 'exam_format',
       'type' => ilExamOrgaField::TYPE_RADIO,

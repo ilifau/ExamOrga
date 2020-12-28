@@ -250,8 +250,8 @@ class ilExamOrgaRecordExcel extends ilExcel
             $list = [];
             foreach ($this->records as $record) {
                 $list[] = $record->getTitle();
-                return sprintf($this->plugin->txt('excel_records_read'), implode('<br /> ', $list));
             }
+            return sprintf($this->plugin->txt('excel_records_read'), implode('<br /> ', $list));
         }
     }
 }

@@ -86,5 +86,7 @@ purpose#:#Zweck
 purpose_info#:#Geben Sie hier an, welche Art von Prüfung hier verwaltet werden soll. Danach richtet sich die Auswahl der Eingabefelder.
 purpose_written#:#E-Prüfungen in Präsenz und schriftliche Fernprüfungsformate
 purpose_oral#:#Mündliche Prüfungen mit Videoaufsicht
+campus_soap_url#:#URL des mein campus Services
+campus_soap_url_info#:#Von dieser URL werden per SOAP die Prüfungen und ihre Teilnehmer abgefragt
 
 

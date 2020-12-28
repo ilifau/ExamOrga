@@ -3,6 +3,10 @@
 
 require_once(__DIR__ . '/../form/class.ilExamOrgaExamsInputGUI.php');
 
+//function split($delim, $string) {
+//    return explode($delim, $string);
+//}
+
 class ilExamOrgaExamsField extends ilExamOrgaField
 {
     /**
@@ -72,5 +76,39 @@ class ilExamOrgaExamsField extends ilExamOrgaField
      */
     public function setExcelValue($record, $excel, $value) {
         return parent::setExcelValue($record, $excel, $value);
+    }
+
+    /**
+     * Get the exam data
+     */
+    protected function getExams() {
+
+        $xml='<SOAPDataService active="y">
+<general>
+<object>getExaminations</object>
+</general>
+</SOAPDataService>
+';
+
+//        $client = new SoapClient($this->plugin->getConfig()->get('campus_soap_url') . '?wsdl');
+//        //$params = array('in0'=> '124','in1'=>'1');
+//        $result = $client->getDa( [] );
+//        print_r($result);
+//        exit;
+//
+        include_once("./webservice/soap/lib/nusoap.php");
+        $soap_client = new nusoap_client($this->plugin->getConfig()->get('campus_soap_url'));
+        $soap_client->setHTTPProxy('proxy.uni-erlangen.de', '80');
+        $result = $soap_client->call('getDataXML');
+        var_dump($result);
+        exit;
+
+
+        $client = new ilSoapClient($this->plugin->getConfig()->get('campus_soap_url'). '?wsdl');
+        $client->init();
+        $result = $client->call('getDataXML', ['xmlParams' => $xml]);
+
+        var_dump($result);
+        exit;
     }
 }

@@ -165,6 +165,11 @@ if (!$ilDB->tableExists('xamo_data'))
             'length' => '4',
 
         ),
+        'admins_text' => array(
+            'type' => 'text',
+            'length' => '2000',
+
+        ),
         'admins' => array(
             'type' => 'text',
             'length' => '1000',

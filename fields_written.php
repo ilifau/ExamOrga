@@ -162,7 +162,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_TIMES,
       'title' => 'Durchgänge',
       'info' => 'Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind). Bei Fernprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 20 Minuten ein. Bei Präsenzprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 60 Minuten ein.',
-      'required' => true
+      'required' => false
   ],
   [
       'name' => 'run_minutes',
@@ -181,6 +181,13 @@ $fields = [
       'required' => true,
       'default' => true,
       'filter' => true,
+  ],
+  [
+      'name' => 'admins_text',
+      'type' => ilExamOrgaField::TYPE_TEXTAREA,
+      'title' => 'Korrektoren',
+      'info' => 'Diese Liste kann nicht mehr bearbeitet werden. Bitte wählen Sie die Accounts der Korrektoren im Feld darunter.',
+      'status' => ilExamOrgaField::STATUS_FIXED
   ],
   [
       'name' => 'admins',
@@ -285,6 +292,7 @@ $fields = [
         'Silvana',
         'Mona',
         'Steffi',
+        'Stefie',
         'Inke'
       ],
       'status' => ilExamOrgaField::STATUS_HIDDEN
@@ -308,6 +316,7 @@ $fields = [
       'options' => [
         'Mona (D)',
         'Silvana (D)',
+        'Steffi (D)',
         'Stefie (D)',
         'Gerd (T)',
         'Fred (T)',

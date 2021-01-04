@@ -46,6 +46,15 @@ class ilExamOrgaData
             ]
         );
 
+        // semester
+        for ($y = 2020; $y <= 2030; $y++) {
+            $options[$y . 's'] = $this->plugin->txt('summer_term') . ' ' . $y;
+            $options[$y . 'w'] = $this->plugin->txt('winter_term') . ' ' . $y . '/' . ($y + 1);
+        }
+        $params[] = ilExamOrgaParam::_create(
+            'purpose', $this->plugin->txt('semester'), $this->plugin->txt('purpose_info'), ilExamOrgaParam::TYPE_SELECT, '2020w', $options
+        );
+
         // online status
         $params[] = ilExamOrgaParam::_create(
             'online', $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0

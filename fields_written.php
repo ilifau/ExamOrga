@@ -276,6 +276,13 @@ $fields = [
       'info' => 'Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht',
       'status' => ilExamOrgaField::STATUS_LOCKED
   ],
+  [
+      'name' => 'course_link',
+      'type' => ilExamOrgaField::TYPE_LINK,
+      'title' => 'Link zum Prüfungs-Kurs',
+      'info' => 'Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
 
   //////////////////////////////////////////////////////////
   [

@@ -280,6 +280,14 @@ class ilExamOrgaRecord extends ActiveRecord
      * @var string
      * @con_has_field        true
      * @con_fieldtype        text
+     * @con_length           100
+     */
+    public $course_link;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        text
      * @con_length           200
      */
     public $team_students;

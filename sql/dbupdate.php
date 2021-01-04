@@ -230,6 +230,10 @@ if (!$ilDB->tableExists('xamo_data'))
             'length' => '20',
 
         ),
+        'course_link' => array(
+            'type' => 'text',
+            'length' => '100',
+        ),
         'team_students' => array(
             'type' => 'text',
             'length' => '200',

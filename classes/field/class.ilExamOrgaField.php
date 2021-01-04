@@ -4,6 +4,7 @@ class ilExamOrgaField
 {
     const TYPE_TEXT = 'text';
     const TYPE_TEXTAREA = 'textarea';
+    const TYPE_LINK = 'link';
     const TYPE_INTEGER = 'integer';
     const TYPE_CHECKBOX = 'checkbox';
     const TYPE_SELECT = 'select';
@@ -17,7 +18,6 @@ class ilExamOrgaField
     const TYPE_TIMES = 'times';
     const TYPE_LOGINS = 'logins';
     const TYPE_EXAMS = 'exams';
-    const TYPE_LINKS = 'links';
 
     const STATUS_PUBLIC = 'public';     // visible to all users, editable for owner and admins
     const STATUS_HIDDEN = 'hidden';     // hidden for all users
@@ -83,6 +83,10 @@ class ilExamOrgaField
             case self::TYPE_TEXTAREA:
                 require_once (__DIR__ . '/class.ilExamOrgaTextareaField.php');
                 return new ilExamOrgaTextareaField($object, $definition);
+
+            case self::TYPE_LINK:
+                require_once (__DIR__ . '/class.ilExamOrgaLinkField.php');
+                return new ilExamOrgaLinkField($object, $definition);
 
             case self::TYPE_INTEGER:
                 require_once (__DIR__ . '/class.ilExamOrgaIntegerField.php');

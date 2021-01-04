@@ -52,7 +52,7 @@ class ilExamOrgaData
             $options[$y . 'w'] = $this->plugin->txt('winter_term') . ' ' . $y . '/' . ($y + 1);
         }
         $params[] = ilExamOrgaParam::_create(
-            'purpose', $this->plugin->txt('semester'), $this->plugin->txt('purpose_info'), ilExamOrgaParam::TYPE_SELECT, '2020w', $options
+            'semester', $this->plugin->txt('semester'), '', ilExamOrgaParam::TYPE_SELECT, '2020w', $options
         );
 
         // online status

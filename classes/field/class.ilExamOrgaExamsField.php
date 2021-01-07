@@ -27,6 +27,8 @@ class ilExamOrgaExamsField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getFormItem($record) {
+//        $this->getExams();
+
         $item = new ilExamOrgaExamsInputGUI($this->title, $this->getPostvar());
 
         $item->setRequired($this->required);
@@ -90,7 +92,7 @@ class ilExamOrgaExamsField extends ilExamOrgaField
 </SOAPDataService>
 ';
 
-//        $client = new SoapClient($this->plugin->getConfig()->get('campus_soap_url') . '?wsdl');
+    //        $client = new SoapClient($this->plugin->getConfig()->get('campus_soap_url') . '?wsdl');
 //        //$params = array('in0'=> '124','in1'=>'1');
 //        $result = $client->getDa( [] );
 //        print_r($result);
@@ -98,8 +100,8 @@ class ilExamOrgaExamsField extends ilExamOrgaField
 //
         include_once("./webservice/soap/lib/nusoap.php");
         $soap_client = new nusoap_client($this->plugin->getConfig()->get('campus_soap_url'));
-        $soap_client->setHTTPProxy('proxy.uni-erlangen.de', '80');
-        $result = $soap_client->call('getDataXML');
+        //$soap_client->setHTTPProxy('proxy.uni-erlangen.de', '80');
+        $result = $soap_client->call('getDataXML', ['xmlParams' => $xml]);
         var_dump($result);
         exit;
 

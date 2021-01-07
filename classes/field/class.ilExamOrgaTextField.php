@@ -46,7 +46,7 @@ class ilExamOrgaTextField extends ilExamOrgaField
         $item = $table->getFilterItemByPostVar($this->getPostvar());
 
         if (isset($item) && !empty($item->getValue())) {
-            $list->where([$this->name => $item->getValue() . '%'], 'LIKE');
+            $list->where([$this->name => '%'. $item->getValue() . '%'], 'LIKE');
         }
     }
 

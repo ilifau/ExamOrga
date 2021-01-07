@@ -44,7 +44,8 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Mail-Adresse',
       'info' => 'Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.',
-      'limit' => 200
+      'limit' => 200,
+      'required' => true,
   ],
 //  [
 //      'name' => 'mail_title',

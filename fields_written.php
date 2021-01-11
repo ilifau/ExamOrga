@@ -220,7 +220,7 @@ $fields = [
       'name' => 'test_ref_id',
       'type' => ilExamOrgaField::TYPE_REFERENCE,
       'title' => 'Testobjekt in StudOn',
-      'info' => 'Nur für E-Prüfungen in Präsenz relevant. Hier können Sie Ihren Test aus StudOn verlinken, sobald er fertiggestellt ist.',
+      'info' => 'Nur für E-Prüfungen in Präsenz relevant. Hier können Sie Ihren Test aus StudOn verlinken, sobald er fertiggestellt ist. Das Exam-Team überträgt Ihren Test dann in die Prüfungsplattform. Falls Sie mehrere Tests haben, kopieren Sie bitte deren Links in die Anmerkungen.',
   ],
   [
       'name' => 'room',

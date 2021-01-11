@@ -269,6 +269,7 @@ class ilExamOrgaServer extends Slim\App
                 'mail_address' => (string) $record->mail_address,
                 'mail_title' => (string) $record->mail_address,
                 'exam_title' => (string) $record->exam_title,
+                'exam_format' => (string) $record->exam_format,
                 'exam_type' => (string) $record->exam_type,
                 'exam_date' => (string) $record->exam_date,
                 'exam_runs' => $exam_runs,

@@ -57,7 +57,8 @@ $fields = [
           'Zentrale / Sprachenzentrum'
       ],
       'default' => true,
-      'filter' => true
+      'filter' => true,
+      'required' => true,
   ],
   [
       'name' => 'fau_chair',
@@ -106,6 +107,15 @@ $fields = [
       'default' => true,
       'filter' => true
   ],
+
+  [
+      'name' => 'force_presence',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Präsenzplattform erzwingen',
+      'info' => 'Unabhängig vom Prüfungsformat soll die Präsenz-Plattform verwendet werden',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
+
   [
       'name' => 'exam_method',
       'type' => ilExamOrgaField::TYPE_RADIO,

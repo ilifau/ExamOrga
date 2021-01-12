@@ -114,6 +114,11 @@ if (!$ilDB->tableExists('xamo_data'))
             'length' => '20',
 
         ),
+        'force_presence' => array(
+            'type' => 'integer',
+            'length' => '4',
+
+        ),
         'exam_method' => array(
             'type' => 'text',
             'length' => '20',

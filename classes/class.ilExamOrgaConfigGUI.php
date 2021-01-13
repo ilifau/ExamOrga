@@ -28,6 +28,9 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
     /** @var ilTemplate $lng */
 	protected $tpl;
 
+    /** @var  ilToolbarGUI $toolbar */
+    protected $toolbar;
+
     /**
 	 * Handles all commands, default is "configure"
      * @throws Exception
@@ -43,8 +46,11 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
         $this->tabs = $DIC->tabs();
         $this->ctrl = $DIC->ctrl();
         $this->tpl = $DIC->ui()->mainTemplate();
+        $this->toolbar = $DIC->toolbar();
+
 
         $this->tabs->addTab('basic', $this->plugin->txt('basic_configuration'), $this->ctrl->getLinkTarget($this, 'configure'));
+        $this->setToolbar();
 
         switch ($DIC->ctrl()->getNextClass())
         {
@@ -63,6 +69,9 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
                 {
                     case "configure":
                     case "saveBasicSettings":
+                    case "updateLanguages":
+                    case "loadCampusExams":
+                    case "generateDBUpdate":
                         $this->tabs->activateTab('basic');
                         $this->$cmd();
                         break;
@@ -70,21 +79,68 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
         }
 	}
 
-	/**
+    /**
+     * Set the toolbar
+     */
+    protected function setToolbar()
+    {
+        $this->toolbar->setFormAction($this->ctrl->getFormAction($this));
+
+        $button = ilLinkButton::getInstance();
+        $button->setUrl($this->ctrl->getLinkTarget($this, 'updateLanguages'));
+        $button->setCaption($this->plugin->txt('update_languages'), false);
+        $this->toolbar->addButtonInstance($button);
+
+        $button = ilLinkButton::getInstance();
+        $button->setUrl($this->ctrl->getLinkTarget($this, 'loadCampusExams'));
+        $button->setCaption($this->plugin->txt('load_campus_exams'), false);
+        $this->toolbar->addButtonInstance($button);
+
+        $button = ilLinkButton::getInstance();
+        $button->setUrl($this->ctrl->getLinkTarget($this, 'generateDBUpdate'));
+        $button->setCaption($this->plugin->txt('generate_db_update'), false);
+        $this->toolbar->addButtonInstance($button);
+
+    }
+
+    /**
 	 * Show base configuration screen
 	 */
 	protected function configure()
 	{
-//	    require_once (__DIR__ . '/record/class.ilExamOrgaRecord.php');
-//        $arBuilder = new arBuilder(new ilExamOrgaRecord());
-//        $arBuilder->generateDBUpdateForInstallation();
-//        return;
-
 		$form = $this->initBasicConfigurationForm();
 		$this->tpl->setContent($form->getHTML());
 	}
 
+    /**
+     * Update Languages
+     */
+    protected function updateLanguages()
+    {
+        $this->plugin->updateLanguages();
+        $this->ctrl->redirect($this, 'configure');
+    }
 
+    /**
+     * Generate the db update steps for active record
+     */
+    protected function loadCampusExams()
+    {
+        require_once (__DIR__ . '/campus/class.ilExamOrgaCampusExam.php');
+        ilExamOrgaCampusExam::updateExams($this->plugin);
+        $this->ctrl->redirect($this, 'configure');
+    }
+
+
+    /**
+     * Generate the db update steps for active record
+     */
+	protected function generateDBUpdate()
+    {
+        require_once (__DIR__ . '/campus/class.ilExamOrgaCampusExam.php');
+        $arBuilder = new arBuilder(new ilExamOrgaCampusExam());
+        $arBuilder->generateDBUpdateForInstallation();
+    }
 
     /**
 	 * Initialize the configuration form

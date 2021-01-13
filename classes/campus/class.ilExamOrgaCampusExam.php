@@ -22,7 +22,6 @@ class ilExamOrgaCampusExam extends ActiveRecord
      */
     public $porgnr;
 
-
     /**
      * @var integer
      * @con_has_field        true
@@ -103,7 +102,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
      * Get the exam data
      * @param ilExamOrgaPlugin
      */
-    protected static function updateExams($plugin)
+    public static function updateExams($plugin)
     {
         $xml= '
 <SOAPDataService active="y">
@@ -112,12 +111,14 @@ class ilExamOrgaCampusExam extends ActiveRecord
 </general>
 </SOAPDataService>
 ';
-
         $client = new SoapClient($plugin->getConfig()->get('campus_soap_url') . '?wsdl');
         $result = $client->__call('getDataXML', ['xmlParams' => $xml]);
-        log_var($result);
-        echo "written";
-        exit;
+
+        require_once (__DIR__ . '/class.ilExamOrgaCampusExamParser.php');
+        $parser = new ilExamOrgaCampusExamParser();
+        $parser->setXMLContent($result);
+        $parser->startParsing();
     }
+
 
 }

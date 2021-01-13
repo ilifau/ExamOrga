@@ -91,5 +91,8 @@ campus_soap_url_info#:#Von dieser URL werden per SOAP die Prüfungen und ihre Te
 summer_term#:#Sommersemester
 winter_term#:#Wintersemester
 semester#:#Semester
+update_languages#:#Sprachen aktualisieren
+load_campus_exams#:#Aus Campus aktualisieren
+generate_db_update#:#Update-Step generieren
 
 

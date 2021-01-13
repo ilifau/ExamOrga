@@ -345,4 +345,81 @@ if (!$ilDB->tableExists('xamo_data'))
         $ilDB->addIndex('xamo_record', ['num_participants'], 'i10');
     }
 ?>
+<#7>
+<?php
+$fields = array(
+    'porgnr' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'pnr' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'psem' => array(
+        'notnull' => '1',
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'ptermin' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'pdatum' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'ppruefer' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'vorname' => array(
+        'type' => 'text',
+        'length' => '50',
+
+    ),
+    'nachname' => array(
+        'type' => 'text',
+        'length' => '50',
+
+    ),
+    'titel' => array(
+        'type' => 'text',
+        'length' => '500',
+
+    ),
+    'veranstaltung' => array(
+        'type' => 'text',
+        'length' => '500',
+
+    ),
+
+);
+if (! $ilDB->tableExists('xamo_campus')) {
+    $ilDB->createTable('xamo_campus', $fields);
+    $ilDB->addPrimaryKey('xamo_campus', array( 'porgnr' ));
+
+    if (! $ilDB->sequenceExists('xamo_campus')) {
+        $ilDB->createSequence('xamo_campus');
+    }
+}
+
+if (!$ilDB->indexExistsByFields('xamo_campus', ['pnr'])) {
+    $ilDB->addIndex('xamo_campus', ['pnr'], 'i2');
+}
+if (!$ilDB->indexExistsByFields('xamo_campus', ['psem'])) {
+    $ilDB->addIndex('xamo_campus', ['psem'], 'i3');
+}
+if (!$ilDB->indexExistsByFields('xamo_campus', ['nachname'])) {
+    $ilDB->addIndex('xamo_campus', ['nachname'], 'i4');
+}
+?>
 

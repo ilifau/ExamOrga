@@ -114,10 +114,6 @@ class ilExamOrgaCampusExamParser extends ilSaxParser
      */
     public function handlerCharacterData($a_xml_parser, $a_data)
     {
-        if ($a_data != "\n") {
-            // Replace multiple tabs with one space
-            $a_data = preg_replace("/\t+/", " ", $a_data);
-            $this->cdata .= $a_data;
-        }
+        $this->cdata .= trim($a_data);
     }
 }

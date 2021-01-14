@@ -11,18 +11,6 @@ class ilExamOrgaCampusExamParser extends ilSaxParser
     protected $exam;
 
     /**
-     *
-     * @return
-     * @throws	ilSaxParserException	if invalid xml structure is given
-     * @throws	ilWebLinkXMLParserException	missing elements
-     */
-
-    public function start()
-    {
-         $this->startParsing();
-    }
-
-    /**
      * set event handlers
      *
      * @param	resource	reference to the xml parser

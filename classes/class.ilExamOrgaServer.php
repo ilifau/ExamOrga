@@ -81,6 +81,8 @@ class ilExamOrgaServer extends Slim\App
         foreach (['', '/fix', '/dev', '/test', '/lab'] as $prefix) {
 
             $this->get($prefix . '/xamo/exams', array($this, 'getExams'));
+            $this->get($prefix . '/xamo/links', array($this, 'getLinks'));
+
             $this->put($prefix . '/xamo/links', array($this, 'putLinks'));
             $this->put($prefix . '/xamo/notes', array($this, 'putNotes'));
         }
@@ -154,6 +156,7 @@ class ilExamOrgaServer extends Slim\App
 
         require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
         require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
+
         $obj_ids = ilExamOrgaData::getObjectIdsForMode($this->mode);
 
         /** @var ilExamOrgaRecord[] $records */
@@ -275,8 +278,9 @@ class ilExamOrgaServer extends Slim\App
                 'exam_runs' => $exam_runs,
                 'rum_minutes' => (int) $record->run_minutes,
                 'num_participants' => (int) $record->num_participants,
-                'parallel_sessions' =>(int)  $sessions,
-                'monitors' => array_values($users)
+                'parallel_sessions' => (int)  $sessions,
+                'monitors' => array_values($users),
+                'links' => $this->getLinksArray($record->id)
             ];
 
             $exams[] = $exam;
@@ -285,6 +289,47 @@ class ilExamOrgaServer extends Slim\App
         return $this->setResponse(StatusCode::HTTP_OK, $exams);
     }
 
+    /**
+     * GET a Json list of all exams
+     * @param Request  $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function getLinks(Request $request, Response $response, array $args)
+    {
+        // common checks and initializations
+        if (!$this->prepare($request, $response, $args)) {
+            return $this->response;
+        }
+
+        require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
+        require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
+
+        $obj_ids = ilExamOrgaData::getObjectIdsForMode($this->mode);
+
+        /** @var ilExamOrgaRecord[] $records */
+        $record_ids = array_keys(ilExamOrgaRecord::where($this->db->in('obj_id', $obj_ids, false, 'integer'))->getArray('id', []));
+
+        if (isset($this->params['id'])) {
+            if (in_array((int) $this->params['id'], $record_ids)) {
+                $record_ids = [(int) $this->params['id']];
+            }
+            else {
+                $record_ids = [];
+            }
+        }
+
+        $links = [];
+        foreach ($record_ids as $record_id) {
+            $links[] = [
+                    'id' => $record_id,
+                    'links' => $this->getLinksArray($record_id)
+                ];
+        }
+
+        return $this->setResponse(StatusCode::HTTP_OK, $links);
+    }
 
 
 
@@ -308,20 +353,48 @@ class ilExamOrgaServer extends Slim\App
             return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'list of json objects expected');
         }
 
+        require_once(__DIR__ . '/links/class.ilExamOrgaLink.php');
+
         $parsed = [];
         foreach ($entries as $entry) {
 
             if (!empty($entry['id'])  && !empty($entry['links'])
                 && is_int($entry['id']) && is_array($entry['links'])) {
 
+                /** @var ilExamOrgaLink $link */
                 $links = [];
-                foreach ($entry['links'] as $link) {
-                    $links[] = (string) $link;
+                foreach (ilExamOrgaLink::where(['record_id' => $entry['id']])->get() as $link) {
+                    $links[$link->exam_run][$link->link] = $link;
                 }
-                $parsed[] = [
+
+                $parsed_entry = [
                     'id' => (int) $entry['id'],
-                    'links' => $links,
+                    'links' => []
                 ];
+                foreach ($entry['links'] as $run => $urls) {
+                    foreach ($urls as $url) {
+                        if (isset($links[$run][$url])) {
+                            // should not be deleted
+                            unset($links[$run][$url]);
+                        } else {
+                            // add new links
+                            $link = new ilExamOrgaLink();
+                            $link->record_id = $entry['id'];
+                            $link->exam_run = $run;
+                            $link->link = $url;
+                            $link->create();
+                        }
+                        $parsed_entry['links'][$run][] = $url;
+                    }
+                }
+                // delete the not found links
+                foreach ($links as $run => $old_links) {
+                    foreach ($old_links as $url => $link) {
+                        $link->delete();
+                    }
+                }
+
+                $parsed[] = $parsed_entry;
             }
             else {
                 return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'wrong entry format');
@@ -379,12 +452,32 @@ class ilExamOrgaServer extends Slim\App
      * @param array    $json
      * @return Response
      */
-    protected function setResponse($status, $json = []) {
-
+    protected function setResponse($status, $json = [])
+    {
         return $this->response = $this->response
             ->withHeader('Content-Type', 'application/json')
             ->withStatus($status)
             ->withJson($json);
+    }
+
+    /**
+     * get an array of links for a record
+     * @param $record_id
+     * @return array run => [url, url, ...]
+     */
+    protected function getLinksArray($record_id)
+    {
+        require_once(__DIR__ . '/links/class.ilExamOrgaLink.php');
+
+        /** @var ilExamOrgaLink $link */
+        $links = [];
+        foreach (ilExamOrgaLink::where(['record_id' => $record_id])->get() as $link) {
+            if (!isset($links[$link->exam_run])) {
+                $links[$link->exam_run] = [];
+            }
+            $links[$link->exam_run][] = $link->link;
+        }
+        return $links;
     }
 
 

@@ -422,4 +422,50 @@ if (!$ilDB->indexExistsByFields('xamo_campus', ['nachname'])) {
     $ilDB->addIndex('xamo_campus', ['nachname'], 'i4');
 }
 ?>
+<#8>
+<?php
+$fields = array(
+    'id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'record_id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'exam_run' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'link' => array(
+        'type' => 'text',
+        'length' => '100',
+
+    ),
+    'created_at' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+    ),
+
+);
+if (! $ilDB->tableExists('xamo_link')) {
+    $ilDB->createTable('xamo_link', $fields);
+    $ilDB->addPrimaryKey('xamo_link', array( 'id' ));
+
+    if (! $ilDB->sequenceExists('xamo_link')) {
+        $ilDB->createSequence('xamo_link');
+    }
+}
+
+if (!$ilDB->indexExistsByFields('xamo_link', ['record_id'])) {
+    $ilDB->addIndex('xamo_link', ['record_id'], 'i1');
+}
+?>
+
 

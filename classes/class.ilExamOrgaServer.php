@@ -426,11 +426,22 @@ class ilExamOrgaServer extends Slim\App
             return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'list of json objects expected');
         }
 
+        require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
+
         $parsed = [];
         foreach ($entries as $entry) {
 
             if (!empty($entry['id'])  && !empty($entry['code']) && !empty($entry['note'])
                 && is_int($entry['id']) && is_int($entry['code']) && is_string($entry['note'])) {
+
+                if (!ilExamOrgaNote::where(['record_id' => $entry['id'], 'note' => $entry['note']])->count()) {
+                    $note = new ilExamOrgaNote();
+                    $note->record_id = $entry['id'];
+                    $note->code = $entry['code'];
+                    $note->note = $entry['note'];
+                    $note->save();
+                }
+
                 $parsed[] = [
                     'id' => (int) $entry['id'],
                     'code' => (int) $entry['code'],

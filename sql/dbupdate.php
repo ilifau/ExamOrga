@@ -467,5 +467,51 @@ if (!$ilDB->indexExistsByFields('xamo_link', ['record_id'])) {
     $ilDB->addIndex('xamo_link', ['record_id'], 'i1');
 }
 ?>
+<#9>
+<?php
+$fields = array(
+    'id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
 
+    ),
+    'record_id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'code' => array(
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'note' => array(
+        'type' => 'text',
+        'length' => '4000',
+
+    ),
+    'created_at' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+
+);
+if (! $ilDB->tableExists('xamo_note')) {
+    $ilDB->createTable('xamo_note', $fields);
+    $ilDB->addPrimaryKey('xamo_note', array( 'id' ));
+
+    if (! $ilDB->sequenceExists('xamo_note')) {
+        $ilDB->createSequence('xamo_note');
+    }
+
+    if (!$ilDB->indexExistsByFields('xamo_note', ['record_id'])) {
+        $ilDB->addIndex('xamo_note', ['record_id'], 'i1');
+    }
+
+}
+?>
 

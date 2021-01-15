@@ -27,6 +27,7 @@ class ilExamOrgaExamsField extends ilExamOrgaField
 
         $item->setRequired($this->required);
         $item->setDisabled(!$this->object->canEditField($this));
+        $item->setAutocomplete($this->object->data->getCampusSemester());
 
         if (isset($this->info)) {
             $item->setInfo($this->info);

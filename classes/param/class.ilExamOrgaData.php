@@ -223,6 +223,19 @@ class ilExamOrgaData
     }
 
     /**
+     * Get the semester as it is stored in mein campus
+     * @return string (format: '20201' (summer term) or '20202' (winter term)
+     */
+    public function getCampusSemester()
+    {
+        $semster = $this->get('semester');
+        $semester = str_replace('s', '1', $semster);
+        $semester = str_replace('w', '2', $semster);
+        return $semester;
+    }
+
+
+    /**
      * Get the object ids for a certain mode
      * @param string $mode  test|prod|any
      * @return int[]

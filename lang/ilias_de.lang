@@ -94,5 +94,6 @@ semester#:#Semester
 update_languages#:#Sprachen aktualisieren
 load_campus_exams#:#Aus Campus aktualisieren
 generate_db_update#:#Update-Step generieren
+exam_not_found#:#Zur eingegebenen Nummer %s wurde keine Prüfung gefunden!
 
 

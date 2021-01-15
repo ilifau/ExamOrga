@@ -120,5 +120,13 @@ class ilExamOrgaCampusExam extends ActiveRecord
         $parser->startParsing();
     }
 
+    /**
+     * Get the label of the exam
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->porgnr . " - " . $this->nachname . ', ' . $this->vorname . ': ' . $this->titel . ' (PNR ' . $this->pnr . ')';
+    }
 
 }

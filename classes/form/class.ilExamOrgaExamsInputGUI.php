@@ -12,6 +12,12 @@
 class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
 {
     /**
+     * @var string
+     */
+    protected $semester;
+
+
+    /**
      * ilExamOrgaExamsInputGUI constructor.
      * @param string $a_title
      * @param string $a_postvar
@@ -19,18 +25,30 @@ class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
     public function __construct($a_title = "", $a_postvar = "")
     {
         parent::__construct($a_title, $a_postvar);
+        $this->setMulti(true);
+    }
 
-        $ajax_url =$this->ctrl->getLinkTargetByClass(
+    /**
+     * Set the semester for autocomplete restriction
+     * @param string $semester
+     */
+    public function setAutocomplete($semester = null)
+    {
+        if (!empty($semester)) {
+            $this->semester = $semester;
+            $this->ctrl->setParameterByClass('ilexamorgaexamsinputgui', 'semester', $semester);
+        }
+
+        $ajax_url = $this->ctrl->getLinkTargetByClass(
             ['iluipluginroutergui', 'ilexamorgaexamsinputgui'],
             'doAutoComplete',
             '',
             true,
             false
         );
-
-        $this->setMulti(true);
-        $this->setDataSource( $ajax_url);
+        $this->setDataSource($ajax_url);
     }
+
 
     /**
      * Execute command
@@ -52,21 +70,34 @@ class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
      */
     public function doAutoComplete()
     {
-        $field = $_GET['autoCompleteField'];
         $term = $_REQUEST['term'];
+        $semester = $_REQUEST['semester'];
         $fetchall = $_REQUEST['fetchall'];
 
-        $cnt = 0;
-        $result[$cnt]['value'] = 'value';
-        $result[$cnt]['label'] = 'label';
-        $result[$cnt]['id'] = 'id';
+        require_once (__DIR__ . '/../campus/class.ilExamOrgaCampusExam.php');
+        $exams = ilExamOrgaCampusExam::getCollection()
+            ->where(['nachname' => $term . '%'] ,'LIKE')
+            ->limit(0, $fetchall ? 1000 : 10);
 
-        $result = [];
+        if (!empty($semester)) {
+            $exams->where(['psem' => $semester]);
+        }
 
-        $result_json['items'] = $result;
-        $result_json['hasMoreResults'] = false;
+        $items = [];
 
-        echo ilJsonUtil::encode($result_json);
+        /** @var  ilExamOrgaCampusExam $exam */
+        foreach($exams->get() as $exam) {
+            $items[] = [
+                'value'=> $exam->porgnr,
+                'label' => $exam->getLabel(),
+                'id' => 'porgnr_' . $exam->porgnr
+            ];
+        }
+
+        $result_json['items'] = $items;
+        $result_json['hasMoreResults'] = !$fetchall;
+
+        echo json_encode($result_json);
         exit;
     }
 
@@ -76,10 +107,29 @@ class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
      */
     public function checkInput()
     {
-        // fault tolerance
-        if ($this->getMulti() && !is_array($_POST[$this->getPostVar()])) {
+        // fault tolerance (field is multi, see constructor)
+        if (!is_array($_POST[$this->getPostVar()])) {
             $_POST[$this->getPostVar()] = [];
         }
+
+        require_once (__DIR__ . '/../campus/class.ilExamOrgaCampusExam.php');
+        foreach ($_POST[$this->getPostVar()] as $value) {
+
+            if (empty(trim($value))) {
+                continue;
+            }
+
+            $exams = ilExamOrgaCampusExam::where(['porgnr' => (int) $value]);
+            if (!empty($this->semester)) {
+                $exams->where(['psem' => $this->semester]);
+            }
+
+            if (!$exams->hasSets()) {
+                $this->setAlert(sprintf(ilExamOrgaPlugin::getInstance()->txt('exam_not_found'), $value));
+                return false;
+            }
+        }
+
         return parent::checkInput();
     }
 

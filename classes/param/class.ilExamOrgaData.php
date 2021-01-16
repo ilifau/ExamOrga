@@ -228,9 +228,9 @@ class ilExamOrgaData
      */
     public function getCampusSemester()
     {
-        $semster = $this->get('semester');
-        $semester = str_replace('s', '1', $semster);
-        $semester = str_replace('w', '2', $semster);
+        $semester = $this->get('semester');
+        $semester = str_replace('s', '1', $semester);
+        $semester = str_replace('w', '2', $semester);
         return $semester;
     }
 

@@ -18,6 +18,7 @@ class ilExamOrgaField
     const TYPE_TIMES = 'times';
     const TYPE_LOGINS = 'logins';
     const TYPE_EXAMS = 'exams';
+    const TYPE_RUN_LINKS = 'run_links';
 
     const STATUS_PUBLIC = 'public';     // visible to all users, editable for owner and admins
     const STATUS_HIDDEN = 'hidden';     // hidden for all users
@@ -139,6 +140,10 @@ class ilExamOrgaField
             case self::TYPE_EXAMS:
                 require_once (__DIR__ . '/class.ilExamOrgaExamsField.php');
                 return new ilExamOrgaExamsField($object, $definition);
+
+            case self::TYPE_RUN_LINKS:
+                require_once (__DIR__ . '/class.ilExamOrgaRunLinksField.php');
+                return new ilExamOrgaRunLinksField($object, $definition);
 
             default:
                 return new self($object, $definition);

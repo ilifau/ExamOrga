@@ -108,4 +108,20 @@ class ilExamOrgaLink extends ActiveRecord
 
         parent::create();
     }
+
+    /**
+     * Get a textual representation of the links
+     */
+    public static function getRecordLinksText($record_id)
+    {
+        /** @var self[] $links */
+        $links = self::where(['record_id' => $record_id])->orderBy('exam_run')->get();
+
+        $entries = [];
+        foreach ($links as $link) {
+            $entries[] = $link->exam_run . "\t" . $link->link;
+        }
+
+        return implode("\n", $entries);
+    }
 }

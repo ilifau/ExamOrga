@@ -123,7 +123,16 @@ $fields = [
       'info' => 'Wird vom RRZE ausgefüllt',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
-  /////////////////////////////////////////////////////////////
+  [
+      'name' => 'run_links',
+      'type' => ilExamOrgaField::TYPE_RUN_LINKS,
+      'title' => 'Zoom-Links zur Fernprüfung',
+      'info' => 'Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind',
+      'size' => 10,
+      'status' => ilExamOrgaField::STATUS_FIXED
+   ],
+
+    /////////////////////////////////////////////////////////////
   [
       'name' => 'head_record',
       'type' => ilExamOrgaField::TYPE_HEADLINE,

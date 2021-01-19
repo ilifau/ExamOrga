@@ -294,6 +294,14 @@ $fields = [
       'info' => 'Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht',
       'status' => ilExamOrgaField::STATUS_LOCKED
   ],
+  [
+      'name' => 'run_links',
+      'type' => ilExamOrgaField::TYPE_RUN_LINKS,
+      'title' => 'Zoom-Links zur Fernprüfung',
+      'info' => 'Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind',
+      'size' => 10,
+      'status' => ilExamOrgaField::STATUS_FIXED
+  ],
 
   //////////////////////////////////////////////////////////
   [

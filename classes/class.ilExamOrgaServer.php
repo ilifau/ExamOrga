@@ -82,8 +82,8 @@ class ilExamOrgaServer extends Slim\App
 
             $this->get($prefix . '/xamo/exams', array($this, 'getExams'));
             $this->get($prefix . '/xamo/links', array($this, 'getLinks'));
-
             $this->put($prefix . '/xamo/links', array($this, 'putLinks'));
+            $this->get($prefix . '/xamo/notes', array($this, 'getNotes'));
             $this->put($prefix . '/xamo/notes', array($this, 'putNotes'));
         }
     }
@@ -280,7 +280,8 @@ class ilExamOrgaServer extends Slim\App
                 'num_participants' => (int) $record->num_participants,
                 'parallel_sessions' => (int)  $sessions,
                 'monitors' => array_values($users),
-                'links' => $this->getLinksArray($record->id)
+                'links' => $this->getLinksArray($record->id),
+                'notes' => $this->getNotesArray($record->id)
             ];
 
             $exams[] = $exam;
@@ -290,7 +291,7 @@ class ilExamOrgaServer extends Slim\App
     }
 
     /**
-     * GET a Json list of all exams
+     * GET a Json list of all links
      * @param Request  $request
      * @param Response $response
      * @param array $args
@@ -405,6 +406,50 @@ class ilExamOrgaServer extends Slim\App
 
     }
 
+
+    /**
+     * GET a Json list of all notes
+     * @param Request  $request
+     * @param Response $response
+     * @param array $args
+     * @return Response
+     */
+    public function getNotes(Request $request, Response $response, array $args)
+    {
+        // common checks and initializations
+        if (!$this->prepare($request, $response, $args)) {
+            return $this->response;
+        }
+
+        require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
+        require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
+
+        $obj_ids = ilExamOrgaData::getObjectIdsForMode($this->mode);
+
+        /** @var ilExamOrgaRecord[] $records */
+        $record_ids = array_keys(ilExamOrgaRecord::where($this->db->in('obj_id', $obj_ids, false, 'integer'))->getArray('id', []));
+
+        if (isset($this->params['id'])) {
+            if (in_array((int) $this->params['id'], $record_ids)) {
+                $record_ids = [(int) $this->params['id']];
+            }
+            else {
+                $record_ids = [];
+            }
+        }
+
+        $notes = [];
+        foreach ($record_ids as $record_id) {
+            $notes[] = [
+                'id' => $record_id,
+                'notes' => $this->getNotesArray($record_id)
+            ];
+        }
+
+        return $this->setResponse(StatusCode::HTTP_OK, $notes);
+    }
+
+
     /**
      * PUT notes to exams
      * @param Request  $request
@@ -429,17 +474,29 @@ class ilExamOrgaServer extends Slim\App
         require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
 
         $parsed = [];
+        $found_records = [];
+        $found_notes = [];
         foreach ($entries as $entry) {
 
             if (!empty($entry['id'])  && !empty($entry['code']) && !empty($entry['note'])
                 && is_int($entry['id']) && is_int($entry['code']) && is_string($entry['note'])) {
 
-                if (!ilExamOrgaNote::where(['record_id' => $entry['id'], 'note' => $entry['note']])->count()) {
+                /** @var ilExamOrgaNote[] $notes */
+                $notes = ilExamOrgaNote::where(['record_id' => $entry['id']])
+                                       ->where(['note' => $entry['note']])->get();
+                if (!empty($notes)) {
+                    $note = array_pop($notes);
+                    $found_records[] = $note->record_id;
+                    $found_notes[] = $note->id;
+                }
+                else {
                     $note = new ilExamOrgaNote();
                     $note->record_id = $entry['id'];
                     $note->code = $entry['code'];
                     $note->note = $entry['note'];
                     $note->save();
+                    $found_records[] = $note->record_id;
+                    $found_notes[] = $note->id;
                 }
 
                 $parsed[] = [
@@ -453,7 +510,14 @@ class ilExamOrgaServer extends Slim\App
             }
         }
 
-        return $this->setResponse(StatusCode::HTTP_OK, $parsed);
+        // delete all notes that where not found for the records
+        $cond = $this->db->in('record_id', array_unique($found_records), false, 'integer')
+            . ' AND ' . $this->db->in('id', array_unique($found_notes), true, 'integer');
+        foreach (ilExamOrgaNote::where($cond)->get() as $note) {
+            $note->delete();
+        }
+
+        return $this->setResponse(StatusCode::HTTP_OK, $found_notes);
     }
 
 
@@ -491,6 +555,27 @@ class ilExamOrgaServer extends Slim\App
         return $links;
     }
 
+
+    /**
+     * get an array of notes for a record
+     * @param $record_id
+     * @return array []
+     */
+    protected function getNotesArray($record_id)
+    {
+        require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
+
+        /** @var ilExamOrgaNote $note */
+        $notes = [];
+        /** @var ilExamOrgaNote $note */
+        foreach (ilExamOrgaNote::where(['record_id' => $record_id])->get() as $note) {
+            $notes[] = [
+                'code' => $note->code,
+                'note' => $note->note
+            ];
+        }
+        return $notes;
+    }
 
     /**
      * Get the external content plugin object

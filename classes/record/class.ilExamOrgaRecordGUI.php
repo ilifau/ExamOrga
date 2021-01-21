@@ -3,6 +3,8 @@
 require_once (__DIR__ . '/../class.ilExamOrgaBaseGUI.php');
 require_once (__DIR__ . '/class.ilExamOrgaRecordTableGUI.php');
 require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
+require_once(__DIR__ . '/../notes/class.ilExamOrgaNote.php');
+require_once (__DIR__ . '/../notes/class.ilExamOrgaNotesTableGUI.php');
 
 /**
  * Class ilExamOrgaRecordGUI
@@ -43,6 +45,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 case 'excelExport':
                 case 'excelImportForm':
                 case 'excelImport':
+                case 'deleteNote':
                     $this->$cmd();
                     break;
 
@@ -178,7 +181,11 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $this->checkEditRecord($record);
 
         $form = $this->initRecordForm($record);
-        $this->tpl->setContent($form->getHTML());
+
+        $notesTable = new ilExamOrgaNotesTableGUI($this, 'editRecord');
+        $notesTable->loadData($record);
+
+        $this->tpl->setContent($form->getHTML() . $notesTable->getHTML());
     }
 
     /**
@@ -234,6 +241,26 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $form->addCommandButton('listRecords', $this->lng->txt('close'));
 
         return $form;
+    }
+
+    /**
+     * Delete a note
+     */
+    protected function deleteNote()
+    {
+        $this->ctrl->saveParameter($this, 'id');
+
+        /** @var ilExamOrgaRecord $record */
+        $record = ilExamOrgaRecord::find((int) $_GET['id']);
+        $this->checkEditRecord($record);
+
+        /** @var ilExamOrgaNote $note */
+        $note = ilExamOrgaNote::find((int) $_GET['note_id']);
+        if (isset($note)) {
+            $note->delete();
+            ilUtil::sendSuccess($this->plugin->txt("note_deleted"), true);
+        }
+        $this->ctrl->redirect($this, "editRecord");
     }
 
 

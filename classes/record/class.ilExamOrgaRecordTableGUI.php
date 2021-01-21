@@ -2,7 +2,7 @@
 // Copyright (c) 2017 Institut fuer Lern-Innovation, Friedrich-Alexander-Universitaet Erlangen-Nuernberg, GPLv3, see LICENSE
 
 /**
- * Class ilExteStatQuestionsOverviewTableGUI
+ * Record table
  */
 class ilExamOrgaRecordTableGUI extends ilTable2GUI
 {

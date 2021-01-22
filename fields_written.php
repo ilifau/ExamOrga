@@ -194,24 +194,30 @@ $fields = [
       'info' => 'Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um eine Auswahlliste zu erhalten.</strong></p>',
       'status' => ilExamOrgaField::STATUS_PUBLIC
   ],
-  [
-      'name' => 'admins_text',
-      'type' => ilExamOrgaField::TYPE_TEXTAREA,
-      'title' => 'Korrektoren',
-      'info' => 'Diese Liste kann nicht mehr bearbeitet werden. Bitte wählen Sie die Accounts der Korrektoren im Feld darunter.',
-      'status' => ilExamOrgaField::STATUS_FIXED
-  ],
+//  [
+//      'name' => 'admins_text',
+//      'type' => ilExamOrgaField::TYPE_TEXTAREA,
+//      'title' => 'Korrektoren',
+//      'info' => 'Diese Liste kann nicht mehr bearbeitet werden. Bitte wählen Sie die Accounts der Korrektoren im Feld darunter.',
+//      'status' => ilExamOrgaField::STATUS_HIDDEN
+//  ],
   [
       'name' => 'admins',
       'type' => ilExamOrgaField::TYPE_LOGINS,
-      'title' => 'Korektoren-Accounts',
-      'info' => 'Wählen Sie hier die StudOn-Accounts der Korrektoren aus. Sie erhalten automatisch Zugiff auf den Kurs in der Prüfungsplattform.',
+      'title' => 'Prüfer/innen-Accounts',
+      'info' => 'Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Als Ersteller dieses Eintrags bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.',
+  ],
+  [
+      'name' => 'correctors',
+      'type' => ilExamOrgaField::TYPE_LOGINS,
+      'title' => 'Korrektor/innen-Accounts',
+      'info' => 'Wählen Sie hier die StudOn-Accounts der Korrektor/innen aus. Sie bekommen in der Prüfungsplattform  Vollzugriff auf die Inhalte der Prüfungswerkstatt. Außerhalb der Werkstatt können sie in Tests und Übungen die Ergebnisse einsehen und bewerten.',
   ],
   [
       'name' => 'monitors',
       'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Aufsichten',
-      'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung',
+      'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.',
   ],
   [
       'name' => 'remarks',
@@ -300,7 +306,7 @@ $fields = [
       'title' => 'Zoom-Links zur Fernprüfung',
       'info' => 'Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind',
       'size' => 10,
-      'status' => ilExamOrgaField::STATUS_FIXED
+      'status' => ilExamOrgaField::STATUS_LOCKED
   ],
 
   //////////////////////////////////////////////////////////

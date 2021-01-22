@@ -180,6 +180,11 @@ if (!$ilDB->tableExists('xamo_data'))
             'length' => '1000',
 
         ),
+        'correctors' => array(
+            'type' => 'text',
+            'length' => '1000',
+
+        ),
         'monitors' => array(
             'type' => 'text',
             'length' => '1000',

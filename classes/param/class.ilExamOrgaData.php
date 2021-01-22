@@ -9,6 +9,17 @@
  */
 class ilExamOrgaData
 {
+    const PARAM_PURPOSE = 'purpose';
+    const PARAM_SEMESTER = 'semester';
+    const PARAM_ONLINE = 'online';
+    const PARAM_TESTDATA = 'testdata';
+    const PARAM_USERS_PER_SESSION = 'users_per_session';
+    const PARAM_INTRO = 'intro';
+
+    const PURPOSE_WRITTEN = 'written';
+    const PURPOSE_ORAL = 'oral';
+
+
     /** @var int obj_id */
     protected $obj_id;
 	/**
@@ -39,10 +50,10 @@ class ilExamOrgaData
 
         // purpose
         $params[] = ilExamOrgaParam::_create(
-            'purpose', $this->plugin->txt('purpose'), $this->plugin->txt('purpose_info'), ilExamOrgaParam::TYPE_SELECT, 'written',
+            self::PARAM_PURPOSE, $this->plugin->txt('purpose'), $this->plugin->txt('purpose_info'), ilExamOrgaParam::TYPE_SELECT, 'written',
             [
-                'written' => $this->plugin->txt('purpose_written'),
-                'oral' => $this->plugin->txt('purpose_oral')
+                self::PURPOSE_WRITTEN => $this->plugin->txt('purpose_written'),
+                self::PURPOSE_ORAL => $this->plugin->txt('purpose_oral')
             ]
         );
 
@@ -52,22 +63,25 @@ class ilExamOrgaData
             $options[$y . 'w'] = $this->plugin->txt('winter_term') . ' ' . $y . '/' . ($y + 1);
         }
         $params[] = ilExamOrgaParam::_create(
-            'semester', $this->plugin->txt('semester'), '', ilExamOrgaParam::TYPE_SELECT, '2020w', $options
+            self::PARAM_SEMESTER, $this->plugin->txt('semester'), '', ilExamOrgaParam::TYPE_SELECT, '2020w', $options
         );
 
         // online status
         $params[] = ilExamOrgaParam::_create(
-            'online', $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
+            self::PARAM_ONLINE, $this->plugin->txt('online'), $this->plugin->txt('online_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
         );
         // test data
         $params[] = ilExamOrgaParam::_create(
-            'testdata', $this->plugin->txt('testdata'), $this->plugin->txt('testdata_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
+            self::PARAM_TESTDATA, $this->plugin->txt('testdata'), $this->plugin->txt('testdata_info'), ilExamOrgaParam::TYPE_BOOLEAN, 0
+        );
+        // users per session
+        $params[] = ilExamOrgaParam::_create(
+            self::PARAM_USERS_PER_SESSION, $this->plugin->txt('users_per_session'), $this->plugin->txt('users_per_session_info'), ilExamOrgaParam::TYPE_INT, 200
         );
         // introduction
         $params[] = ilExamOrgaParam::_create(
-            'intro', $this->plugin->txt('introduction'), $this->plugin->txt('introduction_info'), ilExamOrgaParam::TYPE_RICHTEXT, null
+            self::PARAM_INTRO, $this->plugin->txt('introduction'), $this->plugin->txt('introduction_info'), ilExamOrgaParam::TYPE_RICHTEXT, null
         );
-
 
 
         foreach ($params as $param)

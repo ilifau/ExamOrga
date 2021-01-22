@@ -3,6 +3,12 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\StatusCode;
 
+require_once('Services/Idm/classes/class.ilDBIdm.php');
+require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
+require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
+require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
+require_once(__DIR__ . '/links/class.ilExamOrgaLink.php');
+
 /**
  * Video portal functions
  */
@@ -44,14 +50,46 @@ class ilExamOrgaServer extends Slim\App
     protected $params;
 
     /**
-     * Request Parameter ?mode='test|prod|any'
+     * GET Parameter mode=test|prod|any
      * test: only data of ExamOrga objects with setting "Test Data" will be treated
-     * prod: only data of ExamOrga objects without setting "Test Data" will be teeated
+     * prod: only data of ExamOrga objects without setting "Test Data" will be treated
      * any (or empty): test and production objects will be treated
      *
      * @var string
      */
     protected $mode;
+
+    /**
+     * GET Parameter id=123
+     * Selects a single record to be treated
+     * The record must match the mode
+     * @var int
+     */
+    protected $record_id;
+
+    /**
+     * GET Parameter min_date=2021-01-25
+     * @var string
+     */
+    protected $min_date;
+
+    /**
+     * GET Parameter min_date=2021-02-25
+     * @var string
+     */
+    protected $max_date;
+
+
+    /**
+     * @var ilExamOrgaData[] (indexed by obj_id)
+     */
+    protected $obj_data = [];
+
+    /**
+     * Condition used to query orga records
+     * @var string
+     */
+    protected $record_condition;
 
     /**
      * ilExamOrgaServer constructor.
@@ -66,7 +104,7 @@ class ilExamOrgaServer extends Slim\App
         $this->access = $DIC->access();
         $this->plugin = $this->getPlugin();
 
-        require_once('Services/Idm/classes/class.ilDBIdm.php');
+
         $this->idm = ilDBIdm::getInstance();
 
 
@@ -108,14 +146,14 @@ class ilExamOrgaServer extends Slim\App
         }
 
         // Authorization
-        $this->token = $this->plugin->getConfig()->get('api_token');
-        if (!empty($this->token)) {
-            $authorization = $this->request->getHeaderLine('Authorization');
-            if ($authorization != 'Bearer ' . $this->token) {
-                $this->setResponse(StatusCode::HTTP_UNAUTHORIZED, 'unauthorized');
-                return false;
-            }
-        }
+//        $this->token = $this->plugin->getConfig()->get('api_token');
+//        if (!empty($this->token)) {
+//            $authorization = $this->request->getHeaderLine('Authorization');
+//            if ($authorization != 'Bearer ' . $this->token) {
+//                $this->setResponse(StatusCode::HTTP_UNAUTHORIZED, 'unauthorized');
+//                return false;
+//            }
+//        }
 
         // Determine the mode
         switch((string) $this->params['mode']) {
@@ -135,6 +173,47 @@ class ilExamOrgaServer extends Slim\App
                 return false;
         }
 
+        // determine the record_id
+        if (isset($this->params['id'])) {
+            if (is_numeric($this->params['id'])) {
+                $this->record_id = (int) $this->params['id'];
+            }
+            else {
+                $this->setResponse(StatusCode::HTTP_BAD_REQUEST, "id parameter must be numeric");
+                return false;
+            }
+        }
+
+        // min and max date
+        if (isset($this->params['min_date'])) {
+            $this->min_date = (string) $this->params['min_date'];
+        }
+        if (isset($this->params['max_date'])) {
+            $this->max_date = (string) $this->params['max_date'];
+        }
+
+
+        // get the settings of the objects for the mode
+        foreach(ilExamOrgaData::getObjectIdsForMode($this->mode) as $obj_id) {
+           $this->obj_data[$obj_id] = new ilExamOrgaData($this->plugin, $obj_id);
+            $this->obj_data[$obj_id]->read();
+        }
+
+        // build the record query condition
+        $conditions = [];
+        $conditions[] = $this->db->in('obj_id', array_keys($this->obj_data), false, 'integer');
+        if (!empty($this->record_id)) {
+            $conditions[] = 'id = ' . $this->db->quote($this->record_id, 'integer');
+        }
+        if (!empty($this->min_date)) {
+            $conditions[] = 'exam_date >= ' . $this->db->quote($this->min_date, 'text');
+        }
+        if (!empty($this->max_date)) {
+            $conditions[] = 'exam_date <= ' . $this->db->quote($this->max_date, 'text');
+        }
+
+        $this->record_condition = implode(' AND ', $conditions);
+
         return true;
     }
 
@@ -152,17 +231,10 @@ class ilExamOrgaServer extends Slim\App
             return $this->response;
         }
 
+        $records = $this->getRecords();
+
+        // collect  data
         $exams = [];
-
-        require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
-        require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
-
-        $obj_ids = ilExamOrgaData::getObjectIdsForMode($this->mode);
-
-        /** @var ilExamOrgaRecord[] $records */
-        $records = ilExamOrgaRecord::where($this->db->in('obj_id', $obj_ids, false, 'integer'))->get();
-
-        // collect user data
         $owners = [];
         $monitors = [];
         $externals = [];
@@ -171,8 +243,9 @@ class ilExamOrgaServer extends Slim\App
         foreach ($records as $record) {
             $owners[$record->owner_id] = [];
             foreach (explode(',', $record->monitors) as $login) {
-                if(!empty(trim($login))) {
-                    $monitors[trim($login)] = [];
+                $login = trim($login);
+                if(!empty($login)) {
+                    $monitors[$login] = [];
                 }
             }
         }
@@ -206,14 +279,21 @@ class ilExamOrgaServer extends Slim\App
             $externals[$row['pk_persistent_id']] = $row;
         }
 
-        foreach ($records as $record)
-        {
+        foreach ($records as $record) {
+
             $exam_runs = [];
             foreach (explode(',', $record->exam_runs) as $run) {
-               $exam_runs[] = trim($run);
+                $run = trim($run);
+                if (!empty($run)) {
+                    $exam_runs[] = $run;
+                }
             }
 
-            $sessions = ceil(($record->num_participants / max(count($exam_runs), 1) / 20));
+            $users_per_session = (int) ($this->obj_data[$record->obj_id]->get(ilExamOrgaData::PARAM_USERS_PER_SESSION));
+            if (empty($users_per_session)) {
+                $users_per_session = 20;
+            }
+            $sessions = ceil(($record->num_participants / max(count($exam_runs), 1) / $users_per_session));
 
             $users = [];
 
@@ -304,25 +384,8 @@ class ilExamOrgaServer extends Slim\App
             return $this->response;
         }
 
-        require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
-        require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
-
-        $obj_ids = ilExamOrgaData::getObjectIdsForMode($this->mode);
-
-        /** @var ilExamOrgaRecord[] $records */
-        $record_ids = array_keys(ilExamOrgaRecord::where($this->db->in('obj_id', $obj_ids, false, 'integer'))->getArray('id', []));
-
-        if (isset($this->params['id'])) {
-            if (in_array((int) $this->params['id'], $record_ids)) {
-                $record_ids = [(int) $this->params['id']];
-            }
-            else {
-                $record_ids = [];
-            }
-        }
-
         $links = [];
-        foreach ($record_ids as $record_id) {
+        foreach ($this->getRecordsIds() as $record_id) {
             $links[] = [
                     'id' => $record_id,
                     'links' => $this->getLinksArray($record_id)
@@ -354,13 +417,11 @@ class ilExamOrgaServer extends Slim\App
             return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'list of json objects expected');
         }
 
-        require_once(__DIR__ . '/links/class.ilExamOrgaLink.php');
 
-        $parsed = [];
+        $return = [];
         foreach ($entries as $entry) {
 
-            if (!empty($entry['id'])  && !empty($entry['links'])
-                && is_int($entry['id']) && is_array($entry['links'])) {
+            if (is_int($entry['id']) && is_array($entry['links'])) {
 
                 /** @var ilExamOrgaLink $link */
                 $links = [];
@@ -368,10 +429,6 @@ class ilExamOrgaServer extends Slim\App
                     $links[$link->exam_run][$link->link] = $link;
                 }
 
-                $parsed_entry = [
-                    'id' => (int) $entry['id'],
-                    'links' => []
-                ];
                 foreach ($entry['links'] as $run => $urls) {
                     foreach ($urls as $url) {
                         if (isset($links[$run][$url])) {
@@ -385,7 +442,6 @@ class ilExamOrgaServer extends Slim\App
                             $link->link = $url;
                             $link->create();
                         }
-                        $parsed_entry['links'][$run][] = $url;
                     }
                 }
                 // delete the not found links
@@ -395,14 +451,17 @@ class ilExamOrgaServer extends Slim\App
                     }
                 }
 
-                $parsed[] = $parsed_entry;
+                $return[] = [
+                    'id' => (int) $entry['id'],
+                    'links' => $this->getLinksArray($entry['id'])
+                ];
             }
             else {
                 return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'wrong entry format');
             }
         }
 
-        return $this->setResponse(StatusCode::HTTP_OK, $parsed);
+        return $this->setResponse(StatusCode::HTTP_OK, $return);
 
     }
 
@@ -421,25 +480,8 @@ class ilExamOrgaServer extends Slim\App
             return $this->response;
         }
 
-        require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
-        require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
-
-        $obj_ids = ilExamOrgaData::getObjectIdsForMode($this->mode);
-
-        /** @var ilExamOrgaRecord[] $records */
-        $record_ids = array_keys(ilExamOrgaRecord::where($this->db->in('obj_id', $obj_ids, false, 'integer'))->getArray('id', []));
-
-        if (isset($this->params['id'])) {
-            if (in_array((int) $this->params['id'], $record_ids)) {
-                $record_ids = [(int) $this->params['id']];
-            }
-            else {
-                $record_ids = [];
-            }
-        }
-
         $notes = [];
-        foreach ($record_ids as $record_id) {
+        foreach ($this->getRecordsIds() as $record_id) {
             $notes[] = [
                 'id' => $record_id,
                 'notes' => $this->getNotesArray($record_id)
@@ -471,38 +513,39 @@ class ilExamOrgaServer extends Slim\App
             return $this->setResponse(StatusCode::HTTP_BAD_REQUEST, 'list of json objects expected');
         }
 
-        require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
-
-        $parsed = [];
-        $found_records = [];
-        $found_notes = [];
+        $return = [];
         foreach ($entries as $entry) {
 
-            if (!empty($entry['id'])  && !empty($entry['code']) && !empty($entry['note'])
-                && is_int($entry['id']) && is_int($entry['code']) && is_string($entry['note'])) {
+            if (is_int($entry['id']) && is_array($entry['notes'])) {
 
                 /** @var ilExamOrgaNote[] $notes */
-                $notes = ilExamOrgaNote::where(['record_id' => $entry['id']])
-                                       ->where(['note' => $entry['note']])->get();
-                if (!empty($notes)) {
-                    $note = array_pop($notes);
-                    $found_records[] = $note->record_id;
-                    $found_notes[] = $note->id;
-                }
-                else {
-                    $note = new ilExamOrgaNote();
-                    $note->record_id = $entry['id'];
-                    $note->code = $entry['code'];
-                    $note->note = $entry['note'];
-                    $note->save();
-                    $found_records[] = $note->record_id;
-                    $found_notes[] = $note->id;
+                $notes = [];
+                foreach (ilExamOrgaNote::where(['record_id' => $entry['id']])->get() as $note) {
+                    $notes[$note->note] = $note;
                 }
 
-                $parsed[] = [
+                foreach ($entry['notes'] as $data) {
+
+                    if (isset($notes[$data['note']])) {
+                        // should not be deleted
+                        unset($notes[$data['note']]);
+                    } else {
+                        // add new note
+                        $note = new ilExamOrgaNote();
+                        $note->record_id = $entry['id'];
+                        $note->code = $data['code'];
+                        $note->note = $data['note'];
+                        $note->create();
+                    }
+                }
+                // delete the not found notes
+                foreach ($notes as $note) {
+                    $note->delete();
+                }
+
+                $return[] = [
                     'id' => (int) $entry['id'],
-                    'code' => (int) $entry['code'],
-                    'note' => (string) $entry['note']
+                    'notes' => $this->getNotesArray($entry['id'])
                 ];
             }
             else {
@@ -510,14 +553,7 @@ class ilExamOrgaServer extends Slim\App
             }
         }
 
-        // delete all notes that where not found for the records
-        $cond = $this->db->in('record_id', array_unique($found_records), false, 'integer')
-            . ' AND ' . $this->db->in('id', array_unique($found_notes), true, 'integer');
-        foreach (ilExamOrgaNote::where($cond)->get() as $note) {
-            $note->delete();
-        }
-
-        return $this->setResponse(StatusCode::HTTP_OK, $found_notes);
+        return $this->setResponse(StatusCode::HTTP_OK, $return);
     }
 
 
@@ -535,6 +571,26 @@ class ilExamOrgaServer extends Slim\App
             ->withJson($json);
     }
 
+
+    /**
+     * Get the relevant records
+     * @return ilExamOrgaRecord[]
+     */
+    public function getRecords()
+    {
+        return ilExamOrgaRecord::where($this->record_condition)->get();
+    }
+
+    /**
+     * Get the relevant record ids
+     * @return int[]
+     */
+    public function getRecordsIds()
+    {
+        return array_keys(ilExamOrgaRecord::where($this->record_condition)->getArray('id', []));
+    }
+
+
     /**
      * get an array of links for a record
      * @param $record_id
@@ -542,7 +598,6 @@ class ilExamOrgaServer extends Slim\App
      */
     protected function getLinksArray($record_id)
     {
-        require_once(__DIR__ . '/links/class.ilExamOrgaLink.php');
 
         /** @var ilExamOrgaLink $link */
         $links = [];
@@ -563,7 +618,6 @@ class ilExamOrgaServer extends Slim\App
      */
     protected function getNotesArray($record_id)
     {
-        require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
 
         /** @var ilExamOrgaNote $note */
         $notes = [];

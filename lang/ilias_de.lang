@@ -101,4 +101,6 @@ code#:#Code
 note#:#Hinweis
 delete_note#:#Hinweis löschen
 note_deleted#:#Der Hinweis wurde gelöscht
+users_per_session#:#Meeting-Größe
+users_per_session_info#:#Anzahl der Prüflinge in einem Zoom-Meeting. Für jeden Durchgang werden mehrere parallele Meetings angelegt. Die Anzahl paralleler Meetings pro Durchgang berechnet sich so:<br /> (Teilnehmer / Durchgänge) / Meeting-Größe
 

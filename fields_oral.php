@@ -137,7 +137,7 @@ $fields = [
       'name' => 'head_record',
       'type' => ilExamOrgaField::TYPE_HEADLINE,
       'title' => 'Angaben zu diesem Eintrag',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
+      'status' => ilExamOrgaField::STATUS_FIXED
   ],
   [
       'name' => 'id',
@@ -175,7 +175,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_USER_ID,
       'title' => 'Besitzer',
       'info' => 'Der Besitzer kann diesen Eintrag bearbeiten',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
+      'status' => ilExamOrgaField::STATUS_LOCKED
   ],
 ];
 

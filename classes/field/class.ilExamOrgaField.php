@@ -21,9 +21,9 @@ class ilExamOrgaField
     const TYPE_RUN_LINKS = 'run_links';
 
     const STATUS_PUBLIC = 'public';     // visible to all users, editable for owner and admins
-    const STATUS_HIDDEN = 'hidden';     // hidden for all users
     const STATUS_LOCKED  = 'locked';    // visible to all users, read-only for owner, editable for admins
     const STATUS_FIXED = 'fixed';       // visible to all users, not editable
+    const STATUS_HIDDEN = 'hidden';     // hidden for all users, editable for admins
 
 
     /** @var ilObjExamOrga */

@@ -284,7 +284,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'title' => 'Finale Abnahme',
       'info' => 'Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmer importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.',
-      'status' => ilExamOrgaField::STATUS_LOCKED
+      'status' => ilExamOrgaField::STATUS_PUBLIC
   ],
   [
       'name' => 'reg_code',
@@ -306,7 +306,7 @@ $fields = [
       'title' => 'Zoom-Links zur Fernprüfung',
       'info' => 'Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind',
       'size' => 10,
-      'status' => ilExamOrgaField::STATUS_LOCKED
+      'status' => ilExamOrgaField::STATUS_FIXED
   ],
 
   //////////////////////////////////////////////////////////
@@ -386,7 +386,7 @@ $fields = [
       'name' => 'head_record',
       'type' => ilExamOrgaField::TYPE_HEADLINE,
       'title' => 'Angaben zu diesem Eintrag',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
+      'status' => ilExamOrgaField::STATUS_FIXED
   ],
   [
       'name' => 'id',
@@ -424,7 +424,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_USER_ID,
       'title' => 'Besitzer',
       'info' => 'Der Besitzer kann diesen Eintrag bearbeiten',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
+      'status' => ilExamOrgaField::STATUS_LOCKED
   ],
 ];
 

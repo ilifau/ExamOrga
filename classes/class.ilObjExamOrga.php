@@ -112,8 +112,7 @@ class ilObjExamOrga extends ilObjectPlugin
 
 	/**
 	 * Get online
-	 *
-	 * @return        boolean                online
+	 * @return bool
 	 */
     public function isOnline()
 	{
@@ -139,6 +138,7 @@ class ilObjExamOrga extends ilObjectPlugin
 
     /**
      * Check if the current user can add a record
+     * @return bool
      */
     public function canAddRecord() {
         return $this->access->checkAccess('add_entry', '', $this->getRefId());
@@ -147,6 +147,7 @@ class ilObjExamOrga extends ilObjectPlugin
     /**
      * Check if the current user can view a certain record
      * @param ilExamOrgaRecord $record
+     * @return bool
      */
     public function canViewRecord($record) {
         return ($this->canViewAllRecords() || $record->isOwner());
@@ -164,9 +165,28 @@ class ilObjExamOrga extends ilObjectPlugin
     /**
      * Check if the current user can edit a certain record
      * @param ilExamOrgaRecord $record
+     * @return bool
      */
     public function canDeleteRecord($record) {
         return ($this->canEditAllRecords() || $record->isOwner());
+    }
+
+
+    /**
+     * Check if a field can be viewed
+     * @var ilExamOrgaField $field
+     * @return bool
+     */
+    public function canViewField($field) {
+        switch ($field->status) {
+            case ilExamOrgaField::STATUS_PUBLIC:
+            case ilExamOrgaField::STATUS_FIXED:
+            case ilExamOrgaField::STATUS_LOCKED:
+                return true;
+            case ilExamOrgaField::STATUS_HIDDEN:
+                return $this->canEditAllRecords();
+        }
+        return false;
     }
 
     /**
@@ -180,8 +200,8 @@ class ilObjExamOrga extends ilObjectPlugin
                 return true;
             case ilExamOrgaField::STATUS_FIXED:
                 return false;
-            case ilExamOrgaField::STATUS_HIDDEN:
             case ilExamOrgaField::STATUS_LOCKED:
+            case ilExamOrgaField::STATUS_HIDDEN:
                return $this->canEditAllRecords();
         }
         return false;
@@ -217,8 +237,7 @@ class ilObjExamOrga extends ilObjectPlugin
         $available = [];
 
         foreach ($this->fields as $field) {
-            if ($this->canEditAllRecords() || $field->status !== ilExamOrgaField::STATUS_HIDDEN
-                && $field->status !== ilExamOrgaField::STATUS_FIXED) {
+            if ($this->canViewField($field)) {
                 $available[$field->name] = $field;
             }
         }

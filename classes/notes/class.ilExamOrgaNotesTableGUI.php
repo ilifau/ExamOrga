@@ -45,9 +45,10 @@ class ilExamOrgaNotesTableGUI extends ilTable2GUI
         $this->addColumn($this->plugin->txt('created_at'), 'created_at');
         $this->addColumn($this->plugin->txt('code'), 'code');
         $this->addColumn($this->plugin->txt('note'), 'note');
-        $this->addColumn($this->lng->txt('actions'));
+        $this->addColumn('');
 
         $this->setTitle($this->plugin->txt('notes'));
+        $this->setDescription($this->plugin->txt('notes_description'));
         $this->setFormName('notes');
         $this->setFormAction($this->ctrl->getFormAction($a_parent_obj, $a_parent_cmd));
 
@@ -56,6 +57,7 @@ class ilExamOrgaNotesTableGUI extends ilTable2GUI
 
         $this->setDefaultOrderField("created_at");
         $this->setDefaultOrderDirection("asc");
+        $this->setExternalSegmentation(true);
 
         $this->disable('sort');
         //$this->disable('header');

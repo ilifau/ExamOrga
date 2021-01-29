@@ -96,6 +96,7 @@ load_campus_exams#:#Aus Campus aktualisieren
 generate_db_update#:#Update-Step generieren
 exam_not_found#:#Zur eingegebenen Nummer %s wurde keine Prüfung gefunden!
 notes#:#Hinweise zur Überarbeitung
+notes_description#:#Die folgenden Hinweise wurden automatisch beim Anlegen der Zoom-Meetings erzeugt und deuten auf Probleme hin. Bitte überarbeiten Sie Ihren Eintrag entsprechend.  Sie können einen erledigen Hinweis löschen. Beim nächten Update der Zoom-Meetings werden die Hinweise entsprechend der noch vorhandenen Probleme aktualisiert.
 created_at#:#Erstellt am
 code#:#Code
 note#:#Hinweis
@@ -103,4 +104,8 @@ delete_note#:#Hinweis löschen
 note_deleted#:#Der Hinweis wurde gelöscht
 users_per_session#:#Meeting-Größe
 users_per_session_info#:#Anzahl der Prüflinge in einem Zoom-Meeting. Für jeden Durchgang werden mehrere parallele Meetings angelegt. Die Anzahl paralleler Meetings pro Durchgang berechnet sich so:<br /> (Teilnehmer / Durchgänge) / Meeting-Größe
-
+notes_filter_zoom_any#:#Zoom: Hinweis vorhanden
+notes_filter_zoom_meeting#:#Zoom: Meeting-Problem
+notes_filter_zoom_monitor#:#Zoom: Aufsichten-Problem
+back_to_list#:#Zurück zur Liste
+alert_note#:#Hat Hinweis zur Überarbeitung

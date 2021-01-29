@@ -19,6 +19,7 @@ class ilExamOrgaField
     const TYPE_LOGINS = 'logins';
     const TYPE_EXAMS = 'exams';
     const TYPE_RUN_LINKS = 'run_links';
+    const TYPE_NOTES = 'notes';
 
     const STATUS_PUBLIC = 'public';     // visible to all users, editable for owner and admins
     const STATUS_LOCKED  = 'locked';    // visible to all users, read-only for owner, editable for admins
@@ -145,6 +146,10 @@ class ilExamOrgaField
                 require_once (__DIR__ . '/class.ilExamOrgaRunLinksField.php');
                 return new ilExamOrgaRunLinksField($object, $definition);
 
+            case self::TYPE_NOTES:
+                require_once (__DIR__ . '/class.ilExamOrgaNotesField.php');
+                return new ilExamOrgaNotesField($object, $definition);
+
             default:
                 return new self($object, $definition);
         }
@@ -200,6 +205,14 @@ class ilExamOrgaField
         else {
             $this->status = self::STATUS_PUBLIC;
         }
+    }
+
+    /**
+     * Preload the data for the list view
+     * @param ilExamOrgaRecord[] $records
+     */
+    public function preload($records) {
+        // to b overridden
     }
 
     /**

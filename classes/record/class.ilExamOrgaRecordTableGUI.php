@@ -21,6 +21,12 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
     /** @var ilExamOrgaField[] */
     protected $fields;
 
+    /** @var int[] */
+    protected $ids_with_notes = [];
+
+    /** @var string */
+    protected $icon_alert;
+
     /**
      * Constructor
      * @param ilExamOrgaRecordGUI $a_parent_obj
@@ -37,6 +43,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $this->object = $a_parent_obj->object;
         $this->plugin = $a_parent_obj->plugin;
         $this->fields = $this->object->getAvailableFields();
+        $this->icon_alert = ilUtil::getImagePath('icon_alert.svg');
 
         $this->setId('ilExamOrgaRecordTableGUI');
         $this->setPrefix('ilExamOrgaRecordTableGUI');
@@ -44,6 +51,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         parent::__construct($a_parent_obj, $a_parent_cmd);
 
         $this->addColumn('', '', '1%', true);
+        $this->addColumn('');
 
         // selected columns
         foreach ($this->getSelectableColumns() as $name => $settings) {
@@ -158,13 +166,23 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         // prepare row data (fillRow expects array)
        $data = [];
-        foreach ($recordList->get() as $record) {
+       $records = $recordList->get();
+       foreach ($records as $record) {
             $row = [];
-            $row['id'] = $record->getValue('id');
+            $row['id'] = $record->id;
             $row['record'] = $record;
             $data[] = $row;
        }
        $this->setData($data);
+
+       // allow fields with external date a bulk load
+       foreach ($this->fields as $field) {
+           $field->preload($records);
+       }
+
+       // get info for alert sign
+       require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
+       $this->ids_with_notes = ilExamOrgaNote::getRecordIdsWithNotes($records);
     }
 
 
@@ -187,12 +205,33 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 	 */
 	public function fillRow($data)
 	{
+	    global $DIC;
+
 		$id = $data['id'];
 		$record = $data['record'];
+        $this->ctrl->setParameter($this->parent_obj, 'id', $id);
 
 		// checkbox
         if ($this->object->canDeleteRecord($record)) {
             $this->tpl->setVariable('ID', $id);
+        }
+
+        $renderer = $DIC->ui()->renderer();
+        $factory = $DIC->ui()->factory();
+
+        if ($this->object->canEditRecord($record)) {
+            $button = $factory->button()->standard('<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>',
+                $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
+            $this->tpl->setVariable('MAIN_BUTTON', $renderer->render($button));
+        }
+        else {
+            $button = $factory->button()->standard('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
+            $this->tpl->setVariable('MAIN_BUTTON', $renderer->render($button));
+        }
+
+        if (in_array($id, $this->ids_with_notes)) {
+            $this->tpl->setVariable('SRC_ALERT', $this->icon_alert);
+            $this->tpl->setVariable('ALT_ALERT', $this->plugin->txt('alert_note'));
         }
 
         // show the columns
@@ -217,7 +256,6 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $list->setListTitle($this->lng->txt('actions'));
 
         // add actions
-        $this->ctrl->setParameter($this->parent_obj, 'id', $id);
         if ($this->object->canEditRecord($record)) {
             $list->addItem($this->plugin->txt('edit_record'), '', $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
         }

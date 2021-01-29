@@ -110,6 +110,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function viewDetails()
     {
+        $this->setRecordToolbar();
+
         /** @var ilExamOrgaRecord $record */
         $record = ilExamOrgaRecord::find((int) $_GET['id']);
         $this->checkViewRecord($record);
@@ -128,8 +130,15 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
         }
 
-        $form->addCommandButton('listRecords', $this->lng->txt('close'));
-        $this->tpl->setContent($form->getHTML());
+        $notesTable = new ilExamOrgaNotesTableGUI($this, 'viewDetails');
+        $notesTable->loadData($record);
+
+        if ($notesTable->dataExists()) {
+            $this->tpl->setContent( $notesTable->getHTML() . $form->getHTML());
+        }
+        else {
+            $this->tpl->setContent( $form->getHTML());
+        }
     }
 
     /**
@@ -175,6 +184,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     protected function editRecord()
     {
         $this->ctrl->saveParameter($this, 'id');
+        $this->setRecordToolbar();
 
         /** @var ilExamOrgaRecord $record */
         $record = ilExamOrgaRecord::find((int) $_GET['id']);
@@ -185,7 +195,12 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $notesTable = new ilExamOrgaNotesTableGUI($this, 'editRecord');
         $notesTable->loadData($record);
 
-        $this->tpl->setContent($form->getHTML() . $notesTable->getHTML());
+        if ($notesTable->dataExists()) {
+            $this->tpl->setContent( $notesTable->getHTML() . $form->getHTML());
+        }
+        else {
+            $this->tpl->setContent( $form->getHTML());
+        }
     }
 
     /**
@@ -238,7 +253,6 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         else {
             $form->addCommandButton('updateRecord', $this->plugin->txt('update_record'));
         }
-        $form->addCommandButton('listRecords', $this->lng->txt('close'));
 
         return $form;
     }
@@ -287,6 +301,17 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $button->setUrl($this->ctrl->getLinkTarget($this, 'excelImportForm'));
             $this->toolbar->addButtonInstance($button);
         }
+    }
+
+    /**
+     * Set the toolbar for a record view
+     */
+    protected function setRecordToolbar()
+    {
+        $button = ilLinkButton::getInstance();
+        $button->setCaption('« ' . $this->plugin->txt('back_to_list'), false);
+        $button->setUrl($this->ctrl->getLinkTarget($this, 'listRecords'));
+        $this->toolbar->addButtonInstance($button);
     }
 
 

@@ -68,6 +68,11 @@ class ilExamOrgaRecordExcel extends ilExcel
 
         $recordList->orderBy('id');
         $this->records = $recordList->get();
+
+        // preload field data
+        foreach ($this->fields as $field) {
+            $field->preload($this->records);
+        }
     }
 
 

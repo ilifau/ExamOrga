@@ -3,12 +3,36 @@
 
 class ilExamOrgaRunLinksField extends ilExamOrgaField
 {
+    /** @var ilExamOrgaLink[][] */
+    protected $links;
+
+    /**
+     * Preload the data for the list view
+     * @param ilExamOrgaRecord[] $records
+     */
+    public function preload($records)
+    {
+        global $DIC;
+
+        $ids = [];
+        foreach ($records as $record) {
+            $ids[] = $record->id;
+        }
+
+        require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
+        $links = ilExamOrgaLink::where($DIC->database()->in('record_id', $ids, false, 'integer'))->orderBy('created_at')->get();
+
+        /** @var ilExamOrgaLink $link */
+        foreach($links as $link) {
+            $this->links[$link->record_id][$link->id] = $link;
+        }
+    }
     /**
      * @inheritdoc
      */
     public function getListHTML($record) {
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return ilExamOrgaLink::getRecordLinksHtml($record->id);
+        return ilExamOrgaLink::getRecordLinksHtml($record->id, $this->links[$record->id]);
     }
 
     /**
@@ -68,8 +92,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      */
     public function getExcelValue($record, $excel) {
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return ilExamOrgaLink::getRecordLinksText($record->id);
-
+        return ilExamOrgaLink::getRecordLinksText($record->id, $this->links[$record->id]);
     }
 
     /**

@@ -111,11 +111,14 @@ class ilExamOrgaLink extends ActiveRecord
 
     /**
      * Get a textual representation of the links
+     * @param self[]|null $links
+     * @return string
      */
-    public static function getRecordLinksText($record_id)
+    public static function getRecordLinksText($record_id, $links = null)
     {
-        /** @var self[] $links */
-        $links = self::where(['record_id' => $record_id])->orderBy('exam_run')->get();
+        if (!isset($links)) {
+            $links = self::where(['record_id' => $record_id])->orderBy('exam_run')->get();
+        }
 
         $entries = [];
         foreach ($links as $link) {
@@ -127,11 +130,14 @@ class ilExamOrgaLink extends ActiveRecord
 
     /**
      * Get a textual representation of the links
+     * @param self[]|null $links
+     * @return string
      */
-    public static function getRecordLinksHtml($record_id)
+    public static function getRecordLinksHtml($record_id, $links = null)
     {
-        /** @var self[] $links */
-        $links = self::where(['record_id' => $record_id])->orderBy('exam_run')->get();
+        if (!isset($links)) {
+            $links = self::where(['record_id' => $record_id])->orderBy('exam_run')->get();
+        }
 
         $entries = [];
         foreach ($links as $link) {

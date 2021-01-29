@@ -131,6 +131,14 @@ $fields = [
       'size' => 10,
       'status' => ilExamOrgaField::STATUS_FIXED
    ],
+    [
+        'name' => 'notes',
+        'type' => ilExamOrgaField::TYPE_NOTES,
+        'title' => 'Hinweise zur Überarbeitung',
+        'size' => 10,
+        'status' => ilExamOrgaField::STATUS_FIXED,
+        'filter' => true
+    ],
 
     /////////////////////////////////////////////////////////////
   [

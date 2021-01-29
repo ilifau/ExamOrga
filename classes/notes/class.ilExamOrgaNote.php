@@ -109,4 +109,49 @@ class ilExamOrgaNote extends ActiveRecord
 
         parent::create();
     }
+
+    /**
+     * Get a textual representation of the links
+     * @param self[]|null $notes
+     * @return string
+     */
+    public static function getRecordNotesText($record_id, $notes = null)
+    {
+        if (!isset($notes)) {
+            $notes = self::where(['record_id' => $record_id])->orderBy('created_at')->get();
+        }
+
+        $entries = [];
+        foreach ($notes as $note) {
+            $entries[] = $note->code . "\t" . $note->note;
+        }
+
+        return implode("\n", $entries);
+    }
+
+    /**
+     * Get the ids if records with notes
+     * @param ilExamOrgaRecord[] $records
+     * @return array
+     */
+    public static function getRecordIdsWithNotes($records)
+    {
+        global $DIC;
+        $db = $DIC->database();
+
+        $ids = [];
+        foreach ($records as $record) {
+            $ids[] = $record->id;
+        }
+        $query = "SELECT DISTINCT record_id FROM xamo_note WHERE "
+            . $db->in('record_id', $ids, false, 'integer');
+        $result = $db->query($query);
+
+        $record_ids = [];
+        while($row = $db->fetchAssoc($result)) {
+            $record_ids[] = $row['record_id'];
+        }
+        return $record_ids;
+    }
+
 }

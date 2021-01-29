@@ -217,7 +217,7 @@ $fields = [
       'name' => 'monitors',
       'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Aufsichten',
-      'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.',
+      'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.<p><strong>WICHTIG: Die ausgewählten StudOn-Accounts müssen mit IdM-Konten verknüpft sein und die Inhaber müssen sich vorab einmal per Single Sign-On in Zoom angemeldet haben, damit das funktioniert.</strong></p>',
   ],
   [
       'name' => 'remarks',
@@ -304,9 +304,17 @@ $fields = [
       'name' => 'run_links',
       'type' => ilExamOrgaField::TYPE_RUN_LINKS,
       'title' => 'Zoom-Links zur Fernprüfung',
-      'info' => 'Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind',
+      'info' => 'Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind. Die Prüfung auf Korrektheit beginnt einen Monat vor dem Prüfungsdatum. <strong>Die Zoom-Meetings weren zwei Wochen vor dem Prüfungstrmin angelegt.</strong> Ein Abgleich findet alle halbe Stunden statt. Bitte beachten sie die dabei generierten Hinweise zur Überarbeitung.',
       'size' => 10,
       'status' => ilExamOrgaField::STATUS_FIXED
+  ],
+  [
+      'name' => 'notes',
+      'type' => ilExamOrgaField::TYPE_NOTES,
+      'title' => 'Hinweise zur Überarbeitung',
+      'size' => 10,
+      'status' => ilExamOrgaField::STATUS_FIXED,
+      'filter' => true,
   ],
 
   //////////////////////////////////////////////////////////

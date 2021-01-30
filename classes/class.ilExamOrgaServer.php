@@ -146,14 +146,14 @@ class ilExamOrgaServer extends Slim\App
         }
 
         // Authorization
-//        $this->token = $this->plugin->getConfig()->get('api_token');
-//        if (!empty($this->token)) {
-//            $authorization = $this->request->getHeaderLine('Authorization');
-//            if ($authorization != 'Bearer ' . $this->token) {
-//                $this->setResponse(StatusCode::HTTP_UNAUTHORIZED, 'unauthorized');
-//                return false;
-//            }
-//        }
+        $this->token = $this->plugin->getConfig()->get('api_token');
+        if (!empty($this->token)) {
+            $authorization = $this->request->getHeaderLine('Authorization');
+            if ($authorization != 'Bearer ' . $this->token) {
+                $this->setResponse(StatusCode::HTTP_UNAUTHORIZED, 'unauthorized');
+                return false;
+            }
+        }
 
         // Determine the mode
         switch((string) $this->params['mode']) {
@@ -518,17 +518,18 @@ class ilExamOrgaServer extends Slim\App
 
             if (is_int($entry['id']) && is_array($entry['notes'])) {
 
-                /** @var ilExamOrgaNote[] $notes */
-                $notes = [];
-                foreach (ilExamOrgaNote::where(['record_id' => $entry['id']])->get() as $note) {
-                    $notes[$note->note] = $note;
+                // get the existing notes, clustered by
+                /** @var ilExamOrgaNote[] $existing */
+                $existing = [];
+                foreach (ilExamOrgaNote::where(['record_id' => $entry['id']])->orderBy('created_at')->get() as $note) {
+                    $existing[$note->note][] = $note;
                 }
 
                 foreach ($entry['notes'] as $data) {
 
-                    if (isset($notes[$data['note']])) {
-                        // should not be deleted
-                        unset($notes[$data['note']]);
+                    if (is_array($existing[$data['note']])) {
+                        // first note with the same message should not be deleted
+                        array_shift($existing[$data['note']]);
                     } else {
                         // add new note
                         $note = new ilExamOrgaNote();
@@ -538,9 +539,11 @@ class ilExamOrgaServer extends Slim\App
                         $note->create();
                     }
                 }
-                // delete the not found notes
-                foreach ($notes as $note) {
-                    $note->delete();
+                // delete the not found notes and double notes
+                foreach ($existing as $text => $notes) {
+                    foreach ($notes as $note) {
+                        $note->delete();
+                    }
                 }
 
                 $return[] = [

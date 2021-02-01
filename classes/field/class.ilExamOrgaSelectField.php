@@ -42,7 +42,7 @@ class ilExamOrgaSelectField extends ilExamOrgaField
      * @inheritdoc
      */
     public function setByForm($record, $form) {
-        $value = $form->getInput($this->getPostvar());
+        $value = trim($form->getInput($this->getPostvar()));
         $this->setValue($record, $value);
     }
 

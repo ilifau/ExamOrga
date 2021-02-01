@@ -331,6 +331,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_SELECT,
       'title' => 'Agentin',
       'options' => [
+          ' ' => 'Nicht gewählt',
         'Silvana',
         'Mona',
         'Steffi',

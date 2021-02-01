@@ -109,3 +109,5 @@ notes_filter_zoom_meeting#:#Zoom: Meeting-Problem
 notes_filter_zoom_monitor#:#Zoom: Aufsichten-Problem
 back_to_list#:#Zurück zur Liste
 alert_note#:#Hat Hinweis zur Überarbeitung
+login_not_found#:#Zum Eintrag "%s" wurde kein StudOn-Konto gefunden!
+idm_account_not_found#:#Der StudOn-Account "%s" ist mit keinem IdM-Konto verknüpft.

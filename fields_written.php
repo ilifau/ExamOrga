@@ -218,6 +218,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Aufsichten',
       'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.<p><strong>WICHTIG: Die ausgewählten StudOn-Accounts müssen mit IdM-Konten verknüpft sein und die Inhaber müssen sich vorab einmal per Single Sign-On in Zoom angemeldet haben, damit das funktioniert.</strong></p>',
+      'require_idm' => true
   ],
   [
       'name' => 'remarks',

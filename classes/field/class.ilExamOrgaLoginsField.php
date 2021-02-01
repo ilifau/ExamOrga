@@ -27,12 +27,14 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
 
         $item->setRequired($this->required);
         $item->setDisabled(!$this->object->canEditField($this));
+        $item->requireIdmAccount($this->require_idm);
 
         if (isset($this->info)) {
             $item->setInfo($this->info);
         }
 
-        $item->setValueByArray([$this->getPostvar() => ilExamOrgaLoginsInputGUI::_getArray($this->getValue($record))]);
+        $item->setValueByArray([$this->getPostvar() =>
+            ilExamOrgaLoginsInputGUI::_addNames(ilExamOrgaLoginsInputGUI::_getArray($this->getValue($record)))]);
         return $item;
     }
 
@@ -43,7 +45,8 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
         /** @var  ilExamOrgaLoginsInputGUI $item */
         $item = $form->getItemByPostVar($this->getPostvar());
 
-        $this->setValue($record, ilExamOrgaLoginsInputGUI::_getString($form->getInput($this->getPostvar())));
+        $this->setValue($record,
+            ilExamOrgaLoginsInputGUI::_getString(ilExamOrgaLoginsInputGUI::_removeNames($form->getInput($this->getPostvar()))));
     }
 
     /**

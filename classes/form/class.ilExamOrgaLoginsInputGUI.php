@@ -11,6 +11,9 @@
  */
 class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
 {
+    protected $require_idm_account;
+
+
     /**
      * ilExamOrgaLoginsInputGUI constructor.
      * @param string $a_title
@@ -30,6 +33,7 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
 
         $this->setMulti(true);
         $this->setDataSource( $ajax_url);
+        $this->setInlineStyle('width: 30em;');
     }
 
     /**
@@ -65,11 +69,52 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
      */
     public function checkInput()
     {
-        // fault tolerance
-        if ($this->getMulti() && !is_array($_POST[$this->getPostVar()])) {
-            $_POST[$this->getPostVar()] = [];
+        // will do standard checks and prepare array for multi
+        if (!parent::checkInput()) {
+            return false;
+        }
+
+        if ($this->isIdmAccountRequired()) {
+            require_once('Services/Idm/classes/class.ilIdmData.php');
+            $idmData = new ilIdmData();
+        }
+
+        foreach ((array) $_POST[$this->getPostVar()] as $entry) {
+            if (!empty(trim($entry))) {
+                $login = self::_removeNames([$entry])[0];
+                $usr_id = ilObjUser::_loginExists($login);
+                if (!$usr_id) {
+                    $this->setAlert(sprintf(ilExamOrgaPlugin::getInstance()->txt('login_not_found'), $entry));
+                    return false;
+                }
+                elseif ($this->isIdmAccountRequired()) {
+                    $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
+                    if (!$idmData->read($ext_account)) {
+                        $this->setAlert(sprintf(ilExamOrgaPlugin::getInstance()->txt('idm_account_not_found'), $login));
+                        return false;
+                    }
+                }
+            }
         }
         return parent::checkInput();
+    }
+
+    /**
+     * Require an external account when input is checked
+     * @param bool $require
+     */
+    public function requireIdmAccount($require = true)
+    {
+        $this->require_idm_account = (bool) $require;
+    }
+
+    /**
+     * Is an external account required?
+     * @return bool
+     */
+    public function isIdmAccountRequired()
+    {
+        return (bool) $this->require_idm_account;
     }
 
     /**
@@ -99,5 +144,60 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
     public static function _getString($array)
     {
         return implode(', ', $array);
+    }
+
+    /**
+     * Add the names to a list of logins
+     * Login will be put in braces
+     * @param array $logins
+     * @return array
+     */
+    public static function _addNames($logins = [])
+    {
+        global $DIC;
+        $db = $DIC->database();
+
+        $logins = (array) $logins;
+
+        $logins2 = [];
+        foreach($logins as $login) {
+            $logins2[$login] = $login;
+        }
+
+        $query = "SELECT firstname, lastname, login, ext_account FROM usr_data WHERE "
+            . $db->in('login', $logins, false, 'text');
+        $result = $db->query($query);
+
+        while ($row = $db->fetchAssoc($result)) {
+            if (isset($logins2[$row['login']])) {
+                $logins2[$row['login']] = $row['lastname'] . ', ' . $row['firstname'] . ' [' . $row['login'] . ']';
+            }
+        }
+
+        return array_values($logins2);
+    }
+
+    /**
+     * Remove the names from a list of logins
+     * Login will be taken out of braces
+     * @param array $logins
+     * @return array
+     */
+    public static function _removeNames($logins = [])
+    {
+        $logins = (array) $logins;
+
+        $logins2 = [];
+        foreach ($logins as $login) {
+            $matches = [];
+            if (preg_match('/.*\[(.+)\].*/', $login, $matches)) {
+                $logins2[] = $matches[1];
+            }
+            else {
+                $logins2[] = $login;
+            }
+        }
+
+        return $logins2;
     }
 }

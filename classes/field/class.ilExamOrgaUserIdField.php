@@ -32,7 +32,8 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
             $item->setInfo($this->info);
         }
 
-        $item->setValue(ilObjUser::_lookupLogin($this->getValue($record)));
+        $login = ilObjUser::_lookupLogin($this->getValue($record));
+        $item->setValue(ilExamOrgaLoginsInputGUI::_addNames($login)[0]);
         return $item;
     }
 
@@ -43,8 +44,8 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
         /** @var  ilExamOrgaLoginsInputGUI $item */
         $item = $form->getItemByPostVar($this->getPostvar());
 
-        $user_id = ilObjUser::_lookupId($item->getValue());
-        $this->setValue($record, $user_id);
+        $login = ilExamOrgaLoginsInputGUI::_removeNames([$item->getValue()])[0];
+        $this->setValue($record, ilObjUser::_lookupId($login));
     }
 
     /**

@@ -69,6 +69,9 @@ class ilExamOrgaField
     /** @var string */
     public $status;
 
+    /** @var bool */
+    public $require_idm;
+
     /**
      * Get a new field object according to the definition
      * @param ilObjExamOrga $object
@@ -173,6 +176,7 @@ class ilExamOrgaField
         $this->multi = (bool) $definition['multi'];
         $this->filter = (bool) $definition['filter'];
         $this->default = (bool) $definition['default'];
+        $this->require_idm = (bool) $definition['require_idm'];
 
         // title
         if (isset($definition['title'])) {

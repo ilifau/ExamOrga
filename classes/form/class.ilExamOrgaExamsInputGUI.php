@@ -9,7 +9,7 @@
  * @ilCtrl_Calls ilExamOrgaExamsInputGUI: ilRepositorySearchGUI
  *
  */
-class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
+class ilExamOrgaExamsInputGUI extends ilTextInputGUI
 {
     /**
      * @var string
@@ -141,13 +141,13 @@ class ilExamOrgaExamsInputGUI extends ilDclTextInputGUI
      */
     public static function _getArray($value)
     {
-        // ilDclGenericMultiInputGUI starts counting of its inputs with 2
-        $i = 2;
-        $users = [];
-        foreach (explode(',', (string) $value) as $user) {
-            $users[$i++] = $user;
+        $exams = [];
+        foreach (explode(',', (string) $value) as $exam) {
+            if (!empty(trim($exam))) {
+                $exams[] = trim($exam);
+            }
         }
-        return $users;
+        return $exams;
     }
 
 

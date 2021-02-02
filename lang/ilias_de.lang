@@ -111,3 +111,4 @@ back_to_list#:#Zurück zur Liste
 alert_note#:#Hat Hinweis zur Überarbeitung
 login_not_found#:#Zum Eintrag "%s" wurde kein StudOn-Konto gefunden!
 idm_account_not_found#:#Der StudOn-Account "%s" ist mit keinem IdM-Konto verknüpft.
+idm_accounts_not_found#:#Die folgenden StudOn-Accounts sind mit keinem IdM-Konto verknüpft: %s

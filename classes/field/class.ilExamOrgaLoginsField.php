@@ -29,8 +29,34 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
         $item->setDisabled(!$this->object->canEditField($this));
         $item->requireIdmAccount($this->require_idm);
 
-        if (isset($this->info)) {
-            $item->setInfo($this->info);
+        $info = [];
+        if (!empty ($this->info)) {
+            $info[] = $this->info;
+        }
+
+        if ($this->check_idm) {
+            require_once('Services/Idm/classes/class.ilIdmData.php');
+            $idmData = new ilIdmData();
+
+            $missing = [];
+            $logins = ilExamOrgaLoginsInputGUI::_getArray($this->getValue($record));
+            foreach ($logins as $login) {
+                $usr_id = ilObjUser::_loginExists($login);
+                if (!$usr_id) {
+                    $missing[] = $login;
+                }
+                $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
+                if (!$idmData->read($ext_account)) {
+                    $missing[] = $login;
+                }
+            }
+            if (!empty($missing)) {
+                $info[] = '<p><strong>' .sprintf($this->plugin->txt('idm_accounts_not_found'), implode(', ', $missing)) . '</strong></p>';
+            }
+        }
+
+        if (!empty ($info)) {
+            $item->setInfo(implode(' ', $info));
         }
 
         $item->setValueByArray([$this->getPostvar() =>

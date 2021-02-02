@@ -70,6 +70,9 @@ class ilExamOrgaField
     public $status;
 
     /** @var bool */
+    public $check_idm;
+
+    /** @var bool */
     public $require_idm;
 
     /**
@@ -176,7 +179,9 @@ class ilExamOrgaField
         $this->multi = (bool) $definition['multi'];
         $this->filter = (bool) $definition['filter'];
         $this->default = (bool) $definition['default'];
+        $this->check_idm = (bool) $definition['check_idm'];
         $this->require_idm = (bool) $definition['require_idm'];
+
 
         // title
         if (isset($definition['title'])) {

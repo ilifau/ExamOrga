@@ -434,6 +434,12 @@ class ilExamOrgaRecord extends ActiveRecord
         return ($this->owner_id == $DIC->user()->getId());
     }
 
+    public function isAdmin()
+    {
+        global $DIC;
+        return (in_array($DIC->user()->getLogin(), $this->getAdminLogins()));
+    }
+
     /**
      * Set creation info and create record
      */
@@ -487,4 +493,35 @@ class ilExamOrgaRecord extends ActiveRecord
         ilDatePresentation::setUseRelativeDates(false);
         return $this->fau_lecturer . ' / ' . (!empty($this->exam_title) ? $this->exam_title . ' / ' : ''). ilDatePresentation::formatDate($date);
     }
+
+    /**
+     * Get the logins of admins as an array
+     * @return string[]
+     */
+    public function getAdminLogins()
+    {
+        $logins = [];
+        foreach (explode(',', (string) $this->admins) as $login) {
+            if (!empty(trim($login))) {
+                $logins[] = trim($login);
+            }
+        }
+        return $logins;
+    }
+
+    /**
+     * Get the logins of correctors as an array
+     * @return string[]
+     */
+    public function getCorrectorLogins()
+    {
+        $logins = [];
+        foreach (explode(',', (string) $this->correctors) as $login) {
+            if (!empty(trim($login))) {
+                $logins[] = trim($login);
+            }
+        }
+        return $logins;
+    }
+
 }

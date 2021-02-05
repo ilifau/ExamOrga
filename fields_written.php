@@ -82,7 +82,7 @@ $fields = [
       'name' => 'mail_address',
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Mail-Adresse',
-      'info' => 'Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.',
+      'info' => 'Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.<p><strong>Diese Felder dienen zur Suche und Kontaktaufnahme. Für den Zugriff auf die Prüfungsplattform und die Zoom-Meetings verwwenden Sie bitte die Felder Prüfer/innen-Accounts, Korrektor/innen-Accounts und Aufsichten weiter unten.</strong></p>',
       'limit' => 200,
       'required' => true,
   ],
@@ -205,7 +205,7 @@ $fields = [
       'name' => 'admins',
       'type' => ilExamOrgaField::TYPE_LOGINS,
       'title' => 'Prüfer/innen-Accounts',
-      'info' => 'Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Als Ersteller dieses Eintrags bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.',
+      'info' => 'Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie können diesen Eintrag bearbeiten, bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Als Ersteller dieses Eintrags bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.',
   ],
   [
       'name' => 'correctors',

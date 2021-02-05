@@ -150,7 +150,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * @return bool
      */
     public function canViewRecord($record) {
-        return ($this->canViewAllRecords() || $record->isOwner());
+        return ($this->canViewAllRecords() || $record->isOwner() || $record->isAdmin());
     }
 
     /**
@@ -159,7 +159,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * @return bool
      */
     public function canEditRecord($record) {
-        return ($this->canEditAllRecords() || $record->isOwner());
+        return ($this->canEditAllRecords() || $record->isOwner() || $record->isAdmin());
     }
 
     /**
@@ -168,7 +168,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * @return bool
      */
     public function canDeleteRecord($record) {
-        return ($this->canEditAllRecords() || $record->isOwner());
+        return ($this->canEditAllRecords() || $record->isOwner() || $record->isAdmin());
     }
 
 

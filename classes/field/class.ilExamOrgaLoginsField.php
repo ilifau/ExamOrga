@@ -51,7 +51,7 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
                 }
             }
             if (!empty($missing)) {
-                $info[] = '<p><strong>' .sprintf($this->plugin->txt('idm_accounts_not_found'), implode(', ', $missing)) . '</strong></p>';
+                $info[] = '<p class="warning">' .sprintf($this->plugin->txt('idm_accounts_not_found'), implode(', ', $missing)) . '</p>';
             }
         }
 

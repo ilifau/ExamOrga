@@ -145,7 +145,9 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         // limit to owned records
         if (!$this->object->canViewAllRecords()) {
-            $recordList->where(['owner_id' => $DIC->user()->getId()]);
+            $cond = $DIC->database()->equals('owner_id', $DIC->user()->getId(), 'integer')
+                . ' OR ' .  $DIC->database()->like('admins', 'text', '%'.$DIC->user()->getLogin().'%', false);
+            $recordList->where($cond);
         }
 
         // apply the filter
@@ -224,7 +226,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
                 $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
             $this->tpl->setVariable('MAIN_BUTTON', $renderer->render($button));
         }
-        else {
+        elseif ($this->object->canViewRecord($record)) {
             $button = $factory->button()->standard('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
             $this->tpl->setVariable('MAIN_BUTTON', $renderer->render($button));
         }
@@ -259,7 +261,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         if ($this->object->canEditRecord($record)) {
             $list->addItem($this->plugin->txt('edit_record'), '', $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
         }
-        else {
+        elseif ($this->object->canViewRecord($record)) {
             $list->addItem($this->plugin->txt('view_details'), '', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
         }
 

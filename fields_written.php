@@ -136,7 +136,8 @@ $fields = [
       'options' => [
           'exam' => 'Klausur',
           'review' => 'Einsichtnahme',
-          'retry' => 'Nachholklausur'
+          'retry' => 'Nachholklausur',
+          'sample' => 'Probeklausur'
       ],
       'default' => true,
       'filter' => true,

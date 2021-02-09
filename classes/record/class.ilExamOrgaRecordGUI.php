@@ -84,8 +84,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $table = new ilExamOrgaRecordTableGUI($this, 'listRecords');
             $table->writeFilterToSession();
             $table->resetOffset();
-            $table->loadData();
-            $this->tpl->setContent($table->getHTML());
+
+            $this->ctrl->redirect($this, 'listRecords');
         }
     }
 
@@ -100,8 +100,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $table->resetOffset();
             $table->resetFilter();
             $table->initFilter();
-            $table->loadData();
-            $this->tpl->setContent($table->getHTML());
+
+            $this->ctrl->redirect($this, 'listRecords');
         }
     }
 

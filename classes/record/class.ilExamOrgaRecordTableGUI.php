@@ -218,17 +218,17 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
             $this->tpl->setVariable('ID', $id);
         }
 
-        $renderer = $DIC->ui()->renderer();
-        $factory = $DIC->ui()->factory();
-
         if ($this->object->canEditRecord($record)) {
-            $button = $factory->button()->standard('<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>',
-                $this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
-            $this->tpl->setVariable('MAIN_BUTTON', $renderer->render($button));
+            $button = ilLinkButton::getInstance();
+            $button->setUrl($this->ctrl->getLinkTarget($this->parent_obj,'editRecord'));
+            $button->setCaption('<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>', false);
+            $this->tpl->setVariable('MAIN_BUTTON', $button->render());
         }
         elseif ($this->object->canViewRecord($record)) {
-            $button = $factory->button()->standard('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', $this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
-            $this->tpl->setVariable('MAIN_BUTTON', $renderer->render($button));
+            $button = ilLinkButton::getInstance();
+            $button->setUrl($this->ctrl->getLinkTarget($this->parent_obj,'viewDetails'));
+            $button->setCaption('<span class="glyphicon glyphicon-search" aria-hidden="true"></span>', false);
+            $this->tpl->setVariable('MAIN_BUTTON', $button->render());
         }
 
         if (in_array($id, $this->ids_with_notes)) {

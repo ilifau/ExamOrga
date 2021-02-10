@@ -85,7 +85,13 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_TEXT,
       'title' => 'Alternativtermin',
   ],
-  [
+    [
+        'name' => 'head_organisation',
+        'type' => ilExamOrgaField::TYPE_HEADLINE,
+        'title' => 'Organisation',
+        'info' => 'Angaben zur Organisation und Durchführung der Prüfung',
+    ],
+    [
       'name' => 'exam_runs',
       'type' => ilExamOrgaField::TYPE_TIMES,
       'title' => 'Durchgänge',
@@ -117,7 +123,13 @@ $fields = [
         'info' => 'Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.<p><strong>WICHTIG: Die ausgewählten StudOn-Accounts müssen mit IdM-Konten verknüpft sein oder zumindest ihre E-Mail-Adresse in Zoom existieren und die Inhaber müssen sich vorab einmal per Single Sign-On in Zoom angemeldet haben, damit das funktioniert.</strong></p>',
         'check_idm' => true
     ],
-  [
+    [
+        'name' => 'head_process',
+        'type' => ilExamOrgaField::TYPE_HEADLINE,
+        'title' => 'Status',
+        'info' => 'Die folgenden Angaben werden vom RRZE ausgefüllt',
+    ],
+    [
       'name' => 'booking_approved',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'title' => 'Buchung abgeschlossen',
@@ -132,14 +144,6 @@ $fields = [
       'size' => 10,
       'status' => ilExamOrgaField::STATUS_FIXED
    ],
-    [
-        'name' => 'notes',
-        'type' => ilExamOrgaField::TYPE_NOTES,
-        'title' => 'Hinweise zur Überarbeitung',
-        'size' => 10,
-        'status' => ilExamOrgaField::STATUS_FIXED,
-        'filter' => true
-    ],
 
     /////////////////////////////////////////////////////////////
   [

@@ -164,6 +164,12 @@ $fields = [
       'title' => 'Alternativtermin',
   ],
   [
+      'name' => 'head_organisation',
+      'type' => ilExamOrgaField::TYPE_HEADLINE,
+      'title' => 'Organisation',
+      'info' => 'Angaben zur Organisation und Durchführung der Prüfung',
+  ],
+  [
       'name' => 'exam_runs',
       'type' => ilExamOrgaField::TYPE_TIMES,
       'title' => 'Durchgänge',
@@ -227,6 +233,13 @@ $fields = [
       'title' => 'Anmerkungen',
       'info' => 'Beschreiben Sie hier kurz eventuelle Besonderheiten zur Klausur (z.B. Einsatz von Video, Audio, Taschenrechner, Zufalls-Test, verschiedene Tests, Weiterleitung zur Umfrage etc.) ',
   ],
+  [
+      'name' => 'finally_approved',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Finale Abnahme',
+      'info' => 'Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmer importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.',
+      'status' => ilExamOrgaField::STATUS_PUBLIC
+  ],
   /////////////////////////////////////////////////////////
   [
       'name' => 'head_presence',
@@ -280,13 +293,6 @@ $fields = [
       'title' => 'Buchung abgeschlossen',
       'info' => 'Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.',
       'status' => ilExamOrgaField::STATUS_LOCKED
-  ],
-  [
-      'name' => 'finally_approved',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'Finale Abnahme',
-      'info' => 'Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmer importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.',
-      'status' => ilExamOrgaField::STATUS_PUBLIC
   ],
   [
       'name' => 'reg_code',

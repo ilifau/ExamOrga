@@ -364,6 +364,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_MULTISELECT,
       'title' => 'Bereitschaft',
       'options' => [
+        'Inke (D)',
         'Mona (D)',
         'Silvana (D)',
         'Steffi (D)',

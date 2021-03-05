@@ -243,4 +243,12 @@ class ilObjExamOrga extends ilObjectPlugin
         }
         return $available;
     }
+
+    /**
+     * Get the active record conditions
+     */
+    public function getActiveConditions() {
+        require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
+        return ilExamOrgaCondition::getActiveConditions($this->getId());
+    }
 }

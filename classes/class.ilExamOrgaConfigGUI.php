@@ -137,8 +137,8 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
      */
 	protected function generateDBUpdate()
     {
-        require_once (__DIR__ . '/notes/class.ilExamOrgaNote.php');
-        $arBuilder = new arBuilder(new ilExamOrgaNote());
+        require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
+        $arBuilder = new arBuilder(new ilExamOrgaCondition());
         $arBuilder->generateDBUpdateForInstallation();
     }
 
@@ -187,5 +187,3 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 		}
 	}
 }
-
-?>

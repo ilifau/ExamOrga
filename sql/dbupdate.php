@@ -519,4 +519,83 @@ if (! $ilDB->tableExists('xamo_note')) {
 
 }
 ?>
+<#10>
+<?php
+$fields = array(
+    'id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
 
+    ),
+    'obj_id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'reg_min_date' => array(
+        'type' => 'timestamp',
+
+    ),
+    'reg_max_date' => array(
+        'type' => 'timestamp',
+
+    ),
+    'reg_min_days_before' => array(
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'exam_formats' => array(
+        'type' => 'text',
+        'length' => '200',
+
+    ),
+    'exam_types' => array(
+        'type' => 'text',
+        'length' => '200',
+
+    ),
+    'exam_min_date' => array(
+        'type' => 'date',
+
+    ),
+    'exam_max_date' => array(
+        'type' => 'date',
+
+    ),
+    'max_exams_per_day' => array(
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'max_exams_per_week' => array(
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'max_exams_per_month' => array(
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'failure_message' => array(
+        'notnull' => '1',
+        'type' => 'text',
+        'length' => '2000',
+
+    ),
+
+);
+if (! $ilDB->tableExists('xamo_cond')) {
+    $ilDB->createTable('xamo_cond', $fields);
+    $ilDB->addPrimaryKey('xamo_cond', array( 'id' ));
+
+    $ilDB->addIndex('xamo_cond', ['obj_id'], 'i1');
+
+    if (! $ilDB->sequenceExists('xamo_cond')) {
+        $ilDB->createSequence('xamo_cond');
+    }
+}
+?>

@@ -169,6 +169,15 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                     $field->setByForm($record, $form);
                 }
             }
+
+            foreach ($this->object->getActiveConditions() as $cond) {
+                if (!$cond->checkRecord($record)) {
+                    ilUtil::sendFailure($cond->failure_message);
+                    $this->tpl->setContent($form->getHTML());
+                    return;
+                }
+            }
+
             $record->create();
 
             ilUtil::sendSuccess($this->plugin->txt("record_created"), true);
@@ -214,6 +223,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $record = ilExamOrgaRecord::find((int) $_GET['id']);
         $this->checkEditRecord($record);
 
+        $original = clone $record;
+
         $form = $this->initRecordForm($record);
         $form->setValuesByPost();
         if ($form->checkInput()) {
@@ -222,6 +233,15 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                     $field->setByForm($record, $form);
                 }
             }
+
+            foreach ($this->object->getActiveConditions() as $cond) {
+                if (!$cond->checkRecord($record) && $cond->checkRecord($original)) {
+                    ilUtil::sendFailure($cond->failure_message);
+                    $this->tpl->setContent($form->getHTML());
+                    return;
+                }
+            }
+
             $record->update();
 
             ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);

@@ -214,7 +214,6 @@ class ilExamOrgaCondition extends ActiveRecord
             $day = new ilDate(time(), IL_CAL_UNIX);
             $day->increment(ilDate::DAY, $this->reg_min_days_before);
             $compare = $day->get(IL_CAL_DATE);
-            log_var($compare);
 
             if ($record->exam_date < $compare) {
                 return false;

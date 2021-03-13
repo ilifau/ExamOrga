@@ -8,7 +8,7 @@ class ilExamOrgaNotesField extends ilExamOrgaField
 
     /**
      * Preload the data for the list view
-     * @param ilExamOrgaRecord[] $records
+     * @param ilExamOrgaFieldValues[] $records
      */
     public function preload($records)
     {
@@ -16,7 +16,7 @@ class ilExamOrgaNotesField extends ilExamOrgaField
 
         $ids = [];
         foreach ($records as $record) {
-            $ids[] = $record->id;
+            $ids[] = $record->getId();
         }
 
         require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
@@ -34,7 +34,7 @@ class ilExamOrgaNotesField extends ilExamOrgaField
      */
     public function getListHTML($record) {
         require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
-        return nl2br(ilExamOrgaNote::getRecordNotesText($record->id, $this->notes[$record->id]));
+        return nl2br(ilExamOrgaNote::getRecordNotesText($record->getId(), $this->notes[$record->getId()]));
     }
 
     /**
@@ -42,7 +42,7 @@ class ilExamOrgaNotesField extends ilExamOrgaField
      */
     public function getDetailsHTML($record) {
         require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
-        return nl2br(ilExamOrgaNote::getRecordNotesText($record->id));
+        return nl2br(ilExamOrgaNote::getRecordNotesText($record->getId()));
     }
 
     /**
@@ -110,7 +110,7 @@ class ilExamOrgaNotesField extends ilExamOrgaField
      */
     public function getExcelValue($record, $excel) {
         require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
-        return ilExamOrgaNote::getRecordNotesText($record->id, $this->notes[$record->id]);
+        return ilExamOrgaNote::getRecordNotesText($record->getId(), $this->notes[$record->getId()]);
     }
 
     /**

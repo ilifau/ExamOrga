@@ -1,5 +1,8 @@
 <?php
 
+require_once(__DIR__ . '/../field/interface.ilExamOrgaFieldValues.php');
+
+
 /**
  * Base Representation of an Exam
  *
@@ -7,7 +10,7 @@
  * INSERT INTO xamo_cond_seq(sequence) VALUES (NULL)
  * Then create a new row with the value of sequence as id
  */
-class ilExamOrgaCondition extends ActiveRecord
+class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
 {
 
     /**
@@ -136,6 +139,14 @@ class ilExamOrgaCondition extends ActiveRecord
      * @con_is_notnull       true
      */
     public $failure_message;
+
+
+    /**
+     * Get the id if the record
+     */
+    public function getId() {
+        return $this->id;
+    }
 
 
     /**

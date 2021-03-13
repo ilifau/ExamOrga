@@ -8,7 +8,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
 
     /**
      * Preload the data for the list view
-     * @param ilExamOrgaRecord[] $records
+     * @param ilExamOrgaFieldValues[] $records
      */
     public function preload($records)
     {
@@ -16,7 +16,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
 
         $ids = [];
         foreach ($records as $record) {
-            $ids[] = $record->id;
+            $ids[] = $record->getId();
         }
 
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
@@ -32,7 +32,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      */
     public function getListHTML($record) {
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return ilExamOrgaLink::getRecordLinksHtml($record->id, $this->links[$record->id]);
+        return ilExamOrgaLink::getRecordLinksHtml($record->getId(), $this->links[$record->getId()]);
     }
 
     /**
@@ -40,7 +40,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      */
     public function getDetailsHTML($record) {
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return nl2br(ilExamOrgaLink::getRecordLinksText($record->id));
+        return nl2br(ilExamOrgaLink::getRecordLinksText($record->getId()));
     }
 
     /**
@@ -48,7 +48,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      */
     public function getFormItem($record) {
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        $text = ilExamOrgaLink::getRecordLinksText($record->id);
+        $text = ilExamOrgaLink::getRecordLinksText($record->getId());
 
         $item = new ilTextAreaInputGUI($this->title, $this->getPostvar());
         $item->setRequired($this->required);
@@ -92,7 +92,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      */
     public function getExcelValue($record, $excel) {
         require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return ilExamOrgaLink::getRecordLinksText($record->id, $this->links[$record->id]);
+        return ilExamOrgaLink::getRecordLinksText($record->getId(), $this->links[$record->getId()]);
     }
 
     /**

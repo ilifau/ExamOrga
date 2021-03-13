@@ -214,11 +214,11 @@ class ilObjExamOrga extends ilObjectPlugin
 
         switch ($this->data->get('purpose')) {
             case 'oral':
-                $fields = include_once(__DIR__ . '/../fields_oral.php');
+                $fields = include_once(__DIR__ . '/../fields_record_oral.php');
                 break;
             case 'written':
             default:
-                $fields = include_once(__DIR__ . '/../fields_written.php');
+                $fields = include_once(__DIR__ . '/../fields_record_written.php');
                 break;
         }
 

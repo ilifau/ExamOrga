@@ -1,5 +1,7 @@
 <?php
 
+require_once(__DIR__ . '/interface.ilExamOrgaFieldValues.php');
+
 class ilExamOrgaField
 {
     const TYPE_TEXT = 'text';
@@ -218,7 +220,7 @@ class ilExamOrgaField
 
     /**
      * Preload the data for the list view
-     * @param ilExamOrgaRecord[] $records
+     * @param ilExamOrgaFieldValues[] $records
      */
     public function preload($records) {
         // to b overridden
@@ -226,7 +228,7 @@ class ilExamOrgaField
 
     /**
      * Get the raw value from the record
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      * @return mixed
      */
     public function getValue($record) {
@@ -235,7 +237,7 @@ class ilExamOrgaField
 
     /**
      * Get the raw value from the record
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      */
     public function setValue($record, $value) {
        $record->setValue($this->name, $value);
@@ -244,7 +246,7 @@ class ilExamOrgaField
 
     /**
      * Get the HTML code for display in a table
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      * @return string
      */
     public function getListHTML($record) {
@@ -253,7 +255,7 @@ class ilExamOrgaField
 
     /**
      * Get the HTML code for display in a table
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      * @return string
      */
     public function getDetailsHTML($record) {
@@ -262,7 +264,7 @@ class ilExamOrgaField
 
     /**
       * Build the form item with the value from a record
-      * @param ilExamOrgaRecord $record
+      * @param ilExamOrgaFieldValues $record
       * @return ilFormPropertyGUI
       */
     public function getFormItem($record)
@@ -287,7 +289,7 @@ class ilExamOrgaField
 
     /**
      * Set the value of the record by form input
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      * @param ilPropertyFormGUI $form
      */
     public function setByForm($record, $form)
@@ -326,7 +328,7 @@ class ilExamOrgaField
 
     /**
      * Get the value for an excel sheet
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      * @param ilExcel $excel
      * @return mixed
      */
@@ -336,7 +338,7 @@ class ilExamOrgaField
 
     /**
      * Set the value from an excel sheet
-     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaFieldValues $record
      * @param ilExcel $excel
      * @param mixed $value
      */

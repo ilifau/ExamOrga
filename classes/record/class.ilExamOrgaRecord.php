@@ -1,9 +1,11 @@
 <?php
 
+require_once(__DIR__ . '/../field/interface.ilExamOrgaFieldValues.php');
+
 /**
  * Base Representation of an Exam
  */
-class ilExamOrgaRecord extends ActiveRecord
+class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
 {
 
     /**
@@ -393,6 +395,14 @@ class ilExamOrgaRecord extends ActiveRecord
      * @con_length           4
      */
     public $modified_by;
+
+
+    /**
+     * Get the id if the record
+     */
+    public function getId() {
+        return $this->id;
+    }
 
     /**
      * Get the value of a property

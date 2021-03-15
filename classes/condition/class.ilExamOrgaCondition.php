@@ -14,15 +14,21 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
 {
 
     /**
-     * Prevent a saving of the record if not done by admin (edit all records)
+     * Prevent a saving of the record at all
      */
-    const LEVEL_PREVENT_SAVE = 'prevent_save';
+    const LEVEL_HARD = 'hard';
 
     /**
      * Prevent an creation of the record if not done by admin (edit all records)
      * Allow an update if the condition is already broken (was saved by admin)
+     * Show a warning and add it to the messages.
      */
-    const LEVEL_PREVENT_CREATE = 'prevent_update';
+    const LEVEL_SOFT = 'soft';
+
+    /**
+     * Allow saving for all users but show a warning and add it to the messages.
+     */
+    const LEVEL_WARN = 'warn';
 
 
     /**
@@ -53,6 +59,16 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
      * @con_length           4
      */
     public $obj_id;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_is_notnull       true
+     * @con_fieldtype        text
+     * @con_length           10
+     */
+    public $level;
+
 
     /**
      * @var string

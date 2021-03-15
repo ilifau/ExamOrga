@@ -111,7 +111,7 @@ class ilExamOrgaNote extends ActiveRecord
     }
 
     /**
-     * Get a textual representation of the links
+     * Get a textual representation of the notes
      * @param self[]|null $notes
      * @return string
      */

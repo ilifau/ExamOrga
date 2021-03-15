@@ -5,7 +5,7 @@ require_once(__DIR__ . "/class.ilExamOrgaPlugin.php");
 /**
  * @ilCtrl_isCalledBy ilObjExamOrgaGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
  * @ilCtrl_Calls ilObjExamOrgaGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilExportGUI
- * @ilCtrl_Calls ilObjExamOrgaGUI: ilExamOrgaRecordGUI
+ * @ilCtrl_Calls ilObjExamOrgaGUI: ilExamOrgaRecordGUI, ilExamOrgaConditionGUI
  */
 class ilObjExamOrgaGUI extends ilObjectPluginGUI
 {
@@ -61,6 +61,16 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
                     $this->ctrl->forwardCommand(new ilExamOrgaRecordGUI($this));
                     break;
             }
+
+            switch ($next_class) {
+                case 'ilexamorgaconditiongui':
+                    $this->checkPermission('write');
+                    $this->tabs->activateTab("conditions");
+                    require_once(__DIR__ . '/condition/class.ilExamOrgaConditionGUI.php');
+                    $this->ctrl->forwardCommand(new ilExamOrgaConditionGUI($this));
+                    break;
+            }
+
         }
         else {
             switch ($cmd)
@@ -118,6 +128,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 		if ($this->access->checkAccess("write", "", $this->object->getRefId()))
 		{
 			$this->tabs->addTab("properties", $this->txt("properties"), $this->ctrl->getLinkTarget($this, "editProperties"));
+            $this->tabs->addTab("conditions", $this->txt("conditions"), $this->ctrl->getLinkTargetByClass('ilexamorgaconditiongui'));
 		}
 
 		// standard export tab

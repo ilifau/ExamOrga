@@ -57,6 +57,7 @@ create_record#:#Eintrag speichern
 update_record#:#Eintrag aktualisieren
 record_created#:#Der Eintrag wurde erstellt.
 record_updated#:#Der Eintrag wurde aktualisiert.
+record_updated_warnings#:#Der Eintrag wurde mit Warnmeldungen aktualisiert:
 delete_records#:#Einträge löschen
 confirm_delete_records#:#Möchten Sie die ausgewählten Einträge löschen?
 records_deleted#:#Die Einträge wurden gelöscht.
@@ -112,3 +113,15 @@ alert_note#:#Hat Hinweis zur Überarbeitung
 login_not_found#:#Zum Eintrag "%s" wurde kein StudOn-Konto gefunden!
 idm_account_not_found#:#Der StudOn-Account "%s" ist mit keinem IdM-Konto verknüpft.
 idm_accounts_not_found#:#Die folgenden StudOn-Accounts sind mit keinem IdM-Konto verknüpft: %s
+record_saving_failed#:#Der Eintrag konnte nicht gespeichert werden:
+record_saved_with_warnings#:#Der Eintrag wurde mit Warnungen gespeichert:
+conditions#:#Bedingungen
+condition_created#:#Die Bedingung wurde erzeugt.
+condition_updated#:#Die Bedingung wirde aktualisiert.
+add_condition#:#Bedingung hinzufügen
+edit_condition#:#Bedingung bearbeiten
+create_condition#:#Bedingung erstellen
+update_condition#:#Bedingung aktualisieren
+delete_conditions#:#Bedingungen löschen
+confirm_delete_conditions#:#Möchten Sie die ausgewählten Bedingungen löschen?
+conditions_deleted#:#Die Bedingung(en) wurde(n) gelöscht.

@@ -147,6 +147,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     protected function addRecord()
     {
         $this->checkAddRecord();
+        $this->setRecordToolbar();
         $record = new ilExamOrgaRecord();
         $form = $this->initRecordForm($record);
         $this->tpl->setContent($form->getHTML());
@@ -170,17 +171,27 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 }
             }
 
-            foreach ($this->object->getActiveConditions() as $cond) {
-                if (!$cond->checkRecord($record)) {
-                    ilUtil::sendFailure($cond->failure_message);
-                    $this->tpl->setContent($form->getHTML());
-                    return;
-                }
+            // condition check
+            $result = $this->object->checkConditions($record, null);
+
+            if (!empty($result['failures'])) {
+                ilUtil::sendFailure($this->plugin->txt("record_saving_failed")
+                    . '<p class="small">' . implode('<br />', $result['failures']) . '</p>' , false);
+                $this->setRecordToolbar();
+                $this->tpl->setContent($form->getHTML());
+                return;
             }
 
             $record->create();
 
-            ilUtil::sendSuccess($this->plugin->txt("record_created"), true);
+            if (!empty($result['warnings'])) {
+                ilUtil::sendSuccess($this->plugin->txt("record_saved_with_warnings")
+                    . '<p class="small">' . implode('<br />', $result['warnings']) . '</p>' , true);
+            }
+            else {
+                ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);
+            }
+
             $this->ctrl->setParameter($this, 'id', $record->id);
             $this->ctrl->redirect($this, "editRecord");
         }
@@ -234,17 +245,26 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 }
             }
 
-            foreach ($this->object->getActiveConditions() as $cond) {
-                if (!$cond->checkRecord($record) && $cond->checkRecord($original)) {
-                    ilUtil::sendFailure($cond->failure_message);
-                    $this->tpl->setContent($form->getHTML());
-                    return;
-                }
+            // condition check
+            $result = $this->object->checkConditions($record, $original);
+
+            if (!empty($result['failures'])) {
+                ilUtil::sendFailure($this->plugin->txt("record_saving_failed")
+                    . '<p class="small">' . implode('<br />', $result['failures']) . '</p>' , false);
+                $this->tpl->setContent($form->getHTML());
+                return;
             }
 
             $record->update();
 
-            ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);
+            if (!empty($result['warnings'])) {
+                ilUtil::sendSuccess($this->plugin->txt("record_saved_with_warnings")
+                    . '<p class="small">' . implode('<br />', $result['warnings']) . '</p>' , true);
+            }
+            else {
+                ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);
+            }
+
             $this->ctrl->redirect($this, "editRecord");
         }
         $this->tpl->setContent($form->getHTML());

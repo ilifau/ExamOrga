@@ -18,16 +18,22 @@ class ilObjExamOrga extends ilObjectPlugin
     public $data;
 
     /**
-     * Records of the organized Exams
-     * @var ilExamOrgaRecord[] $records (indexed by id)
+     * Fields defined for an Exam Records
+     * @var ilExamOrgaField[] $record_fields (indexed by name)
      */
-    public $records;
+    protected $record_fields;
 
     /**
-     * Fields defined for an Exam Records
-     * @var ilExamOrgaField[] $fields (indexed by name)
+     * Fields defined for a record Condition
+     * @var ilExamOrgaField[] $condition_fields (indexed by name)
      */
-    public $fields;
+    protected $condition_fields;
+
+    /**
+     * Active conditions
+     * @var ilExamOrgaCondition[] $active_conditions
+     */
+    protected $active_conditions;
 
     /**
 	 * Constructor
@@ -68,7 +74,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	{
         $this->data = $this->plugin->getData($this->getId());
 	    $this->data->read();
-	    $this->initFields();
+	    $this->initRecordFields();
 	}
 
 	/**
@@ -208,9 +214,9 @@ class ilObjExamOrga extends ilObjectPlugin
     }
 
     /**
-     * Init the list of available fields
+     * Init the list of available record fields
      */
-    protected function initFields() {
+    protected function initRecordFields() {
 
         switch ($this->data->get('purpose')) {
             case 'oral':
@@ -225,7 +231,7 @@ class ilObjExamOrga extends ilObjectPlugin
 
         foreach ($fields as $definition) {
             $name = (string) $definition['name'];
-            $this->fields[$name] = ilExamOrgaField::factory($this, $definition);
+            $this->record_fields[$name] = ilExamOrgaField::factory($this, $definition);
         }
     }
 
@@ -236,7 +242,7 @@ class ilObjExamOrga extends ilObjectPlugin
     public function getAvailableFields() {
         $available = [];
 
-        foreach ($this->fields as $field) {
+        foreach ($this->record_fields as $field) {
             if ($this->canViewField($field)) {
                 $available[$field->name] = $field;
             }
@@ -245,10 +251,68 @@ class ilObjExamOrga extends ilObjectPlugin
     }
 
     /**
+     * Get the gui fields for a condition
+     */
+    public function getConditionFields()
+    {
+        if (!isset($this->condition_fields)) {
+            $fields = include_once(__DIR__ . '/../fields_condition.php');
+            foreach ($fields as $definition) {
+                $name = (string) $definition['name'];
+                $this->condition_fields[$name] = ilExamOrgaField::factory($this, $definition);
+            }
+        }
+        return $this->condition_fields;
+    }
+
+
+    /**
      * Get the active record conditions
      */
     public function getActiveConditions() {
-        require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
-        return ilExamOrgaCondition::getActiveConditions($this->getId());
+
+        if (!isset($this->active_conditions)) {
+            require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
+            $this->active_conditions = ilExamOrgaCondition::getActiveConditions($this->getId());
+        }
+        return $this->active_conditions;
+    }
+
+    /**
+     * Check a record against the active conditions
+     *
+     * @param ilExamOrgaRecord $record
+     * @param ilExamOrgaRecord $original
+     * @return array ['failures' => string[], 'warnings' => string[] ]
+     */
+    public function checkConditions($record, $original = null) {
+
+        $failures = [];
+        $warnings = [];
+        foreach ($this->getActiveConditions() as $cond) {
+            if (!$cond->checkRecord($record)) {
+
+                switch ($cond->level) {
+                    case ilExamOrgaCondition::LEVEL_HARD:
+                        $failures[] = $cond->failure_message;
+                        break;
+
+                    case ilExamOrgaCondition::LEVEL_SOFT:
+                        if ((!isset($original) || $cond->checkRecord($original)) && !$this->canEditAllRecords()) {
+                            $failures[] = $cond->failure_message;
+                        }
+                        else {
+                            $warnings[] = $cond->failure_message;
+                        }
+                        break;
+
+                    case ilExamOrgaCondition::LEVEL_WARN:
+                        $warnings[] = $cond->failure_message;
+                        break;
+                }
+            }
+        }
+
+        return ['failures' => $failures, 'warnings' => $warnings];
     }
 }

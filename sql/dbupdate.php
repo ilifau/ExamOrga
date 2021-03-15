@@ -534,6 +534,11 @@ $fields = array(
         'length' => '4',
 
     ),
+    'level' => array(
+        'notnull' => '1',
+        'type' => 'text',
+        'length' => '10',
+    ),
     'reg_min_date' => array(
         'type' => 'timestamp',
 

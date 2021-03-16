@@ -123,6 +123,30 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
     public $exam_max_date;
 
     /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        text
+     * @con_length           10
+     */
+    public $weekdays;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        text
+     * @con_length           10
+     */
+    public $min_daytime;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        text
+     * @con_length           10
+     */
+    public $max_daytime;
+
+    /**
      * @var integer
      * @con_has_field        true
      * @con_fieldtype        integer
@@ -227,7 +251,7 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
             return true;
         }
 
-        // CCONDITIONS: not matching => condition failed => return false
+        // CONDITIONS: not matching => condition failed => return false
 
         if (!empty($this->exam_types) && !in_array($record->exam_type, self::_toArray($this->exam_types))) {
             return false;
@@ -242,7 +266,9 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
         }
 
         if (!empty($this->reg_min_days_before)) {
-            $day = new ilDate(time(), IL_CAL_UNIX);
+            $time = ( empty($record->created_at) ? time() : $record->created_at);
+
+            $day = new ilDate($time, IL_CAL_UNIX);
             $day->increment(ilDate::DAY, $this->reg_min_days_before);
             $compare = $day->get(IL_CAL_DATE);
 
@@ -250,6 +276,32 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
                 return false;
             }
         }
+
+        switch ($this->weekdays) {
+            case 'Mo-Fr':
+                if ($record->getWeekday() > 5) {
+                    return false;
+                }
+                break;
+            case 'Mo-Sa':
+                if ($record->getWeekday() > 6) {
+                    return false;
+                }
+                break;
+        }
+
+        if (!empty($this->min_daytime)) {
+            if ($record->getEarliestStart() < $this->min_daytime) {
+                return false;
+            }
+        }
+
+        if (!empty($this->max_daytime)) {
+            if ($record->getLatestEnd() > $this->max_daytime) {
+                return false;
+            }
+        }
+
 
         // DEFAULT: all checks passed => conditions satisfied => return true
         return true;

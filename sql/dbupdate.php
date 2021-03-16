@@ -575,6 +575,21 @@ $fields = array(
         'length' => '4',
 
     ),
+    'weekdays' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'min_daytime' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
+    'max_daytime' => array(
+        'type' => 'text',
+        'length' => '10',
+
+    ),
     'max_exams_per_week' => array(
         'type' => 'integer',
         'length' => '4',

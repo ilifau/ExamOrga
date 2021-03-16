@@ -94,7 +94,36 @@ $fields = [
       'title' => 'Späteste Prüfung',
       'default' => true,
     ],
-//    [
+    [
+        'name' => 'weekdays',
+        'type' => ilExamOrgaField::TYPE_RADIO,
+        'title' => 'Wochentage',
+        'info' => 'Erlaubte Wochentage als Prüfungstermin',
+        'options' => [
+            '' => 'beliebig',
+            'Mo-Fr' => 'Montag bis Freitag',
+            'Mo-Sa' => 'Montag bis Samstag',
+        ],
+        'default' => true
+    ],
+    [
+        'name' => 'min_daytime',
+        'type' => ilExamOrgaField::TYPE_SELECT,
+        'title' => 'Frühester Start',
+        'info' => 'Frühester Durchgangs-Start am Prüfungstag',
+        'options' => ['','06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','10:30','11:00', '11:30', '12:00'],
+        'default' => true
+    ],
+    [
+        'name' => 'max_daytime',
+        'type' => ilExamOrgaField::TYPE_SELECT,
+        'title' => 'Spätestes Ende',
+        'info' => 'Spätestes Durchgang-Ende am Prüfungstag',
+        'options' => ['','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00', '20:30', '21:00'],
+        'default' => true
+    ],
+
+    //    [
 //        'name' => 'max_exams_per_day',
 //        'type' => ilExamOrgaField::TYPE_INTEGER,
 //        'title' => 'Pro Tag',

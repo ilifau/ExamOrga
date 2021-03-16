@@ -117,7 +117,7 @@ record_saving_failed#:#Der Eintrag konnte nicht gespeichert werden:
 record_saved_with_warnings#:#Der Eintrag wurde mit Warnungen gespeichert:
 conditions#:#Bedingungen
 condition_created#:#Die Bedingung wurde erzeugt.
-condition_updated#:#Die Bedingung wirde aktualisiert.
+condition_updated#:#Die Bedingung wurde aktualisiert.
 add_condition#:#Bedingung hinzufügen
 edit_condition#:#Bedingung bearbeiten
 create_condition#:#Bedingung erstellen

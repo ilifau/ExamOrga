@@ -534,4 +534,67 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
         return $logins;
     }
 
+    /**
+     * Get the weekday of the exam date (1 for Monday, 7 for Sunday)
+     */
+    public function getWeekday()
+    {
+        $date = new DateTime($this->exam_date);
+        return $date->format('N');
+    }
+
+    /**
+     * Get the time of the earliest run start on the exam day
+     */
+    public function getEarliestStart()
+    {
+        $times = self::_toArray($this->exam_runs);
+        if (empty($times)) {
+            return '00:00';
+        }
+        sort($times);
+        return $times[0];
+    }
+
+
+    /**
+     * Get the time of the latest run end on the exam day
+     */
+    public function getLatestEnd()
+    {
+        $times = self::_toArray($this->exam_runs);
+        if (empty($times)) {
+            return '23:59';
+        }
+        sort($times);
+        $times = array_reverse($times);
+
+        $time = explode(':', $times[0]);
+        $hour = $time[0];
+        $minute = $time[1] + (int) $this->run_minutes;
+
+        $hour = $hour + intdiv($minute, 60);
+        $minute = $minute % 60;
+
+        if ($hour > 23) {
+            return '23:59';
+        }
+        return sprintf("%02d:%02d", $hour, $minute);
+    }
+
+
+    /**
+     * Get an array of a comma separated string
+     * @return string[]
+     */
+    protected static function _toArray($list)
+    {
+        $array = [];
+        foreach (explode(',', (string) $list) as $value) {
+            if (!empty(trim($value))) {
+                $array[] = trim($value);
+            }
+        }
+        return $array;
+    }
 }

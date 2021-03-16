@@ -109,6 +109,14 @@ $fields = [
   ],
 
   [
+      'name' => 'force_presence',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Präsenzplattform erzwingen',
+      'info' => 'Unabhängig vom Prüfungsformat soll die Präsenz-Plattform verwendet werden',
+      'status' => ilExamOrgaField::STATUS_LOCKED
+  ],
+
+  [
       'name' => 'exam_method',
       'type' => ilExamOrgaField::TYPE_RADIO,
       'title' => 'Prüfungsmethode',
@@ -124,9 +132,10 @@ $fields = [
       'name' => 'exam_type',
       'type' => ilExamOrgaField::TYPE_RADIO,
       'title' => 'Typ',
-      'info' => 'Bitte immer korrekt auswählen! Für Einsichtnahmen muss kein eigener Eintrag angelegt werden. Es wird der Eintrag der Klausur verwendet.',
+      'info' => 'Bitte immer korrekt auswählen!',
       'options' => [
           'exam' => 'Klausur',
+          'review' => 'Einsichtnahme',
           'retry' => 'Nachholklausur',
           'sample' => 'Probeklausur'
       ],
@@ -366,12 +375,12 @@ $fields = [
       ],
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
-//  [
-//      'name' => 'ips_active',
-//      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-//      'title' => 'IP Freigabe',
-//      'status' => ilExamOrgaField::STATUS_HIDDEN
-//  ],
+  [
+      'name' => 'ips_active',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'IP Freigabe',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
+  ],
   [
       'name' => 'tech_details',
       'type' => ilExamOrgaField::TYPE_TEXTAREA,
@@ -381,15 +390,15 @@ $fields = [
   [
       'name' => 'settings_checked',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'Exam-Check    Einstellungen',
+      'title' => 'Exam-Check 1 Einstellungen',
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
-//  [
-//      'name' => 'seb_checked',
-//      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-//      'title' => 'Exam-Check 2 SEB',
-//      'status' => ilExamOrgaField::STATUS_HIDDEN
-//  ],
+  [
+      'name' => 'seb_checked',
+      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+      'title' => 'Exam-Check 2 SEB',
+      'status' => ilExamOrgaField::STATUS_HIDDEN
+  ],
   /////////////////////////////////////////////////////////////
   [
       'name' => 'head_record',

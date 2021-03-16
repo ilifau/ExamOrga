@@ -218,16 +218,19 @@ class ilObjExamOrga extends ilObjectPlugin
      */
     protected function initRecordFields() {
 
-        switch ($this->data->get('purpose')) {
-            case 'oral':
-                $fields = include_once(__DIR__ . '/../fields_record_oral.php');
-                break;
-            case 'written':
-            default:
-                $fields = include_once(__DIR__ . '/../fields_record_written.php');
-                break;
-        }
+        $names = [
+            'fields_record_' . $this->data->get(ilExamOrgaData::PARAM_PURPOSE) . '_'  . $this->data->get(ilExamOrgaData::PARAM_SEMESTER) . '.php',
+            'fields_record_' . $this->data->get(ilExamOrgaData::PARAM_PURPOSE). '.php',
+            'fields_record_written.php'
+            ];
 
+        $fields = [];
+        foreach ($names as $name) {
+            if (file_exists(__DIR__ . '/../' . $name)) {
+                $fields = include_once(__DIR__ . '/../' . $name);
+                break;
+            }
+        }
 
         foreach ($fields as $definition) {
             $name = (string) $definition['name'];

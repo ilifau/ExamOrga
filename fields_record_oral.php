@@ -129,13 +129,13 @@ $fields = [
         'title' => 'Status',
         'info' => 'Die folgenden Angaben werden vom RRZE ausgefüllt',
     ],
-    [
-      'name' => 'booking_approved',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'title' => 'Buchung abgeschlossen',
-      'info' => 'Wird vom RRZE ausgefüllt',
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
+//    [
+//      'name' => 'booking_approved',
+//      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+//      'title' => 'Buchung abgeschlossen',
+//      'info' => 'Wird vom RRZE ausgefüllt',
+//      'status' => ilExamOrgaField::STATUS_HIDDEN
+//  ],
   [
       'name' => 'run_links',
       'type' => ilExamOrgaField::TYPE_RUN_LINKS,

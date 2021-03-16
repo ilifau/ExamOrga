@@ -18,6 +18,19 @@ $fields = [
         'default' => true
     ],
     [
+        'name' => 'failure_message',
+        'type' => ilExamOrgaField::TYPE_TEXTAREA,
+        'title' => 'Meldung',
+        'info' => 'Meldung, welche die Bedingung verständlich wiedergibt.',
+        'default' => true,
+    ],
+    [
+        'name' => 'head_filter',
+        'type' => ilExamOrgaField::TYPE_HEADLINE,
+        'title' => 'Anwendung',
+        'info' => 'Stellen Sie hier ein, für welche Einträge diese Bedingung geprüft wird.',
+    ],
+    [
         'name' => 'reg_min_date',
         'type' => ilExamOrgaField::TYPE_DATE,
         'title' => 'Gültig ab',
@@ -32,24 +45,29 @@ $fields = [
         'default' => true,
     ],
     [
+        'name' => 'exam_formats',
+        'type' => ilExamOrgaField::TYPE_MULTISELECT,
+        'title' => 'Für Formate',
+        'info' => 'Prüfungsformate mit dieser Bedingung',
+        'options' => [
+            'presence' => 'E-Prüfung in Präsenz',
+            'open' => 'Open-Book-Prüfung mit Zeitbegrenzung',
+            'monitored' => 'Fernklausur mit Videoaufsicht',
+        ],
+        'default' => true
+    ],
+    [
+        'name' => 'head_condition',
+        'type' => ilExamOrgaField::TYPE_HEADLINE,
+        'title' => 'Anforderung',
+        'info' => 'Stellen Sie hier ein, welche Anforderungen ein Eintrag erfüllen muss.',
+    ],
+    [
         'name' => 'reg_min_days_before',
         'type' => ilExamOrgaField::TYPE_INTEGER,
         'title' => 'Vorlauf',
         'info' => 'Minumum an Tagen zwischen Bearbeitung des Eintrags und dem Prüfungsdatum',
         'default' => true,
-    ],
-    [
-      'name' => 'exam_formats',
-      'type' => ilExamOrgaField::TYPE_MULTISELECT,
-      'title' => 'Formate',
-      'info' => 'Erlaubte Prüfungsformate',
-      'options' => [
-        'presence' => 'E-Prüfung in Präsenz',
-        'open' => 'Open-Book-Prüfung mit Zeitbegrenzung',
-        'monitored' => 'Fernklausur mit Videoaufsicht',
-      ],
-      'required' => true,
-      'default' => true
     ],
     [
       'name' => 'exam_types',
@@ -97,14 +115,6 @@ $fields = [
 //        'info' => 'Maximale Anzahl an Prüfungen pro Monat',
 //        'default' => true,
 //    ],
-    [
-        'name' => 'failure_message',
-        'type' => ilExamOrgaField::TYPE_TEXTAREA,
-        'title' => 'Meldung',
-        'info' => 'Meldung, welche die Bedingung verständlich wiedergibt.',
-        'default' => true,
-    ],
-
 ];
 
 return $fields;

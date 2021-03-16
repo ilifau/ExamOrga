@@ -221,9 +221,13 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
      */
     public function checkRecord(ilExamOrgaRecord $record)
     {
+        // FILTER: not matching => condition will not be checked => return true
+
         if (!empty($this->exam_formats) && !in_array($record->exam_format, self::_toArray($this->exam_formats))) {
-            return false;
+            return true;
         }
+
+        // CCONDITIONS: not matching => condition failed => return false
 
         if (!empty($this->exam_types) && !in_array($record->exam_type, self::_toArray($this->exam_types))) {
             return false;
@@ -247,7 +251,7 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
             }
         }
 
-        // all checks passed
+        // DEFAULT: all checks passed => conditions satisfied => return true
         return true;
     }
 

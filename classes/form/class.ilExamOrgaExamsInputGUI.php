@@ -120,9 +120,9 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
             }
 
             $exams = ilExamOrgaCampusExam::where(['porgnr' => (int) $value]);
-            if (!empty($this->semester)) {
-                $exams->where(['psem' => $this->semester]);
-            }
+//            if (!empty($this->semester)) {
+//                $exams->where(['psem' => $this->semester]);
+//            }
 
             if (!$exams->hasSets()) {
                 $this->setAlert(sprintf(ilExamOrgaPlugin::getInstance()->txt('exam_not_found'), $value));

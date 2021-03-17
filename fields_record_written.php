@@ -189,7 +189,7 @@ $fields = [
       'name' => 'exam_ids',
       'type' => ilExamOrgaField::TYPE_EXAMS,
       'title' => 'Prüfungen in mein campus',
-      'info' => 'Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um eine Auswahlliste zu erhalten.</strong></p>',
+      'info' => 'Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um Prüfungen aus dem Semester dieses Anmeldesystems zu erhalten. Andere IDs (z.B. bei Nachholklausuren) können Sie von Hand eingeben.</strong></p>',
       'status' => ilExamOrgaField::STATUS_PUBLIC
   ],
 //  [

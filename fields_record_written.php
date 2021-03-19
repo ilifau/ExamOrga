@@ -48,6 +48,7 @@ $fields = [
           'Nat / Geographie und Geowissenschaften',
           'Nat / Mathematik',
           'Nat / Physik',
+          'Nat / Data Science (DDS)',
           'Tech / Artificial Intelligence in Biomedical Engineering (AIBE)',
           'Tech / Chemie- und Bioingenieurwesen (CBI)',
           'Tech / Elektrotechnik-Elektronik-Informationstechnik (EEI)',

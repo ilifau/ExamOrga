@@ -50,8 +50,13 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
         global $DIC;
         $ilDB = $DIC->database();
 
+        $ilDB->dropTable('xamo_campus');
+        $ilDB->dropTable('xamo_cond');
         $ilDB->dropTable('xamo_config');
         $ilDB->dropTable('xamo_data');
+        $ilDB->dropTable('xamo_link');
+        $ilDB->dropTable('xamo_note');
+        $ilDB->dropTable('xamo_record');
     }
 
     /**

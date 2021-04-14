@@ -113,10 +113,12 @@ class ilExamOrgaCampusExam extends ActiveRecord
 ';
         $client = new SoapClient($plugin->getConfig()->get('campus_soap_url') . '?wsdl');
         $result = $client->__call('getDataXML', ['xmlParams' => $xml]);
+        $file = ilUtil::ilTempnam();
+        file_put_contents($file, $result);
+        unset($result);
 
         require_once (__DIR__ . '/class.ilExamOrgaCampusExamParser.php');
-        $parser = new ilExamOrgaCampusExamParser();
-        $parser->setXMLContent($result);
+        $parser = new ilExamOrgaCampusExamParser($file);
         $parser->startParsing();
     }
 
@@ -126,7 +128,47 @@ class ilExamOrgaCampusExam extends ActiveRecord
      */
     public function getLabel()
     {
-        return $this->porgnr . " - " . $this->nachname . ', ' . $this->vorname . ': ' . $this->titel . ' (PNR ' . $this->pnr . ')';
+        $semester = $this->psem;
+        $year = (int)  substr($semester, 0, 4);
+        $num = (int) substr($semester, 4, 1);
+
+        switch ($num) {
+            case 1:
+                $semester = 'SoSe ' . $year;
+                break;
+            case 2:
+                $semester = 'WiSe ' . $year;
+                break;
+        }
+
+        return $this->porgnr . " - " . $this->nachname . ', ' . $this->vorname . ': ' . $this->titel . ' (PNR ' . $this->pnr . ', ' . $semester .  ')';
     }
 
+    /**
+     * get a list of semesters that are near a given semester
+     * @param $semester
+     * @return array
+     */
+    public static function getNearSemesters($semester)
+    {
+        $year = (int)  substr($semester, 0, 4);
+        $num = (int) substr($semester, 4, 1);
+
+        switch ($num) {
+            case 1:
+                return [
+                    ($year - 1) . '2',
+                    $semester,
+                    $year . '2'
+                ];
+            case 2:
+                return [
+                    $year . '1',
+                    $semester
+                    ($year + 1) . '1',
+                ];
+            default:
+                return [$semester];
+        }
+    }
 }

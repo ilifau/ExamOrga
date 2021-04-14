@@ -85,6 +85,8 @@ class ilExamOrgaCampusExamParser extends ilSaxParser
 
             case 'Examination':
                 $this->exam->save();
+                arObjectCache::purge($this->exam);
+                unset($this->exam);
                 break;
         }
 

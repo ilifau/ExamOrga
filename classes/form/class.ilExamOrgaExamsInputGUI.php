@@ -70,6 +70,9 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
      */
     public function doAutoComplete()
     {
+        global $DIC;
+        $db = $DIC->database();
+
         $term = $_REQUEST['term'];
         $semester = $_REQUEST['semester'];
         $fetchall = $_REQUEST['fetchall'];
@@ -80,7 +83,9 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
             ->limit(0, $fetchall ? 1000 : 10);
 
         if (!empty($semester)) {
-            $exams->where(['psem' => $semester]);
+            $exams->where($db->in('psem', ilExamOrgaCampusExam::getNearSemesters($semester), false, 'text'))
+                  ->orderBy('pnr')
+                ->orderBy('psem');
         }
 
         $items = [];

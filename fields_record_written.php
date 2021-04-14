@@ -131,6 +131,7 @@ $fields = [
           'retry' => 'Nachholklausur',
           'sample' => 'Probeklausur'
       ],
+      'required' => true,
       'default' => true,
       'filter' => true,
   ],

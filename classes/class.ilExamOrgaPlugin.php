@@ -155,4 +155,38 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
         return $txt;
     }
 
+
+    /**
+     * Handle a call by the cron job plugin
+     * @return	array [success, message]
+     * @throws	Exception
+     */
+    public function handleCronJob()
+    {
+        if (!ilContext::usesHTTP()) {
+            echo "ExamAdmin: handle cron job...\n";
+        }
+
+        $done = false;
+        $messages = [];
+
+        require_once (__DIR__ . '/class.ilExamOrgaCronHandler.php');
+        $handler = new ilExamOrgaCronHandler($this);
+
+        // update the list of exams
+        if ($handler->updateExams()) {
+            $done = true;
+            $messages[] = $this->txt('campus_exams_loaded');
+            if (!ilContext::usesHTTP()) {
+                echo $this->txt('campus_exams_loaded') . "\n";
+            }
+        }
+
+        if (!ilContext::usesHTTP()) {
+            echo "ExamOrga: finished.\n";
+        }
+
+        return [$done, implode(' | ', $messages)];
+    }
+
 }

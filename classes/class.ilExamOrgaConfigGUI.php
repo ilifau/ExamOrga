@@ -127,7 +127,13 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
     protected function loadCampusExams()
     {
         require_once (__DIR__ . '/campus/class.ilExamOrgaCampusExam.php');
-        ilExamOrgaCampusExam::updateExams($this->plugin);
+        try {
+            ilExamOrgaCampusExam::updateExams($this->plugin);
+            ilUtil::sendSuccess($this->plugin->txt('campus_exams_loaded'), true);
+        }
+        catch (Exception $e) {
+            ilUtil::sendFailure($e->getMessage(), true);
+        }
         $this->ctrl->redirect($this, 'configure');
     }
 

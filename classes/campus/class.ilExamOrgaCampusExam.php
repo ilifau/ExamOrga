@@ -119,6 +119,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
 
         require_once (__DIR__ . '/class.ilExamOrgaCampusExamParser.php');
         $parser = new ilExamOrgaCampusExamParser($file);
+        $parser->setThrowException(true);
         $parser->startParsing();
     }
 

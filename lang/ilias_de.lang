@@ -94,6 +94,7 @@ winter_term#:#Wintersemester
 semester#:#Semester
 update_languages#:#Sprachen aktualisieren
 load_campus_exams#:#Aus Campus aktualisieren
+campus_exams_loaded#:#Die Daten aus Campus wurden aktualisiert.
 generate_db_update#:#Update-Step generieren
 exam_not_found#:#Zur eingegebenen Nummer %s wurde keine Prüfung gefunden!
 notes#:#Hinweise zur Überarbeitung

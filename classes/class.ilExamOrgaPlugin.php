@@ -164,7 +164,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     public function handleCronJob()
     {
         if (!ilContext::usesHTTP()) {
-            echo "ExamAdmin: handle cron job...\n";
+            echo "ExamOrga: handle cron job...\n";
         }
 
         $done = false;

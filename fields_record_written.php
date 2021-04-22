@@ -167,7 +167,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_TIMES,
       'title' => 'Durchgänge',
       'info' => 'Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind). Bei Fernprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 20 Minuten ein. Bei Präsenzprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 60 Minuten ein.',
-      'required' => false
+      'required' => true
   ],
   [
       'name' => 'run_minutes',
@@ -240,12 +240,12 @@ $fields = [
       'title' => 'Präsenzprüfung',
       'info' => 'Die folgenden Angaben sind nur für E-Prüfungen in Präsenz relevant',
   ],
-  [
-      'name' => 'test_ref_id',
-      'type' => ilExamOrgaField::TYPE_REFERENCE,
-      'title' => 'Testobjekt in StudOn',
-      'info' => 'Nur für E-Prüfungen in Präsenz relevant. Hier können Sie Ihren Test aus StudOn verlinken, sobald er fertiggestellt ist. Das Exam-Team überträgt Ihren Test dann in die Prüfungsplattform. Falls Sie mehrere Tests haben, kopieren Sie bitte deren Links in die Anmerkungen.',
-  ],
+//  [
+//      'name' => 'test_ref_id',
+//      'type' => ilExamOrgaField::TYPE_REFERENCE,
+//      'title' => 'Testobjekt in StudOn',
+//      'info' => 'Nur für E-Prüfungen in Präsenz relevant. Hier können Sie Ihren Test aus StudOn verlinken, sobald er fertiggestellt ist. Das Exam-Team überträgt Ihren Test dann in die Prüfungsplattform. Falls Sie mehrere Tests haben, kopieren Sie bitte deren Links in die Anmerkungen.',
+//  ],
   [
       'name' => 'room',
       'type' => ilExamOrgaField::TYPE_TEXTAREA,
@@ -338,7 +338,8 @@ $fields = [
         'Stefie',
         'Inke'
       ],
-      'status' => ilExamOrgaField::STATUS_HIDDEN
+      'status' => ilExamOrgaField::STATUS_HIDDEN,
+      'filter' => true,
   ],
   [
       'name' => 'quality_checked',

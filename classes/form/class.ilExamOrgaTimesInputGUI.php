@@ -19,11 +19,12 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
         parent::__construct($a_title, $a_postvar);
 
         $timeInput = new ilExamOrgaDayTimeInputGUI('', 'daytime');
+        $timeInput->setRequired($this->required);
 
         $this->setMulti(true);
-        $this->setAllowEmptyFields(true);
         $this->addInput($timeInput);
     }
+
 
     /**
      *
@@ -31,12 +32,34 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
      */
     public function checkInput()
     {
-        // fault tolerance
+        global $DIC;
+
+        // fault tolerance (field is multi, see constructor)
         if (!is_array($_POST[$this->getPostVar()])) {
             $_POST[$this->getPostVar()] = [];
         }
+
+
+        if ($this->required) {
+            $found = false;
+            foreach ($_POST[$this->getPostVar()] as $entry) {
+                if (is_array($entry['daytime'])) {
+                    if (!empty(ilExamOrgaDayTimeInputGUI::_getString($entry['daytime']))) {
+                        $found = true;
+                    }
+                }
+            }
+            if (!$found) {
+                $this->setAlert(sprintf($DIC->language()->txt("msg_input_is_required")));
+                return false;
+            }
+        }
+
+
+
         return parent::checkInput();
     }
+
 
     /**
      * Get the array representation from a string value
@@ -69,7 +92,7 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
         $times = [];
         foreach ((array) $array as $entry) {
             $time = ilExamOrgaDayTimeInputGUI::_getString($entry['daytime']);
-            if (isset($times)) {
+            if (isset($time)) {
                 $times[] = $time;
             }
         }

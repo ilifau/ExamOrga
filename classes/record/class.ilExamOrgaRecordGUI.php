@@ -185,7 +185,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $record->create();
 
             if (!empty($result['warnings'])) {
-                ilUtil::sendSuccess($this->plugin->txt("record_saved_with_warnings")
+                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings")
                     . '<p class="small">' . implode('<br />', $result['warnings']) . '</p>' , true);
             }
             else {
@@ -258,7 +258,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $record->update();
 
             if (!empty($result['warnings'])) {
-                ilUtil::sendSuccess($this->plugin->txt("record_saved_with_warnings")
+                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings")
                     . '<p class="small">' . implode('<br />', $result['warnings']) . '</p>' , true);
             }
             else {

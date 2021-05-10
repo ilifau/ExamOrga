@@ -100,5 +100,6 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      */
     public function setExcelValue($record, $excel, $value) {
         // nothing to set
+        return true;
     }
 }

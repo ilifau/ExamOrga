@@ -81,85 +81,86 @@ class ilExamOrgaField
      * Get a new field object according to the definition
      * @param ilObjExamOrga $object
      * @param array $definition
+     * @param string $lang_prefix
      * @return self
      */
-    public static function factory($object, $definition) {
+    public static function factory($object, $definition, $lang_prefix = 'field') {
         switch ($definition['type']) {
 
             case self::TYPE_TEXT:
                 require_once (__DIR__ . '/class.ilExamOrgaTextField.php');
-                return new ilExamOrgaTextField($object, $definition);
+                return new ilExamOrgaTextField($object, $definition, $lang_prefix);
 
             case self::TYPE_TEXTAREA:
                 require_once (__DIR__ . '/class.ilExamOrgaTextareaField.php');
-                return new ilExamOrgaTextareaField($object, $definition);
+                return new ilExamOrgaTextareaField($object, $definition, $lang_prefix);
 
             case self::TYPE_LINK:
                 require_once (__DIR__ . '/class.ilExamOrgaLinkField.php');
-                return new ilExamOrgaLinkField($object, $definition);
+                return new ilExamOrgaLinkField($object, $definition, $lang_prefix);
 
             case self::TYPE_INTEGER:
                 require_once (__DIR__ . '/class.ilExamOrgaIntegerField.php');
-                return new ilExamOrgaIntegerField($object, $definition);
+                return new ilExamOrgaIntegerField($object, $definition, $lang_prefix);
 
             case self::TYPE_CHECKBOX:
                 require_once (__DIR__ . '/class.ilExamOrgaCheckboxField.php');
-                return new ilExamOrgaCheckboxField($object, $definition);
+                return new ilExamOrgaCheckboxField($object, $definition, $lang_prefix);
 
             case self::TYPE_SELECT:
                 require_once (__DIR__ . '/class.ilExamOrgaSelectField.php');
-                return new ilExamOrgaSelectField($object, $definition);
+                return new ilExamOrgaSelectField($object, $definition, $lang_prefix);
 
             case self::TYPE_MULTISELECT:
                 require_once (__DIR__ . '/class.ilExamOrgaMultiselectField.php');
-                return new ilExamOrgaMultiselectField($object, $definition);
+                return new ilExamOrgaMultiselectField($object, $definition, $lang_prefix);
 
             case self::TYPE_RADIO:
                 require_once (__DIR__ . '/class.ilExamOrgaRadioField.php');
-                return new ilExamOrgaRadioField($object, $definition);
+                return new ilExamOrgaRadioField($object, $definition, $lang_prefix);
 
             case self::TYPE_DATE:
                 require_once (__DIR__ . '/class.ilExamOrgaDateField.php');
-                return new ilExamOrgaDateField($object, $definition);
+                return new ilExamOrgaDateField($object, $definition, $lang_prefix);
 
             case self::TYPE_TIMESTAMP:
                 require_once (__DIR__ . '/class.ilExamOrgaTimestampField.php');
-                return new ilExamOrgaTimestampField($object, $definition);
+                return new ilExamOrgaTimestampField($object, $definition, $lang_prefix);
 
             case self::TYPE_HEADLINE:
                 require_once (__DIR__ . '/class.ilExamOrgaHeadlineField.php');
-                return new ilExamOrgaHeadlineField($object, $definition);
+                return new ilExamOrgaHeadlineField($object, $definition, $lang_prefix);
 
             case self::TYPE_REFERENCE:
                 require_once (__DIR__ . '/class.ilExamOrgaReferenceField.php');
-                return new ilExamOrgaReferenceField($object, $definition);
+                return new ilExamOrgaReferenceField($object, $definition, $lang_prefix);
 
             case self::TYPE_TIMES:
                 require_once (__DIR__ . '/class.ilExamOrgaTimesField.php');
-                return new ilExamOrgaTimesField($object, $definition);
+                return new ilExamOrgaTimesField($object, $definition, $lang_prefix);
 
             case self::TYPE_LOGINS:
                 require_once (__DIR__ . '/class.ilExamOrgaLoginsField.php');
-                return new ilExamOrgaLoginsField($object, $definition);
+                return new ilExamOrgaLoginsField($object, $definition, $lang_prefix);
 
             case self::TYPE_USER_ID:
                 require_once (__DIR__ . '/class.ilExamOrgaUserIdField.php');
-                return new ilExamOrgaUserIdField($object, $definition);
+                return new ilExamOrgaUserIdField($object, $definition, $lang_prefix);
 
             case self::TYPE_EXAMS:
                 require_once (__DIR__ . '/class.ilExamOrgaExamsField.php');
-                return new ilExamOrgaExamsField($object, $definition);
+                return new ilExamOrgaExamsField($object, $definition, $lang_prefix);
 
             case self::TYPE_RUN_LINKS:
                 require_once (__DIR__ . '/class.ilExamOrgaRunLinksField.php');
-                return new ilExamOrgaRunLinksField($object, $definition);
+                return new ilExamOrgaRunLinksField($object, $definition, $lang_prefix);
 
             case self::TYPE_NOTES:
                 require_once (__DIR__ . '/class.ilExamOrgaNotesField.php');
-                return new ilExamOrgaNotesField($object, $definition);
+                return new ilExamOrgaNotesField($object, $definition, $lang_prefix);
 
             default:
-                return new self($object, $definition);
+                return new self($object, $definition, $lang_prefix);
         }
     }
 
@@ -167,8 +168,9 @@ class ilExamOrgaField
      * ilExamOrgaField constructor.
      * @param ilObjExamOrga $object
      * @param array $definition
+     * @param string $lang_prefix
      */
-    public function __construct($object, $definition)
+    public function __construct($object, $definition, $lang_prefix = 'field')
     {
         $this->object = $object;
         $this->plugin = $object->plugin;
@@ -185,20 +187,24 @@ class ilExamOrgaField
         $this->require_idm = (bool) $definition['require_idm'];
 
 
+        if (isset($definition['lang_prefix'])) {
+            $lang_prefix = $definition['lang_prefix'];
+        }
+
         // title
         if (isset($definition['title'])) {
             $this->title = $definition['title'];
         }
         else {
-            $this->title =  $this->plugin->txt('field_' . $this->name);
+            $this->title =  $this->plugin->txt($lang_prefix . '_' . $this->name);
         }
 
         // optional info line
         if (isset($definition['info'])) {
-            $this->info =  $definition['info'];
+            $this->info = $definition['info'];
         }
-        elseif ($this->plugin->txt('field_' . $this->name . '_info') != 'field_' . $this->name . '_info') {
-            $this->info = $this->plugin->txt('field_' . $this->name . '_info');
+        elseif ($this->plugin->txt($lang_prefix . '_' . $this->name . '_info') != $lang_prefix  . '_' . $this->name . '_info') {
+            $this->info = $this->plugin->txt($lang_prefix . '_' . $this->name . '_info');
         }
 
         // select or radio options

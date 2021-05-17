@@ -234,7 +234,7 @@ class ilObjExamOrga extends ilObjectPlugin
 
         foreach ($fields as $definition) {
             $name = (string) $definition['name'];
-            $this->record_fields[$name] = ilExamOrgaField::factory($this, $definition);
+            $this->record_fields[$name] = ilExamOrgaField::factory($this, $definition, 'record');
         }
     }
 
@@ -262,7 +262,7 @@ class ilObjExamOrga extends ilObjectPlugin
             $fields = include_once(__DIR__ . '/../fields_condition.php');
             foreach ($fields as $definition) {
                 $name = (string) $definition['name'];
-                $this->condition_fields[$name] = ilExamOrgaField::factory($this, $definition);
+                $this->condition_fields[$name] = ilExamOrgaField::factory($this, $definition, 'condition');
             }
         }
         return $this->condition_fields;

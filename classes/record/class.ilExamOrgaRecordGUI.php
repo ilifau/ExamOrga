@@ -84,8 +84,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $table = new ilExamOrgaRecordTableGUI($this, 'listRecords');
             $table->writeFilterToSession();
             $table->resetOffset();
-
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
     }
 
@@ -100,8 +99,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $table->resetOffset();
             $table->resetFilter();
             $table->initFilter();
-
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
     }
 
@@ -113,7 +111,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $this->setRecordToolbar();
 
         /** @var ilExamOrgaRecord $record */
-        $record = ilExamOrgaRecord::find((int) $_GET['id']);
+        $record = ilExamOrgaRecord::findInObject((int) $_GET['id'], $this->object->getId());
         $this->checkViewRecord($record);
 
         $form = new ilPropertyFormGUI();
@@ -203,11 +201,11 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function editRecord()
     {
-        $this->ctrl->saveParameter($this, 'id');
         $this->setRecordToolbar();
+        $this->ctrl->saveParameter($this, 'id');
 
         /** @var ilExamOrgaRecord $record */
-        $record = ilExamOrgaRecord::find((int) $_GET['id']);
+        $record = ilExamOrgaRecord::findInObject((int) $_GET['id'], $this->object->getId());
         $this->checkEditRecord($record);
 
         $form = $this->initRecordForm($record);
@@ -231,7 +229,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $this->ctrl->saveParameter($this, 'id');
 
         /** @var ilExamOrgaRecord $record */
-        $record = ilExamOrgaRecord::find((int) $_GET['id']);
+        $record = ilExamOrgaRecord::findInObject((int) $_GET['id'], $this->object->getId());
         $this->checkEditRecord($record);
 
         $original = clone $record;
@@ -305,7 +303,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $this->ctrl->saveParameter($this, 'id');
 
         /** @var ilExamOrgaRecord $record */
-        $record = ilExamOrgaRecord::find((int) $_GET['id']);
+        $record = ilExamOrgaRecord::findInObject((int) $_GET['id'], $this->object->getId());
         $this->checkEditRecord($record);
 
         /** @var ilExamOrgaNote $note */
@@ -398,7 +396,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         }
 
         ilUtil::sendSuccess($this->plugin->txt('records_deleted'), true);
-        $this->ctrl->redirect($this, 'listRecords');
+        $this->redirectToList();
     }
 
     /**
@@ -447,7 +445,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         else {
             ilUtil::sendFailure($excel->getInfo(), true);
         }
-        $this->ctrl->redirect($this, 'listRecords');
+        $this->redirectToList();
     }
 
     /**
@@ -494,7 +492,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     {
         if (!$this->object->canAddRecord()) {
             ilUtil::sendFailure($this->plugin->txt('message_no_add_record'), true);
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
         return true;
     }
@@ -508,11 +506,11 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     {
         if (!isset($record)) {
             ilUtil::sendFailure($this->lng->txt("message_record_not_found"), true);
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
         if (!$this->object->canViewRecord($record)) {
             ilUtil::sendFailure($this->plugin->txt('message_no_view_record'), true);
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
         return true;
     }
@@ -527,12 +525,21 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     {
         if (!isset($record)) {
             ilUtil::sendFailure($this->lng->txt("message_record_not_found"), true);
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
         if (!$this->object->canEditRecord($record)) {
             ilUtil::sendFailure($this->lng->txt("message_no_edit_record"), true);
-            $this->ctrl->redirect($this, 'listRecords');
+            $this->redirectToList();
         }
         return true;
+    }
+
+    /**
+     * Cleanup parameters and show the list of records
+     */
+    protected function redirectToList() 
+    {
+        $this->ctrl->setParameter($this, 'id', '');
+        $this->ctrl->redirect($this, 'listRecords');
     }
 }

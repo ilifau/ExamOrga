@@ -396,6 +396,22 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
      */
     public $modified_by;
 
+    /**
+     * Find a record with a given id that belongs to an orga object
+     * @param int $id
+     * @param int $obj_id
+     * @return ilExamOrgaRecord|null
+     */
+    public static function findInObject($id, $obj_id)
+    {
+        /** @var ilExamOrgaRecord[] $records */
+        $recordList = ilExamOrgaRecord::getCollection();
+        $records = $recordList->where(['id' => (int) $id, 'obj_id' => (int) $obj_id])->get();
+        if (empty($records)) {
+            return null;
+        }
+        return array_pop($records);
+    }
 
     /**
      * Get the id if the record

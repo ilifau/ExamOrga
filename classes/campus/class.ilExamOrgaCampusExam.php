@@ -165,7 +165,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
             case 2:
                 return [
                     $year . '1',
-                    $semester
+                    $semester,
                     ($year + 1) . '1',
                 ];
             default:

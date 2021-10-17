@@ -30,6 +30,16 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
      */
     const LEVEL_WARN = 'warn';
 
+    /**
+     * All partial conditions must fit
+     */
+    const TYPE_REQUIRE = 'require';
+
+    /**
+     * The combination of the partial conditions mur not fit
+     */
+    const TYPE_EXCLUDE = 'exclude';
+
 
     /**
      * @return string
@@ -73,6 +83,16 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
     /**
      * @var string
      * @con_has_field        true
+     * @con_is_notnull       true
+     * @con_fieldtype        text
+     * @con_length           10
+     */
+    public $cond_type = 'require';
+
+
+    /**
+     * @var string
+     * @con_has_field        true
      * @con_fieldtype        timestamp
      */
     public $reg_min_date;
@@ -91,6 +111,20 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
      * @con_length           4
      */
     public $reg_min_days_before;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        date
+     */
+    public $exam_from_date;
+
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_fieldtype        date
+     */
+    public $exam_to_date;
 
     /**
      * @var string
@@ -239,7 +273,7 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
 
 
     /**
-     * Check a record if the condition is matched
+     * Check a record if the condition is satisfied
      * @param ilExamOrgaRecord $record
      * @return bool
      */
@@ -251,18 +285,43 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
             return true;
         }
 
-        // CONDITIONS: not matching => condition failed => return false
+        if (!empty($this->exam_from_date) & $record->exam_date < $this->exam_from_date) {
+            return true;
+        }
+
+        if (!empty($this->exam_to_date) & $record->exam_date > $this->exam_to_date) {
+            return true;
+        }
+
+
+         // Set the return value for mismatching or matching condition
+
+        switch ($this->cond_type) {
+            case self::TYPE_EXCLUDE:
+                $mismatch = true;
+                $match = false;
+                break;
+
+            case self::TYPE_REQUIRE:
+            default:
+                $mismatch = false;
+                $match = true;
+                break;
+        }
+
+
+        // CONDITIONS: not matching => condition failed => return mismatch value
 
         if (!empty($this->exam_types) && !in_array($record->exam_type, self::_toArray($this->exam_types))) {
-            return false;
+            return $mismatch;
         }
 
         if (!empty($this->exam_min_date && $record->exam_date < $this->exam_min_date)) {
-            return false;
+            return $mismatch;
         }
 
         if (!empty($this->exam_max_date && $record->exam_date > $this->exam_max_date)) {
-            return false;
+            return $mismatch;
         }
 
         if (!empty($this->reg_min_days_before)) {
@@ -273,38 +332,38 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
             $compare = $day->get(IL_CAL_DATE);
 
             if ($record->exam_date < $compare) {
-                return false;
+                return $mismatch;
             }
         }
 
         switch ($this->weekdays) {
             case 'Mo-Fr':
                 if ($record->getWeekday() > 5) {
-                    return false;
+                    return $mismatch;
                 }
                 break;
             case 'Mo-Sa':
                 if ($record->getWeekday() > 6) {
-                    return false;
+                    return $mismatch;
                 }
                 break;
         }
 
         if (!empty($this->min_daytime)) {
             if ($record->getEarliestStart() < $this->min_daytime) {
-                return false;
+                return $mismatch;
             }
         }
 
         if (!empty($this->max_daytime)) {
             if ($record->getLatestEnd() > $this->max_daytime) {
-                return false;
+                return $mismatch;
             }
         }
 
 
-        // DEFAULT: all checks passed => conditions satisfied => return true
-        return true;
+        // DEFAULT: all checks passed => conditions satisfied => return match value
+        return $match;
     }
 
 

@@ -6,11 +6,21 @@ $plugin = ilExamOrgaPlugin::getInstance();
  */
 $fields = [
     [
+        'name' => 'cond_type',
+        'type' => ilExamOrgaField::TYPE_RADIO,
+        'options' => [
+            'require' => $plugin->txt('condition_cond_type_require'),
+            'exclude' => $plugin->txt('condition_cond_type_exclude'),
+        ],
+        'required' => true,
+        'default' => true
+    ],
+    [
         'name' => 'level',
         'type' => ilExamOrgaField::TYPE_RADIO,
         'options' => [
-            'hard' => $plugin->txt('condition_field_level_option_hard'),
-            'soft' => $plugin->txt('condition_field_level_option_soft'),
+            'hard' => $plugin->txt('condition_level_option_hard'),
+            'soft' => $plugin->txt('condition_level_option_soft'),
         ],
         'required' => true,
         'default' => true
@@ -45,7 +55,17 @@ $fields = [
         'default' => true
     ],
     [
-        'name' => 'head_condition',
+        'name' => 'exam_from_date',
+        'type' => ilExamOrgaField::TYPE_DATE,
+        'default' => true,
+    ],
+    [
+        'name' => 'exam_to_date',
+        'type' => ilExamOrgaField::TYPE_DATE,
+        'default' => true,
+    ],
+    [
+        'name' => 'head_conditions',
         'type' => ilExamOrgaField::TYPE_HEADLINE,
     ],
     [
@@ -78,9 +98,9 @@ $fields = [
         'name' => 'weekdays',
         'type' => ilExamOrgaField::TYPE_RADIO,
         'options' => [
-            '' => $plugin->txt('condition_field_weekdays_any'),
-            'Mo-Fr' => $plugin->txt('condition_field_weekdays_mo_fr'),
-            'Mo-Sa' => $plugin->txt('condition_field_weekdays_mo_sa'),
+            '' => $plugin->txt('condition_weekdays_any'),
+            'Mo-Fr' => $plugin->txt('condition_weekdays_mo_fr'),
+            'Mo-Sa' => $plugin->txt('condition_weekdays_mo_sa'),
         ],
         'default' => true
     ],

@@ -539,12 +539,26 @@ $fields = array(
         'type' => 'text',
         'length' => '10',
     ),
+    'cond_type' => array(
+        'notnull' => '1',
+        'type' => 'text',
+        'length' => '10',
+        'default'=> 'require'
+    ),
     'reg_min_date' => array(
         'type' => 'timestamp',
 
     ),
     'reg_max_date' => array(
         'type' => 'timestamp',
+
+    ),
+    'exam_from_date' => array(
+        'type' => 'date',
+
+    ),
+    'exam_to_date' => array(
+        'type' => 'date',
 
     ),
     'reg_min_days_before' => array(

@@ -130,27 +130,32 @@ condition_level#:#Level
 condition_level_info#:#Erlaubte Prüfungsformate
 condition_level_option_hard#:#Verhindert Speicherung für alle
 condition_level_option_soft#:#Verhindert Erstellung für Nutzer, erlaubt Erstellung für Admins, danach Bearbeitung durch Nutzer mit Warnung
+condition_cond_type#:#Bedingungstyp
+condition_cond_type_require#:#Anforderung - alle festgelegten Einzelbedingungen müssen passen
+condition_cond_type_exclude#:#Ausschluss - die Kombination der festgelegten Einzelbedingungen darf nicht passen
 condition_failure_message#:#Meldung
 condition_failure_message_info#:#Meldung, welche die Bedingung verständlich wiedergibt.
 condition_head_filter#:#Anwendung
-condition_head_filter_info#:#Stellen Sie hier ein, für welche Einträge diese Bedingung geprüft wird.
+condition_head_filter_info#:#Stellen Sie hier ein, für welche Einträge die Bedingung geprüft werden.
 condition_reg_min_date#:#Gültig ab
 condition_reg_min_date_info#:#Erstellungs- oder Bearbeitungsdatum, ab dem die Bedingung gültig ist
 condition_reg_max_date#:#Gültig bis
 condition_reg_max_date_info#:#Erstellungs- oder Bearbeitungsdatum, bis zu dem dem die Bedingung gültig ist
 condition_exam_formats#:#Für Formate
 condition_exam_formats_info#:#Prüfungsformate mit dieser Bedingung
-condition_head_condition#:#Anforderung
-condition_head_condition_info#:#Stellen Sie hier ein, welche Anforderungen ein Eintrag erfüllen muss.
+condition_exam_from_date#:#Für Prüfungen von
+condition_exam_to_date#:#Für Prüfungen bis
+condition_head_conditions#:#Einzelbedingungen
+condition_head_conditions_info#:#Stellen Sie hier ein, welche Einzelbedingungen geprüft werden
 condition_reg_min_days_before#:#Vorlauf
 condition_reg_min_days_before_info#:#Minumum an Tagen zwischen Bearbeitung des Eintrags und dem Prüfungsdatum
 condition_exam_types#:#Typen
-condition_exam_types_info#:#Erlaubte Prüfungstypen
+condition_exam_types_info#:#Prüfungstypen
 condition_exam_min_date#:#Früheste Prüfung
 condition_exam_max_date#:#Späteste Prüfung
 condition_weekdays#:#Wochentage
 condition_weekdays_info#:#Erlaubte Wochentage als Prüfungstermin
-condition_weekdays_any#:#beliebig
+condition_weekdays_any#:#nicht festgelegt
 condition_weekdays_mo_fr#:#Montag bis Freitag
 condition_weekdays_mo_sa#:#Montag bis Samstag
 condition_min_daytime#:#Frühester Start

@@ -88,7 +88,7 @@ purpose_info#:#Geben Sie hier an, welche Art von Prüfung hier verwaltet werden 
 purpose_written#:#E-Prüfungen in Präsenz und schriftliche Fernprüfungsformate
 purpose_oral#:#Mündliche Prüfungen mit Videoaufsicht
 campus_soap_url#:#URL des mein campus Services
-campus_soap_url_info#:#Von dieser URL werden per SOAP die Prüfungen und ihre Teilnehmer abgefragt
+campus_soap_url_info#:#Von dieser URL werden per SOAP die Prüfungen und ihre Teilnehmenden abgefragt
 summer_term#:#Sommersemester
 winter_term#:#Wintersemester
 semester#:#Semester
@@ -105,7 +105,7 @@ note#:#Hinweis
 delete_note#:#Hinweis löschen
 note_deleted#:#Der Hinweis wurde gelöscht
 users_per_session#:#Meeting-Größe
-users_per_session_info#:#Anzahl der Prüflinge in einem Zoom-Meeting. Für jeden Durchgang werden mehrere parallele Meetings angelegt. Die Anzahl paralleler Meetings pro Durchgang berechnet sich so:<br /> (Teilnehmer / Durchgänge) / Meeting-Größe
+users_per_session_info#:#Anzahl der Prüflinge in einem Zoom-Meeting. Für jeden Durchgang werden mehrere parallele Meetings angelegt. Die Anzahl paralleler Meetings pro Durchgang berechnet sich so:<br /> (Teilnehmende / Durchgänge) / Meeting-Größe
 notes_filter_zoom_any#:#Zoom: Hinweis vorhanden
 notes_filter_zoom_meeting#:#Zoom: Meeting-Problem
 notes_filter_zoom_monitor#:#Zoom: Aufsichten-Problem
@@ -179,43 +179,44 @@ exam_types_sample#:#Probeklausur
 exam_methods_test#:#Test (kontinuierliche Bearbeitung auf der Prüfungsplattform)
 exam_methods_exercise#:#Übung (Offline-Bearbeitung mit anschließendem Upload)
 record_fau_unit#:#Bereich
-record_fau_unit_info#:#Wählen Sie hier den Bereich, in dem Ihre Prüfung auf der (Fern-)Prüfungsplattform angelegt werden soll. Die Bereiche orientieren sich an den Fakultäten und Ihrer Untergliederung. Damit sollen zu lange Listen von Prüfungen auf einer Ebene vermieden werden.
+record_fau_unit_info#:#Wählen Sie hier den Bereich, in dem Ihre Prüfung auf der (Fern-)Prüfungsplattform angelegt werden soll. Die Bereiche orientieren sich an den Fakultäten und ihrer Untergliederung. Damit sollen zu lange Listen von Prüfungen auf einer Ebene vermieden werden.
 record_fau_chair#:#Lehrstuhl
 record_fau_chair_info#:#Bitte die volle Lehrstuhl-Bezeichnung angeben
-record_fau_lecturer#:#Dozent
+record_fau_lecturer#:#Dozent/in
 record_mail_address#:#Mail-Adresse
-record_mail_address_info#:#Bitte die E-Mail-Adresse des Hauptansprechpartners eintragen.<p><strong>Diese Felder dienen zur Suche und Kontaktaufnahme. Für den Zugriff auf die Prüfungsplattform und die Zoom-Meetings verwwenden Sie bitte die Felder Prüfer/innen-Accounts, Korrektor/innen-Accounts und Aufsichten weiter unten.</strong></p>
+record_mail_address_info#:#Bitte die E-Mail-Adresse des Hauptansprechpartners / der Hauptansprechpartnerin eintragen.<p><strong>Diese Felder dienen zur Suche und Kontaktaufnahme. Für den Zugriff auf die Prüfungsplattform und die Zoom-Meetings verwenden Sie bitte die Felder Prüfer/innen-Accounts, Korrektor/innen-Accounts und Aufsichten weiter unten.</strong></p>
 record_exam_format#:#Prüfungsformat
 record_exam_format_info#:#Geben Sie hier an, welches Format Sie durchführen möchten. Wenn Sie unsicher sind kontaktieren Sie uns gerne.
 record_force_presence#:#Präsenzplattform erzwingen
 record_force_presence_info#:#Unabhängig vom Prüfungsformat soll die Präsenz-Plattform verwendet werden
 record_exam_method#:#Prüfungsmethode
-record_exam_method_info#:#[Nur bei Fernprüfungen] Geben Sie bitte an, ob Sie Ihre Prüfung mit dem Objekt Übung (Vorrangig für Essayfragen I Studierende laden von der Prüfungsplattform eine Aufgabenstellung herunter, bearbeiten diese offline und laden sie anschließend wieder in das Übungsobjekt auf der Prüfungsplattform hoch) oder mit dem Objekt Test (Vorrangig für Antwort-Wahl-Verfahren I Studierende bearbeiten alle Aufgaben im Test auf der Prüfungsplattform) umsetzen möchten.
+record_exam_method_info#:#[Nur bei Fernprüfungen] Geben Sie bitte an, ob Sie Ihre Prüfung mit dem Objekt <strong>Übung</strong> (vorrangig für Essayfragen: Studierende laden von der Prüfungsplattform eine Aufgabenstellung herunter, bearbeiten diese offline und laden sie anschließend wieder in das Übungsobjekt auf der Prüfungsplattform hoch) oder mit dem Objekt <strong>Test</strong> (vorrangig für Antwort-Wahl-Verfahren: Studierende bearbeiten alle Aufgaben im Test auf der Prüfungsplattform) umsetzen möchten.
 record_exam_type#:#Typ
 record_exam_type_info#:#Bitte immer korrekt auswählen! Für Einsichtnahmen muss kein eigener Eintrag angelegt werden. Es wird der Eintrag der Klausur verwendet.
 record_exam_title#:#Prüfungstitel
 record_exam_date#:#Datum
 record_alternative_dates#:#Alternativtermin
+record_alternative_dates_info#:#Diese Angabe ist nur für E-Prüfungen in Präsenz relevant.
 record_head_organisation#:#Organisation
 record_head_organisation_info#:#Angaben zur Organisation und Durchführung der Prüfung
 record_exam_runs#:#Durchgänge
 record_exam_runs_info#:#Startzeitpunkt der Prüfung bzw. Startzeitpunkte aller Durchgänge (wenn mehrere veranschlagt sind). Bei Fernprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 20 Minuten ein. Bei Präsenzprüfungen rechnen Sie bitte zwischen den Durchgängen eine Pause von 60 Minuten ein.
 record_run_minutes#:#Prüfungsdauer
 record_run_minutes_info#:#Bitte geben Sie die reine Prüfungsdauer pro Durchgang in Minuten an. Bei Fernprüfungen Angabe bitte inkl. Pufferzeit von 20 Minuten für Upload und technische Verzögerungen.
-record_num_participants#:#Teilnehmerzahl
+record_num_participants#:#Teilnehmer/innen-Zahl
 record_num_participants_info#:#Bitte geben Sie die Gesamtzahl der Teilnehmer/innen an. Zur Lastberechnung nimmt das System eine Gleichverteilung auf die Durchgänge an.
 record_exam_ids#:#Prüfungen in mein campus
-record_exam_ids_info#:#Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um Prüfungen aus dem Semester dieses Anmeldesystems zu erhalten. Andere IDs (z.B. bei Nachholklausuren) können Sie von Hand eingeben.</strong></p>
+record_exam_ids_info#:#Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmeer/innen automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um Prüfungen aus dem Semester dieses Anmeldesystems zu erhalten. Andere IDs (z.B. bei Nachholklausuren) können Sie von Hand eingeben.</strong></p>
 record_admins#:#Prüfer/innen-Accounts
-record_admins_info#:#Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie können diesen Eintrag bearbeiten, bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Als Ersteller dieses Eintrags bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.
+record_admins_info#:#Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie können diesen Eintrag bearbeiten, bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Wenn Sie diesen Eintrag selbst erstellt haben, bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.
 record_correctors#:#Korrektor/innen-Accounts
 record_correctors_info#:#Wählen Sie hier die StudOn-Accounts der Korrektor/innen aus. Sie bekommen in der Prüfungsplattform  Vollzugriff auf die Inhalte der Prüfungswerkstatt. Außerhalb der Werkstatt können sie in Tests und Übungen die Ergebnisse einsehen und bewerten.
 record_monitors#:#Aufsichten
-record_monitors_info#:#Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.<p><strong>WICHTIG: Die ausgewählten StudOn-Accounts müssen mit IdM-Konten verknüpft sein oder zumindest ihre E-Mail-Adresse in Zoom existieren und die Inhaber müssen sich vorab einmal per Single Sign-On in Zoom angemeldet haben, damit das funktioniert.</strong></p>
+record_monitors_info#:#Wählen Sie hier die StudOn-Accounts der Aufsichten aus. Sie erhalten automatisch Zugiff auf die ZOOM-Meetings zur Prüfung.<p><strong>WICHTIG: Die ausgewählten StudOn-Accounts müssen mit IdM-Konten verknüpft sein oder zumindest ihre E-Mail-Adressen müssen in Zoom existieren und die Inhaber/innen müssen sich vorab einmal per Single Sign-On in Zoom angemeldet haben, damit das funktioniert.</strong></p>
 record_remarks#:#Anmerkungen
 record_remarks_info#:#Beschreiben Sie hier kurz eventuelle Besonderheiten zur Klausur (z.B. Einsatz von Video, Audio, Taschenrechner, Zufalls-Test, verschiedene Tests, Weiterleitung zur Umfrage etc.)
 record_finally_approved#:#Finale Abnahme
-record_finally_approved_info#:#Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmer importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.
+record_finally_approved_info#:#Hiermit bestätigen Sie, dass Sie Ihre Prüfung auf die Prüfungsplattform übertragen haben, die Teilnehmenden importiert sind, final alle Einstellungen überprüft wurden und keine Änderungen mehr vorgenommen werden. Die finale Abnahme bezieht sich auf den letzten Check ihrer Prüfung auf der Prüfungsplattform und ist erst wenige Tage vor Prüfungstermin relevant.
 record_head_presence#:#Präsenzprüfung
 record_head_presence_info#:#Die folgenden Angaben sind nur für E-Prüfungen in Präsenz relevant
 record_test_ref_id#:#Testobjekt in StudOn
@@ -233,21 +234,21 @@ record_booking_in_process_info#:#Wird vom Exam-Team ausgefüllt. Ihre Anfrage is
 record_booking_approved#:#Buchung abgeschlossen
 record_booking_approved_info#:#Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.
 record_reg_code#:#Registrierungscode
-record_reg_code_info#:#Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht
+record_reg_code_info#:#Wird vom StudOn-Exam Team eingetragen, sobald dieser bereitsteht.
 record_course_link#:#Link zum Prüfungs-Kurs
-record_course_link_info#:#Wird vom StudOn-Exam Team eingetragen, sobald dieser bereit steht
+record_course_link_info#:#Wird vom StudOn-Exam Team eingetragen, sobald dieser bereitsteht.
 record_run_links#:#Zoom-Links zur Fernprüfung
-record_run_links_info#:#Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind. Die Prüfung auf Korrektheit beginnt einen Monat vor dem Prüfungsdatum. <strong>Die Zoom-Meetings weren zwei Wochen vor dem Prüfungstrmin angelegt.</strong> Ein Abgleich findet alle halbe Stunden statt. Bitte beachten sie die dabei generierten Hinweise zur Überarbeitung.
+record_run_links_info#:#Werden vom RRZE übermittelt, sobald die Zoom-Meetings angelegt sind. Die Prüfung auf Korrektheit beginnt einen Monat vor dem Prüfungsdatum. <strong>Die Zoom-Meetings werden zwei Wochen vor dem Prüfungstermin angelegt.</strong> Ein Abgleich findet alle halbe Stunden statt. Bitte beachten sie die dabei generierten Hinweise zur Überarbeitung.
 record_notes#:#Hinweise zur Überarbeitung
 record_head_internal#:#Intern
 record_head_internal_info#:#Die folgenden Angaben sind nur für das Exam-Team sichtbar
 record_team_agent#:#Agentin
-record_quality_checked#:#Qualitätscheck
+record_quality_checked#:#Chromebook-Check
 record_team_students#:#ILI-Hiwi
 record_team_standby#:#Bereitschaft
 record_ips_active#:#IP Freigabe
-record_tech_details#:#Techn. Details
-record_settings_checked#:#Exam-Check Einstellungen
+record_tech_details#:#Besonderheiten
+record_settings_checked#:#Settings-Check
 record_seb_checked#:#Exam-Check 2 SEB
 record_head_record#:#Angaben zu diesem Eintrag
 record_id#:#ID
@@ -256,7 +257,8 @@ record_created_at#:#Erstellt am
 record_created_by#:#Erstellt von
 record_modified_at#:#Bearbeitet am
 record_modified_by#:#Bearbeitet von
-record_owner_id#:#Besitzer
-record_owner_id_info#:#Der Besitzer kann diesen Eintrag bearbeiten
+record_owner_id#:#Besitzer/in
+record_owner_id_info#:#Dieser Account kann den Eintrag bearbeiten
 record_oral_fau_unit#:#Fakultät
 record_oral_head_process_info#:#Die folgenden Angaben werden vom RRZE
+please_select#:#-- Bitte auswählen --

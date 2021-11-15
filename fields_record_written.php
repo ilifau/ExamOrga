@@ -66,6 +66,7 @@ $fields = [
       'limit' => 200,
       'default' => true,
       'filter' => true,
+      'required' => true
   ],
   [
       'name' => 'fau_lecturer',
@@ -179,11 +180,11 @@ $fields = [
       'name' => 'remarks',
       'type' => ilExamOrgaField::TYPE_TEXTAREA,
   ],
-  [
-      'name' => 'finally_approved',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'status' => ilExamOrgaField::STATUS_PUBLIC
-  ],
+//  [
+//      'name' => 'finally_approved',
+//      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+//      'status' => ilExamOrgaField::STATUS_PUBLIC
+//  ],
   /////////////////////////////////////////////////////////
   [
       'name' => 'head_presence',
@@ -198,11 +199,11 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
-  [
-      'name' => 'room_in_univis',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
+//  [
+//      'name' => 'room_in_univis',
+//      'type' => ilExamOrgaField::TYPE_CHECKBOX,
+//      'status' => ilExamOrgaField::STATUS_HIDDEN
+//  ],
   //////////////////////////////////////////////////////////
   [
       'name' => 'head_process',
@@ -248,20 +249,20 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_HEADLINE,
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
-  [
-      'name' => 'team_agent',
-      'type' => ilExamOrgaField::TYPE_SELECT,
-      'options' => [
-          ' ' => 'Nicht gewählt',
-        'Silvana',
-        'Mona',
-        'Steffi',
-        'Stefie',
-        'Inke'
-      ],
-      'status' => ilExamOrgaField::STATUS_HIDDEN,
-      'filter' => true,
-  ],
+//  [
+//      'name' => 'team_agent',
+//      'type' => ilExamOrgaField::TYPE_SELECT,
+//      'options' => [
+//          ' ' => 'Nicht gewählt',
+//        'Silvana',
+//        'Mona',
+//        'Steffi',
+//        'Stefie',
+//        'Inke'
+//      ],
+//      'status' => ilExamOrgaField::STATUS_HIDDEN,
+//      'filter' => true,
+//  ],
   [
       'name' => 'quality_checked',
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
@@ -272,21 +273,21 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_TEXTAREA,
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
-  [
-      'name' => 'team_standby',
-      'type' => ilExamOrgaField::TYPE_MULTISELECT,
-      'options' => [
-        'Inke (D)',
-        'Mona (D)',
-        'Silvana (D)',
-        'Steffi (D)',
-        'Stefie (D)',
-        'Gerd (T)',
-        'Fred (T)',
-        'Silvana (T)'
-      ],
-      'status' => ilExamOrgaField::STATUS_HIDDEN
-  ],
+//  [
+//      'name' => 'team_standby',
+//      'type' => ilExamOrgaField::TYPE_MULTISELECT,
+//      'options' => [
+//        'Inke (D)',
+//        'Mona (D)',
+//        'Silvana (D)',
+//        'Steffi (D)',
+//        'Stefie (D)',
+//        'Gerd (T)',
+//        'Fred (T)',
+//        'Silvana (T)'
+//      ],
+//      'status' => ilExamOrgaField::STATUS_HIDDEN
+//  ],
   [
       'name' => 'tech_details',
       'type' => ilExamOrgaField::TYPE_TEXTAREA,
@@ -332,8 +333,6 @@ $fields = [
   [
       'name' => 'owner_id',
       'type' => ilExamOrgaField::TYPE_USER_ID,
-      'title' => 'Besitzer',
-      'info' => 'Der Besitzer kann diesen Eintrag bearbeiten',
       'status' => ilExamOrgaField::STATUS_LOCKED
   ],
 ];

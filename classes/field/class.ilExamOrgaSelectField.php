@@ -33,7 +33,8 @@ class ilExamOrgaSelectField extends ilExamOrgaField
         if (isset($this->info)) {
             $item->setInfo($this->info);
         }
-        $item->setOptions($this->options);
+        $options = array_merge(['' => $this->plugin->txt('please_select')], $this->options);
+        $item->setOptions($options);
         $item->setValue($this->getValue($record));
         return $item;
     }

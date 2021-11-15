@@ -10,6 +10,9 @@
      *
      * @author Fred Neumann <fred.neumann@fau.de>
      */
+
+    /** @var ilDBInterface */
+    global $ilDB;
 ?>
 <#2>
 <?php
@@ -631,5 +634,28 @@ if (! $ilDB->tableExists('xamo_cond')) {
     if (! $ilDB->sequenceExists('xamo_cond')) {
         $ilDB->createSequence('xamo_cond');
     }
+}
+?>
+<#11>
+<?php
+if (!$ilDB->tableColumnExists('xamo_record', 'booking_status')) {
+    $ilDB->addTableColumn('xamo_record', 'booking_status', array(
+        'type' => 'text',
+        'length' => '20',
+        'notnull' => '1',
+        'default' => 'requested'
+    ));
+
+    $ilDB->manipulate("UPDATE xamo_record SET booking_status = 'approved' WHERE booking_status = 'requested' AND booking_approved > 0");
+    $ilDB->manipulate("UPDATE xamo_record SET booking_status = 'in_process' WHERE booking_status = 'requested' AND booking_in_process > 0");
+}
+?>
+<#12>
+<?php
+if ($ilDB->tableColumnExists('xamo_record', 'booking_approved')) {
+    $ilDB->dropTableColumn('xamo_record', 'booking_approved');
+}
+if ($ilDB->tableColumnExists('xamo_record', 'booking_in_process')) {
+    $ilDB->dropTableColumn('xamo_record', 'booking_in_process');
 }
 ?>

@@ -230,20 +230,12 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
     public $remarks;
 
     /**
-     * @var integer
+     * @var string
      * @con_has_field        true
-     * @con_fieldtype        integer
-     * @con_length           4
+     * @con_fieldtype        text
+     * @con_length           20
      */
-    public $booking_in_process;
-
-    /**
-     * @var integer
-     * @con_has_field        true
-     * @con_fieldtype        integer
-     * @con_length           4
-     */
-    public $booking_approved;
+    public $booking_status = 'requested';
 
     /**
      * @var integer

@@ -229,10 +229,11 @@ record_room_in_univis#:#UnivIS Eintrag
 record_room_in_univis_info#:#Für Exam-Team
 record_head_process#:#Status
 record_head_process_info#:#Die folgenden Angaben werden vom Exam-Team ausgefüllt
-record_booking_in_process#:#In Bearbeitung
-record_booking_in_process_info#:#Wird vom Exam-Team ausgefüllt. Ihre Anfrage ist bei uns eingegangen und wird von uns bearbeitet.
-record_booking_approved#:#Buchung abgeschlossen
-record_booking_approved_info#:#Wird vom Exam-Team ausgefüllt. Sie können die Daten Ihres verbindlich gebuchten Prüfungstermins einsehen.
+record_booking_status#:#Buchungsstatus
+record_booking_status_info#:#Wird vom Exam-Team ausgefüllt. Neue Einträge haben den Status "angemeldet". Präsenzprüfungen haben während der Klärung der Raumverfügbarkeit den Status "In bearbeitung". Verbindlich geebuchte Termine erhalten den Status "bestätigt".
+record_booking_status_requested#:#angemeldet
+record_booking_status_in_process#:#in Bearbeitung (Präsenzprüfung)
+record_booking_status_approved#:#bestätigt
 record_reg_code#:#Registrierungscode
 record_reg_code_info#:#Wird vom StudOn-Exam Team eingetragen, sobald dieser bereitsteht.
 record_course_link#:#Link zum Prüfungs-Kurs

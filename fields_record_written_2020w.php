@@ -220,14 +220,16 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_HEADLINE,
   ],
   [
-      'name' => 'booking_in_process',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'status' => ilExamOrgaField::STATUS_LOCKED
-  ],
-  [
-      'name' => 'booking_approved',
-      'type' => ilExamOrgaField::TYPE_CHECKBOX,
-      'status' => ilExamOrgaField::STATUS_LOCKED
+      'name' => 'booking_status',
+      'type' => ilExamOrgaField::TYPE_RADIO,
+      'options' => [
+          'requested' => $plugin->txt('record_booking_status_requested'),
+          'in_process' => $plugin->txt('record_booking_status_in_process'),
+          'approved' => $plugin->txt('record_booking_status_approved'),
+      ],
+      'required' => true,
+      'default' => true,
+      'filter' => true
   ],
   [
       'name' => 'reg_code',

@@ -1,11 +1,13 @@
 <?php
 
 require_once(__DIR__ . "/class.ilExamOrgaPlugin.php");
+require_once(__DIR__ . "/class.ilObjExamOrga.php");
+require_once(__DIR__ . "/record/class.ilExamOrgaRecord.php");
 
 /**
  * @ilCtrl_isCalledBy ilObjExamOrgaGUI: ilRepositoryGUI, ilAdministrationGUI, ilObjPluginDispatchGUI
  * @ilCtrl_Calls ilObjExamOrgaGUI: ilPermissionGUI, ilInfoScreenGUI, ilObjectCopyGUI, ilCommonActionDispatcherGUI, ilExportGUI
- * @ilCtrl_Calls ilObjExamOrgaGUI: ilExamOrgaRecordGUI, ilExamOrgaConditionGUI
+ * @ilCtrl_Calls ilObjExamOrgaGUI: ilExamOrgaRecordGUI, ilExamOrgaConditionGUI, ilExamOrgaMessageGUI
  */
 class ilObjExamOrgaGUI extends ilObjectPluginGUI
 {
@@ -14,6 +16,44 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 
 	/** @var ilExamOrgaPlugin */
 	public $plugin;
+
+    /**
+     * Extended to go to a specific record
+     * @param $a_target
+     */
+    public static function _goto($a_target)
+    {
+        global $DIC;
+
+        $ilCtrl = $DIC->ctrl();
+
+        $t = explode("_", $a_target[0]);
+        $ref_id = (int) $t[0];
+        $record_id = (int) $t[1];
+
+        if (empty($record_id)) {
+            parent::_goto($a_target);
+        }
+
+        /** @var ilExamOrgaRecord $record */
+        $record = ilExamOrgaRecord::findOrGetInstance($record_id);
+        $object = new ilObjExamOrga($ref_id);
+
+        $ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
+        $ilCtrl->getCallStructure('ilObjPluginDispatchGUI');
+
+        $ilCtrl->setParameterByClass('ilexamorgarecordgui', "ref_id", $ref_id);
+        $ilCtrl->setParameterByClass('ilexamorgarecordgui', "id", $record_id);
+
+        if ($object->canEditRecord($record)) {
+            $ilCtrl->redirectByClass(["ilobjplugindispatchgui", 'ilobjexamorgagui', 'ilexamorgarecordgui'], "editRecord");
+        }
+        elseif ($object->canViewRecord($record)) {
+            $ilCtrl->redirectByClass(["ilobjplugindispatchgui", 'ilobjexamorgagui', 'ilexamorgarecordgui'], "viewDetails");
+        }
+
+        parent::_goto($a_target);
+    }
 
 	/**
 	 * Initialisation
@@ -71,6 +111,14 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
                     break;
             }
 
+            switch ($next_class) {
+                case 'ilexamorgamessagegui':
+                    $this->checkPermission('write');
+                    $this->tabs->activateTab("messages");
+                    require_once(__DIR__ . '/message/class.ilExamOrgaMessageGUI.php');
+                    $this->ctrl->forwardCommand(new ilExamOrgaMessageGUI($this));
+                    break;
+            }
         }
         else {
             switch ($cmd)
@@ -129,6 +177,8 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 		{
 			$this->tabs->addTab("properties", $this->txt("properties"), $this->ctrl->getLinkTarget($this, "editProperties"));
             $this->tabs->addTab("conditions", $this->txt("conditions"), $this->ctrl->getLinkTargetByClass('ilexamorgaconditiongui'));
+            $this->tabs->addTab("messages", $this->txt("messages"), $this->ctrl->getLinkTargetByClass('ilexamorgamessagegui'));
+
 		}
 
 		// standard export tab

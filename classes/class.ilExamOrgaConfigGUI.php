@@ -143,8 +143,9 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
      */
 	protected function generateDBUpdate()
     {
-        require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
-        $arBuilder = new arBuilder(new ilExamOrgaCondition());
+        require_once (__DIR__ . '/field/interface.ilExamOrgaFieldValues.php');
+        require_once (__DIR__ . '/message/class.ilExamOrgaMessageSent.php');
+        $arBuilder = new arBuilder(new ilExamOrgaMessageSent());
         $arBuilder->generateDBUpdateForInstallation();
     }
 

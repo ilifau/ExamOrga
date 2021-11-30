@@ -52,7 +52,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
 
         $item = new ilTextAreaInputGUI($this->title, $this->getPostvar());
         $item->setRequired($this->required);
-        $item->setDisabled(!$this->object->canEditField($this));
+        // $item->setDisabled(!$this->object->canEditField($this));
 
         if (isset($this->info)) {
             $item->setInfo($this->info);

@@ -8,7 +8,8 @@ class ilExamOrgaTextareaField extends ilExamOrgaField
      */
     public function getListHTML($record)
     {
-        return parent::getListHTML($record);
+       $text = parent::getListHTML($record);
+       return ilStr::shortenText($text, 0, 250);
     }
 
     /**

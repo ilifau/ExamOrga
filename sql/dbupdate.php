@@ -659,3 +659,108 @@ if ($ilDB->tableColumnExists('xamo_record', 'booking_in_process')) {
     $ilDB->dropTableColumn('xamo_record', 'booking_in_process');
 }
 ?>
+<#13>
+<?php
+if (!$ilDB->tableColumnExists('xamo_note', 'note_type')) {
+    $ilDB->addTableColumn('xamo_note', 'note_type', array(
+        'type' => 'text',
+        'length' => '20',
+        'notnull' => '0',
+        'default' => null
+    ));
+
+    $ilDB->manipulate("UPDATE xamo_note SET note_type = 'zoom' WHERE note_type IS NULL");
+}
+?>
+<#14>
+<?php
+$fields = array(
+    'id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'obj_id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'message_type' => array(
+        'type' => 'text',
+        'length' => '20',
+
+    ),
+    'subject' => array(
+        'type' => 'text',
+        'length' => '250',
+
+    ),
+    'content' => array(
+        'type' => 'text',
+        'length' => '4000',
+    ),
+    'active' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+        'default' => 0
+    )
+
+);
+if (! $ilDB->tableExists('xamo_message')) {
+    $ilDB->createTable('xamo_message', $fields);
+    $ilDB->addPrimaryKey('xamo_message', array( 'id' ));
+
+    if (! $ilDB->sequenceExists('xamo_message')) {
+        $ilDB->createSequence('xamo_message');
+    }
+
+    if (!$ilDB->indexExistsByFields('xamo_message', ['obj_id', 'message_type'])) {
+        $ilDB->addIndex('xamo_message', ['obj_id', 'message_type'], 'i1');
+    }
+}
+?>
+<#15>
+<?php
+$fields = array(
+    'id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'record_id' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+    'message_type' => array(
+        'type' => 'text',
+        'length' => '20',
+        'notnull' => '1',
+
+    ),
+    'sent_at' => array(
+        'notnull' => '1',
+        'type' => 'integer',
+        'length' => '4',
+
+    ),
+
+);
+if (! $ilDB->tableExists('xamo_message_sent')) {
+    $ilDB->createTable('xamo_message_sent', $fields);
+    $ilDB->addPrimaryKey('xamo_message_sent', array( 'id' ));
+
+    if (! $ilDB->sequenceExists('xamo_message_sent')) {
+        $ilDB->createSequence('xamo_message_sent');
+    }
+
+    if (!$ilDB->indexExistsByFields('xamo_message_sent', ['record_id', 'message_type'])) {
+        $ilDB->addIndex('xamo_message_sent', ['record_id', 'message_type'], 'i1');
+    }
+}
+?>

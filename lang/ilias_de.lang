@@ -45,6 +45,7 @@ config_base#:#Grundfunktionen
 config_base_info#:#Hier stellen Sie die Grundfunktionen des Plugins ein
 exam_admin_tab#:#Prüfung
 overview#:#Übersicht
+message_record_not_found#:#Der Eintrag wurde nicht gefunden!
 message_no_list_records#:#Sie haben keinen Zugriff auf die Einträge!
 message_no_add_record#:#Sie können keinen Eintrag hinzufügen!
 message_no_edit_record#:#Sie können den Eintrag nicht bearbeiten!
@@ -262,4 +263,30 @@ record_owner_id#:#Besitzer/in
 record_owner_id_info#:#Dieser Account kann den Eintrag bearbeiten
 record_oral_fau_unit#:#Fakultät
 record_oral_head_process_info#:#Die folgenden Angaben werden vom RRZE
+record_link#:#Link zum Eintrag
 please_select#:#-- Bitte auswählen --
+messages#:#Mitteilungen
+messages_info#:#Bearbeiten Sie hier die Vorlagen für automatische Mitteilungen
+message_type#:#Mitteilungs-Typ
+message_type_confirm_presence#:#Terminbestätigung Präsenz
+message_type_confirm_remote#:#Terminbestätigung Fern
+message_type_reminder1_presence#:#Erste Erinnerung Präsenz (1 Woche vorher)
+message_type_reminder1_remote#:#Erste Erinnerung Fern (1 Woche vorher)
+message_type_reminder2_presence#:#Zweite Erinnerung Präsenz (3 Tage vorher)
+message_type_reminder2_remote#:#Zweite Erinnerung Fern (3 Tage vorher)
+message_type_warning_zoom#:#Warnung Fehler bei Zoom-Einrichtung
+message_type_warning_campus#:#Warnung fehlende Campus-ID
+message_type_warning_roles#:#Warnung fehlende Korrektor/innen, Prüfer/innen
+message_type_warning_schedule#:#Warnung Termin/Uhrzeit außerhalb Service
+message_subject#:#Betreff
+message_content#:#Inhalt
+edit_message#:#Mitteilung bearbeiten
+update_message#:#Mitteilung speichern
+message_updated#:#Die Mitteilung wurde gespeichert.
+example_title#:#Beispiel-Prüfung
+message_active#:#Aktiv
+message_active_info#:#Mit Aktivierung wird die Mitteilung für automatische Nachrichten verwendet.
+message_sent#:#Die Mitteilung wurde versandt.
+message_not_sent#:#Die Mitteilung konnte nicht versendet werden!
+send_test_message#:#Test-Mitteilung senden
+

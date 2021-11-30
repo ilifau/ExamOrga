@@ -1,5 +1,6 @@
 <?php
 
+require_once (__DIR__ . '/../class.ilObjExamOrga.php');
 require_once (__DIR__ . '/../class.ilExamOrgaBaseGUI.php');
 require_once (__DIR__ . '/class.ilExamOrgaRecordTableGUI.php');
 require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
@@ -127,6 +128,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 $form->addItem($item);
             }
         }
+        $this->addRecordLinkItem($form, $record);
 
         $notesTable = new ilExamOrgaNotesTableGUI($this, 'viewDetails');
         $notesTable->loadData($record);
@@ -289,10 +291,22 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $form->addCommandButton('createRecord', $this->plugin->txt('create_record'));
         }
         else {
+            $this->addRecordLinkItem($form, $record);
             $form->addCommandButton('updateRecord', $this->plugin->txt('update_record'));
         }
 
         return $form;
+    }
+
+    /**
+     * @param ilPropertyFormGUI $form
+     * @param ilExamOrgaRecord $record
+     */
+    protected function addRecordLinkItem($form, $record)
+    {
+        $item = new ilTextInputGUI($this->plugin->txt('record_link'), 'added_record_link');
+        $item->setValue(ilObjExamOrga::_getRecordLink($this->object->getRefId(), $record->getId()));
+        $form->addItem($item);
     }
 
     /**
@@ -505,7 +519,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     protected function checkViewRecord($record)
     {
         if (!isset($record)) {
-            ilUtil::sendFailure($this->lng->txt("message_record_not_found"), true);
+            ilUtil::sendFailure($this->plugin->txt("message_record_not_found"), true);
             $this->redirectToList();
         }
         if (!$this->object->canViewRecord($record)) {
@@ -524,11 +538,11 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     protected function checkEditRecord($record)
     {
         if (!isset($record)) {
-            ilUtil::sendFailure($this->lng->txt("message_record_not_found"), true);
+            ilUtil::sendFailure($this->plugin->txt("message_record_not_found"), true);
             $this->redirectToList();
         }
         if (!$this->object->canEditRecord($record)) {
-            ilUtil::sendFailure($this->lng->txt("message_no_edit_record"), true);
+            ilUtil::sendFailure($this->plugin->txt("message_no_edit_record"), true);
             $this->redirectToList();
         }
         return true;

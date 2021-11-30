@@ -353,7 +353,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
     public $owner_id;
 
     /**
-     * @var string
+     * @var int
      * @con_has_field        true
      * @con_is_notnull       true
      * @con_fieldtype        integer
@@ -371,7 +371,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
     public $created_by;
 
     /**
-     * @var string
+     * @var int
      * @con_has_field        true
      * @con_is_notnull       true
      * @con_fieldtype        integer

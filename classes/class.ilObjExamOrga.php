@@ -36,6 +36,12 @@ class ilObjExamOrga extends ilObjectPlugin
     protected $active_conditions;
 
     /**
+     * Fields defined for message
+     * @var ilExamOrgaField[] $message_fields (indexed by message_type)
+     */
+    protected $message_fields;
+
+    /**
 	 * Constructor
 	 *
 	 * @access        public
@@ -45,12 +51,20 @@ class ilObjExamOrga extends ilObjectPlugin
 	{
 	    global $DIC;
         $this->access = $DIC->access();
+        $this->plugin = ilExamOrgaPlugin::getInstance();
 
 		parent::__construct($a_ref_id);
 	}
 
+    /**
+     * Get the direct link to a record
+     */
+    public static function _getRecordLink($ref_id, $record_id)
+    {
+        return ilLink::_getStaticLink($ref_id, 'xamo', true, '_' . $record_id);
+    }
 
-	/**
+    /**
 	 * Get type.
 	 */
 	final function initType()
@@ -268,6 +282,20 @@ class ilObjExamOrga extends ilObjectPlugin
         return $this->condition_fields;
     }
 
+    /**
+     * Get the gui fields for a condition
+     */
+    public function getMessageFields()
+    {
+        if (!isset($this->message_fields)) {
+            $fields = include_once(__DIR__ . '/../fields_message.php');
+            foreach ($fields as $definition) {
+                $name = (string) $definition['name'];
+                $this->message_fields[$name] = ilExamOrgaField::factory($this, $definition, 'message');
+            }
+        }
+        return $this->message_fields;
+    }
 
     /**
      * Get the active record conditions

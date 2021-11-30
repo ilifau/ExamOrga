@@ -5,6 +5,12 @@
  */
 class ilExamOrgaNote extends ActiveRecord
 {
+    CONST TYPE_ZOOM = 'zoom';
+    CONST TYPE_CAMPUS = 'campus';
+    CONST TYPE_ROLES = 'roles';
+    CONST TYPE_SCHEDULE = 'schedule';
+
+
     /**
      * @return string
      * @description Return the Name of your Database Table
@@ -35,6 +41,14 @@ class ilExamOrgaNote extends ActiveRecord
      */
     public $record_id;
 
+    /**
+     * @var string
+     * @con_has_field        true
+     * @con_is_notnull       false
+     * @con_fieldtype        text
+     * @con_length           20
+     */
+    public $note_type;
 
     /**
      * @var integer

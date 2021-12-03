@@ -22,6 +22,7 @@ class ilExamOrgaField
     const TYPE_EXAMS = 'exams';
     const TYPE_RUN_LINKS = 'run_links';
     const TYPE_NOTES = 'notes';
+    const TYPE_MESSAGES = 'messages';
 
     const STATUS_PUBLIC = 'public';     // visible to all users, editable for owner and admins
     const STATUS_LOCKED  = 'locked';    // visible to all users, read-only for owner, editable for admins
@@ -159,6 +160,11 @@ class ilExamOrgaField
                 require_once (__DIR__ . '/class.ilExamOrgaNotesField.php');
                 return new ilExamOrgaNotesField($object, $definition, $lang_prefix);
 
+            case self::TYPE_MESSAGES:
+                require_once (__DIR__ . '/class.ilExamOrgaMessagesField.php');
+                return new ilExamOrgaMessagesField($object, $definition, $lang_prefix);
+
+
             default:
                 return new self($object, $definition, $lang_prefix);
         }
@@ -229,7 +235,7 @@ class ilExamOrgaField
      * @param ilExamOrgaFieldValues[] $records
      */
     public function preload($records) {
-        // to b overridden
+        // to be overridden
     }
 
     /**

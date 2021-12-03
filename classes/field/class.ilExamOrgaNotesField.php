@@ -68,7 +68,10 @@ class ilExamOrgaNotesField extends ilExamOrgaField
         $options = [
             'zoom_any' => $this->plugin->txt('notes_filter_zoom_any'),
             'zoom_meeting' => $this->plugin->txt('notes_filter_zoom_meeting'),
-            'zoom_monitor' => $this->plugin->txt('notes_filter_zoom_monitor')
+            'zoom_monitor' => $this->plugin->txt('notes_filter_zoom_monitor'),
+            'campus' => $this->plugin->txt('message_type_warning_campus'),
+            'roles' => $this->plugin->txt('message_type_warning_roles'),
+            'condition' => $this->plugin->txt('message_type_warning_condition'),
         ];
 
         $item = new ilSelectInputGUI($this->title, $this->getPostvar());
@@ -87,14 +90,23 @@ class ilExamOrgaNotesField extends ilExamOrgaField
         $cond = '';
         if (isset($item)) {
             switch ($item->getValue()) {
-                case 'zoom_any':
-                    $cond = 'code BETWEEN 100 AND 199';
-                    break;
                 case 'zoom_meeting':
                     $cond = 'code = 140 OR code = 150';
                     break;
                 case 'zoom_monitor':
                     $cond = 'code = 141 OR code = 151';
+                    break;
+                case 'zoom_any':
+                    $cond = 'code BETWEEN 100 AND 199';
+                    break;
+                case 'campus':
+                    $cond = 'code BETWEEN 200 AND 299';
+                    break;
+                case 'roles':
+                    $cond = 'code BETWEEN 300 AND 399';
+                    break;
+                case 'condition':
+                    $cond = 'code BETWEEN 400 and 499';
                     break;
             }
 

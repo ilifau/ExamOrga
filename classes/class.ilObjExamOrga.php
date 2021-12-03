@@ -310,40 +310,11 @@ class ilObjExamOrga extends ilObjectPlugin
     }
 
     /**
-     * Check a record against the active conditions
-     *
-     * @param ilExamOrgaRecord $record
-     * @param ilExamOrgaRecord $original
-     * @return array ['failures' => string[], 'warnings' => string[] ]
+     * @return ilExamOrgaMessenger
      */
-    public function checkConditions($record, $original = null) {
-
-        $failures = [];
-        $warnings = [];
-        foreach ($this->getActiveConditions() as $cond) {
-            if (!$cond->checkRecord($record)) {
-
-                switch ($cond->level) {
-                    case ilExamOrgaCondition::LEVEL_HARD:
-                        $failures[] = $cond->failure_message;
-                        break;
-
-                    case ilExamOrgaCondition::LEVEL_SOFT:
-                        if ((!isset($original) || $cond->checkRecord($original)) && !$this->canEditAllRecords()) {
-                            $failures[] = $cond->failure_message;
-                        }
-                        else {
-                            $warnings[] = $cond->failure_message;
-                        }
-                        break;
-
-                    case ilExamOrgaCondition::LEVEL_WARN:
-                        $warnings[] = $cond->failure_message;
-                        break;
-                }
-            }
-        }
-
-        return ['failures' => $failures, 'warnings' => $warnings];
+    public function getMessenger()
+    {
+        require_once (__DIR__ . '/message/class.ilExamOrgaMessenger.php');
+        return new ilExamOrgaMessenger($this);
     }
 }

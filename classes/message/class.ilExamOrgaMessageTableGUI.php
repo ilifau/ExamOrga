@@ -58,6 +58,7 @@ class ilExamOrgaMessageTableGUI extends ilTable2GUI
         }
 
         $this->setTitle($this->plugin->txt('messages'));
+        $this->setDescription(nl2br($this->plugin->txt('messages_description')));
         $this->setFormName('messages');
         $this->setFormAction($this->ctrl->getFormAction($a_parent_obj, $a_parent_cmd));
 

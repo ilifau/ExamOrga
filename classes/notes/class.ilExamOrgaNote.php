@@ -5,11 +5,10 @@
  */
 class ilExamOrgaNote extends ActiveRecord
 {
-    CONST TYPE_ZOOM = 'zoom';
-    CONST TYPE_CAMPUS = 'campus';
-    CONST TYPE_ROLES = 'roles';
-    CONST TYPE_SCHEDULE = 'schedule';
-
+    CONST TYPE_ZOOM = 'zoom';               // notes from the zoom service
+    CONST TYPE_CAMPUS = 'campus';           // notes regarding campus connection
+    CONST TYPE_ROLES = 'roles';             // notes regarding the roles
+    CONST TYPE_CONDITION = 'condition';     // warnings from the conditions
 
     /**
      * @return string
@@ -125,6 +124,23 @@ class ilExamOrgaNote extends ActiveRecord
     }
 
     /**
+     * Get the default codes for the note types
+     * specific codes may be in the same 100 range
+     * @return array type => code
+     * @see ilExamOrgaRecordChecker::updateNotes()
+     * @see ilExamOrgaNotesField::setFilterCondition()
+     */
+    public static function getDefaultCodes()
+    {
+        return [
+            self::TYPE_ZOOM => 100,
+            self::TYPE_CAMPUS => 200,
+            self::TYPE_ROLES => 300,
+            self::TYPE_CONDITION => 400
+        ];
+    }
+
+    /**
      * Get a textual representation of the notes
      * @param self[]|null $notes
      * @return string
@@ -168,4 +184,54 @@ class ilExamOrgaNote extends ActiveRecord
         return $record_ids;
     }
 
+    /**
+     * Get the notes for a record of a certain type
+     *
+     * @param int $record_id
+     * @return self[]
+     */
+    public static function getRecordNotesForType($record_id, $type)
+    {
+        return ilExamOrgaNote::where(['record_id' => $record_id, 'note_type' => $type])->orderBy('created_at')->get();
+    }
+
+    /**
+     * Get the notes for a record of a certain type by their texts
+     * Will keep existing notes with the same texts, add new notes for new texts and delete obsoloete notes
+     *
+     * @param int $record_id
+     * @param string $type
+     * @param array $data [ ['note' => string, 'code' => int], ...]
+     */
+    public static function setRecordNotesByData($record_id, $type, $data)
+    {
+        // get the existing notes, clustered by their texts
+        /** @var ilExamOrgaNote[] $existing */
+        $existing = [];
+        foreach (ilExamOrgaNote::where(['record_id' => $record_id, 'note_type' => $type])->orderBy('created_at')->get() as $note) {
+            $existing[$note->note][] = $note;
+        }
+
+        foreach ($data as $row) {
+
+            if (is_array($existing[$row['note']])) {
+                // first note with the same text should not be deleted
+                array_shift($existing[$row['note']]);
+            } else {
+                // add new note
+                $note = new ilExamOrgaNote();
+                $note->record_id = $record_id;
+                $note->note_type = $type;
+                $note->note = $row['note'];
+                $note->code = $row['code'];
+                $note->create();
+            }
+        }
+        // delete the not found notes and double notes
+        foreach ($existing as $notes) {
+            foreach ($notes as $note) {
+                $note->delete();
+            }
+        }
+    }
 }

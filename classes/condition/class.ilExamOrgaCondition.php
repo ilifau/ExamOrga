@@ -21,12 +21,12 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
     /**
      * Prevent an creation of the record if not done by admin (edit all records)
      * Allow an update if the condition is already broken (was saved by admin)
-     * Show a warning and add it to the messages.
+     * Show a warning and add it to the notes.
      */
     const LEVEL_SOFT = 'soft';
 
     /**
-     * Allow saving for all users but show a warning and add it to the messages.
+     * Allow saving for all users but show a warning and add it to the notes.
      */
     const LEVEL_WARN = 'warn';
 
@@ -77,7 +77,7 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
      * @con_fieldtype        text
      * @con_length           10
      */
-    public $level;
+    public $level = 'hard';
 
 
     /**

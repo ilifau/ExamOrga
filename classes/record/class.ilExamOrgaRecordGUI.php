@@ -3,9 +3,11 @@
 require_once (__DIR__ . '/../class.ilObjExamOrga.php');
 require_once (__DIR__ . '/../class.ilExamOrgaBaseGUI.php');
 require_once (__DIR__ . '/class.ilExamOrgaRecordTableGUI.php');
+require_once (__DIR__ . '/class.ilExamOrgaRecordChecker.php');
 require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
 require_once(__DIR__ . '/../notes/class.ilExamOrgaNote.php');
 require_once (__DIR__ . '/../notes/class.ilExamOrgaNotesTableGUI.php');
+require_once (__DIR__ . '/../message/class.ilExamOrgaMessenger.php');
 
 /**
  * Class ilExamOrgaRecordGUI
@@ -171,25 +173,30 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 }
             }
 
-            // condition check
-            $result = $this->object->checkConditions($record, null);
+            $checker = new ilExamOrgaRecordChecker($this->object, $record);
+            $checker->doChecks();
 
-            if (!empty($result['failures'])) {
+            if (!empty($checker->getFailures())) {
                 ilUtil::sendFailure($this->plugin->txt("record_saving_failed")
-                    . '<p class="small">' . implode('<br />', $result['failures']) . '</p>' , false);
+                    . '<p class="small">' . implode('<br />', $checker->getFailures()) . '</p>' , false);
                 $this->setRecordToolbar();
                 $this->tpl->setContent($form->getHTML());
                 return;
             }
 
             $record->create();
+            $checker->handleCheckResult(ilExamOrgaRecordChecker::PURPOSE_SAVE);
 
-            if (!empty($result['warnings'])) {
-                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings")
-                    . '<p class="small">' . implode('<br />', $result['warnings']) . '</p>' , true);
+            $confirmed_info = "";
+            if ($checker->isConfirmationSent()) {
+                $confirmed_info = '<br />' . $this->plugin->txt('confirmation_sent');
+            }
+
+            if (!empty($checker->getWarnings())) {
+                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings") . $confirmed_info , true);
             }
             else {
-                ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);
+                ilUtil::sendSuccess($this->plugin->txt("record_created") . $confirmed_info, true);
             }
 
             $this->ctrl->setParameter($this, 'id', $record->id);
@@ -245,24 +252,29 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 }
             }
 
-            // condition check
-            $result = $this->object->checkConditions($record, $original);
+            $checker = new ilExamOrgaRecordChecker($this->object, $record, $original);
+            $checker->doChecks();
 
-            if (!empty($result['failures'])) {
+            if (!empty($checker->getFailures())) {
                 ilUtil::sendFailure($this->plugin->txt("record_saving_failed")
-                    . '<p class="small">' . implode('<br />', $result['failures']) . '</p>' , false);
+                    . '<p class="small">' . implode('<br />', $checker->getFailures()) . '</p>' , false);
                 $this->tpl->setContent($form->getHTML());
                 return;
             }
 
             $record->update();
+            $checker->handleCheckResult(ilExamOrgaRecordChecker::PURPOSE_SAVE);
 
-            if (!empty($result['warnings'])) {
-                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings")
-                    . '<p class="small">' . implode('<br />', $result['warnings']) . '</p>' , true);
+            $confirmed_info = "";
+            if ($checker->isConfirmationSent()) {
+                $confirmed_info = '<br />' . $this->plugin->txt('confirmation_sent');
+            }
+
+            if (!empty($checker->getWarnings())) {
+                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings") . $confirmed_info, true);
             }
             else {
-                ilUtil::sendSuccess($this->plugin->txt("record_updated"), true);
+                ilUtil::sendSuccess($this->plugin->txt("record_updated") . $confirmed_info, true);
             }
 
             $this->ctrl->redirect($this, "editRecord");

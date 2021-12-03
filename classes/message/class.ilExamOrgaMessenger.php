@@ -8,10 +8,8 @@ class ilExamOrgaMessenger
     /** @var ilExamOrgaPlugin */
     protected $plugin;
 
-    /**
-     * @var int orga object ref_id
-     */
-    protected $ref_id;
+    /** @var ilObjExamOrga */
+    protected $object;
 
     /**
      * @var ilExamOrgaMessage[] indexed by type
@@ -20,15 +18,14 @@ class ilExamOrgaMessenger
 
     /**
      * Constructor
-     * @param int $ref_id
+     * @param ilObjExamOrga $object
      */
-    public function __construct($ref_id)
+    public function __construct($object)
     {
-        $this->ref_id = $ref_id;
+        $this->object = $object;
         $this->plugin = ilExamOrgaPlugin::getInstance();
-        $this->messages = ilExamOrgaMessage::getForObject(ilObject::_lookupObjectId($this->ref_id));
+        $this->messages = ilExamOrgaMessage::getForObject($this->object->getId());
     }
-
 
     /**
      * Send the message if it is not already sent
@@ -58,7 +55,7 @@ class ilExamOrgaMessenger
         $user = new ilObjUser($record->owner_id);
 
         $context = new ilExamOrgaMailTemplateContext();
-        $params = ['ref_id' => $this->ref_id, 'record' => $record];
+        $params = ['ref_id' => $this->getRefId(), 'record' => $record];
 
 
         $resolver = new ilMailTemplatePlaceholderResolver($context, strip_tags($message->subject));
@@ -102,4 +99,24 @@ class ilExamOrgaMessenger
         ilExamOrgaMessageSent::setUnsent($record->id, $type);
     }
 
+
+    /**
+     * Get a ref_id for the current object
+     * In a cron job the object may not be created by ref_id
+     * @retirn int|null
+     */
+    protected Function getRefId()
+    {
+        if (!empty($this->object->getRefId())) {
+            return $this->object->getRefId();
+        }
+
+        foreach(ilObject::_getAllReferences($this->object->getId()) as $ref_id) {
+            if (!ilObject::_isInTrash($ref_id)) {
+                return $ref_id;
+            }
+        }
+
+        return null;
+    }
 }

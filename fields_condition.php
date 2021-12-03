@@ -21,6 +21,7 @@ $fields = [
         'options' => [
             'hard' => $plugin->txt('condition_level_option_hard'),
             'soft' => $plugin->txt('condition_level_option_soft'),
+            'warn' => $plugin->txt('condition_level_option_warn'),
         ],
         'required' => true,
         'default' => true

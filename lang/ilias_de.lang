@@ -99,7 +99,7 @@ campus_exams_loaded#:#Die Daten aus Campus wurden aktualisiert.
 generate_db_update#:#Update-Step generieren
 exam_not_found#:#Zur eingegebenen Nummer %s wurde keine Prüfung gefunden!
 notes#:#Hinweise zur Überarbeitung
-notes_description#:#Die folgenden Hinweise wurden automatisch beim Anlegen der Zoom-Meetings erzeugt und deuten auf Probleme hin. Bitte überarbeiten Sie Ihren Eintrag entsprechend.  Sie können einen erledigen Hinweis löschen. Beim nächten Update der Zoom-Meetings werden die Hinweise entsprechend der noch vorhandenen Probleme aktualisiert.
+notes_description#:#Die folgenden Hinweise wurden automatisch beim Überprüfen des Eintrags erzeugt und deuten auf Probleme hin. Bitte überarbeiten Sie Ihren Eintrag entsprechend.  Sie können einen erledigen Hinweis löschen. Bei der nächsten Überprüfung werden die Hinweise entsprechend der noch vorhandenen Probleme aktualisiert.
 created_at#:#Erstellt am
 code#:#Code
 note#:#Hinweis
@@ -116,7 +116,7 @@ login_not_found#:#Zum Eintrag "%s" wurde kein StudOn-Konto gefunden!
 idm_account_not_found#:#Der StudOn-Account "%s" ist mit keinem IdM-Konto verknüpft.
 idm_accounts_not_found#:#Die folgenden StudOn-Accounts sind mit keinem IdM-Konto verknüpft: %s
 record_saving_failed#:#Der Eintrag konnte nicht gespeichert werden:
-record_saved_with_warnings#:#Der Eintrag wurde mit Warnungen gespeichert:
+record_saved_with_warnings#:#Der Eintrag wurde mit Warnungen gespeichert (siehe Hinweise zur Überarbeitung).
 conditions#:#Bedingungen
 condition_created#:#Die Bedingung wurde erzeugt.
 condition_updated#:#Die Bedingung wurde aktualisiert.
@@ -128,14 +128,15 @@ delete_conditions#:#Bedingungen löschen
 confirm_delete_conditions#:#Möchten Sie die ausgewählten Bedingungen löschen?
 conditions_deleted#:#Die Bedingung(en) wurde(n) gelöscht.
 condition_level#:#Level
-condition_level_info#:#Erlaubte Prüfungsformate
-condition_level_option_hard#:#Verhindert Speicherung für alle
-condition_level_option_soft#:#Verhindert Erstellung für Nutzer, erlaubt Erstellung für Admins, danach Bearbeitung durch Nutzer mit Warnung
+condition_level_info#:#Härtegrad der Bedingung. Warnungen werden als "Hinweise zur Überarbeitung" gespeichert. Sind solche Warnungen vorhanden, wird einmalig über Nacht eine Mitteilung vom Typ "Warnung zu nicht erfüllten Bedingungen" gesendet, falls diese Mitteilung aktiviert ist.
+condition_level_option_hard#:#Verhindert Speicherung
+condition_level_option_soft#:#Erlaubt Erstellung für Admins, danach Bearbeitung durch Nutzer mit Warnung
+condition_level_option_warn#:#Erlaubt Erstellung und Bearbeitung durch Nutzer mit Warnung
 condition_cond_type#:#Bedingungstyp
 condition_cond_type_require#:#Anforderung - alle festgelegten Einzelbedingungen müssen passen
 condition_cond_type_exclude#:#Ausschluss - die Kombination der festgelegten Einzelbedingungen darf nicht passen
 condition_failure_message#:#Meldung
-condition_failure_message_info#:#Meldung, welche die Bedingung verständlich wiedergibt.
+condition_failure_message_info#:#Meldung, welche die Bedingung verständlich wiedergibt. Diese Meldung wird in den "Hinweisen zur Überarbeitung" angezeigt.
 condition_head_filter#:#Anwendung
 condition_head_filter_info#:#Stellen Sie hier ein, für welche Einträge die Bedingung geprüft werden.
 condition_reg_min_date#:#Gültig ab
@@ -231,7 +232,7 @@ record_room_in_univis_info#:#Für Exam-Team
 record_head_process#:#Status
 record_head_process_info#:#Die folgenden Angaben werden vom Exam-Team ausgefüllt
 record_booking_status#:#Buchungsstatus
-record_booking_status_info#:#Wird vom Exam-Team ausgefüllt. Neue Einträge haben den Status "angemeldet". Präsenzprüfungen haben während der Klärung der Raumverfügbarkeit den Status "In bearbeitung". Verbindlich geebuchte Termine erhalten den Status "bestätigt".
+record_booking_status_info#:#Wird vom Exam-Team ausgefüllt. Neue Einträge haben den Status "angemeldet". Präsenzprüfungen haben während der Klärung der Raumverfügbarkeit den Status "In bearbeitung". Verbindlich gebuchte Termine erhalten den Status "bestätigt".
 record_booking_status_requested#:#angemeldet
 record_booking_status_in_process#:#in Bearbeitung (Präsenzprüfung)
 record_booking_status_approved#:#bestätigt
@@ -264,21 +265,23 @@ record_owner_id_info#:#Dieser Account kann den Eintrag bearbeiten
 record_oral_fau_unit#:#Fakultät
 record_oral_head_process_info#:#Die folgenden Angaben werden vom RRZE
 record_link#:#Link zum Eintrag
+record_sent_messages#:#Gesendete Mitteilungen
 please_select#:#-- Bitte auswählen --
 messages#:#Mitteilungen
-messages_info#:#Bearbeiten Sie hier die Vorlagen für automatische Mitteilungen
+messages_description#:#Bearbeiten Sie hier die Vorlagen für automatische Mitteilungs per E-Mail. Empfänger sind der Besitzer eines Eintrags und die unter Mail-Adresse angegebene Addresse des Hauptansprechpartners. Aktive Terminbestätigungen werden sofort beim Speichern oder über Nacht versendet, sobald der Buchungsstatus auf "gestätigt" gesetzt und ein Link zum Prüfungskurs eingetragen ist. Die Warnungen werden einmalig über Nacht verschickt, wenn entsprechende "Hinweise zur Überarbeitung" vorhanden sind. Die Erinnerungen werden einmalig ab ihrer Fälligkeit, aber maximal bis zum Prüfungstag verschickt.
 message_type#:#Mitteilungs-Typ
 message_type_confirm_presence#:#Terminbestätigung Präsenz
 message_type_confirm_remote#:#Terminbestätigung Fern
-message_type_reminder1_presence#:#Erste Erinnerung Präsenz (1 Woche vorher)
-message_type_reminder1_remote#:#Erste Erinnerung Fern (1 Woche vorher)
-message_type_reminder2_presence#:#Zweite Erinnerung Präsenz (3 Tage vorher)
-message_type_reminder2_remote#:#Zweite Erinnerung Fern (3 Tage vorher)
-message_type_warning_zoom#:#Warnung Fehler bei Zoom-Einrichtung
-message_type_warning_campus#:#Warnung fehlende Campus-ID
-message_type_warning_roles#:#Warnung fehlende Korrektor/innen, Prüfer/innen
-message_type_warning_schedule#:#Warnung Termin/Uhrzeit außerhalb Service
+message_type_reminder1_presence#:#Erste Erinnerung Präsenz (eine Woche vorher)
+message_type_reminder1_remote#:#Erste Erinnerung Fern (eine Woche vorher)
+message_type_reminder2_presence#:#Zweite Erinnerung Präsenz (drei Tage vorher)
+message_type_reminder2_remote#:#Zweite Erinnerung Fern (drei Tage vorher)
+message_type_warning_zoom#:#Warnung zu Fehlern bei der Zoom-Einrichtung
+message_type_warning_campus#:#Warnung zu fehlender Campus-ID
+message_type_warning_roles#:#Warnung zu fehlende Korrektor/innen, Prüfer/innen
+message_type_warning_condition#:#Warnung zu nicht erfüllten Bedingungen
 message_subject#:#Betreff
+message_subject_info#:#Auch hier können die Platzhalter verwendet werden
 message_content#:#Inhalt
 edit_message#:#Mitteilung bearbeiten
 update_message#:#Mitteilung speichern
@@ -289,4 +292,10 @@ message_active_info#:#Mit Aktivierung wird die Mitteilung für automatische Nach
 message_sent#:#Die Mitteilung wurde versandt.
 message_not_sent#:#Die Mitteilung konnte nicht versendet werden!
 send_test_message#:#Test-Mitteilung senden
+warning_campus#:#Es ist keine Prüfung aus mein campus ausgewählt.
+warning_roles#:#Es sind keine Prüfer/innen-Accounts oder Korrektor/innen-Accounts ausgewählt.
+confirmation_sent#:#Die Buchungsbestätigung wurde versandt.
+without_confirmation#:#Ohne Bestätigung
+without_reminder1#:#Ohne erste Erinnerung
+without_reminder2#:#Ohne zweite Erinnerung
 

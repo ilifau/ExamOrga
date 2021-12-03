@@ -518,33 +518,7 @@ class ilExamOrgaServer extends Slim\App
 
             if (is_int($entry['id']) && is_array($entry['notes'])) {
 
-                // get the existing notes, clustered by
-                /** @var ilExamOrgaNote[] $existing */
-                $existing = [];
-                foreach (ilExamOrgaNote::where(['record_id' => $entry['id']])->orderBy('created_at')->get() as $note) {
-                    $existing[$note->note][] = $note;
-                }
-
-                foreach ($entry['notes'] as $data) {
-
-                    if (is_array($existing[$data['note']])) {
-                        // first note with the same message should not be deleted
-                        array_shift($existing[$data['note']]);
-                    } else {
-                        // add new note
-                        $note = new ilExamOrgaNote();
-                        $note->record_id = $entry['id'];
-                        $note->code = $data['code'];
-                        $note->note = $data['note'];
-                        $note->create();
-                    }
-                }
-                // delete the not found notes and double notes
-                foreach ($existing as $text => $notes) {
-                    foreach ($notes as $note) {
-                        $note->delete();
-                    }
-                }
+                ilExamOrgaNote::setRecordNotesByData($entry['id'], ilExamOrgaNote::TYPE_ZOOM, $entry['notes']);
 
                 $return[] = [
                     'id' => (int) $entry['id'],
@@ -621,11 +595,9 @@ class ilExamOrgaServer extends Slim\App
      */
     protected function getNotesArray($record_id)
     {
-
-        /** @var ilExamOrgaNote $note */
         $notes = [];
         /** @var ilExamOrgaNote $note */
-        foreach (ilExamOrgaNote::where(['record_id' => $record_id])->get() as $note) {
+        foreach (ilExamOrgaNote::getRecordNotesForType($record_id, ilExamOrgaNote::TYPE_ZOOM) as $note) {
             $notes[] = [
                 'code' => $note->code,
                 'note' => $note->note

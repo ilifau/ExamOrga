@@ -14,7 +14,7 @@ class ilExamOrgaMessage extends ActiveRecord implements ilExamOrgaFieldValues
     CONST TYPE_WARNING_ZOOM = 'warning_zoom';
     CONST TYPE_WARNING_CAMPUS = 'warning_campus';
     CONST TYPE_WARNING_ROLES = 'warning_roles';
-    CONST TYPE_WARNING_SCHEDULE = 'warning_schedule';
+    CONST TYPE_WARNING_CONDITION = 'warning_condition';
 
     /**
      * Get the defined types
@@ -30,7 +30,7 @@ class ilExamOrgaMessage extends ActiveRecord implements ilExamOrgaFieldValues
             self::TYPE_REMINDER2_REMOTE,
             self::TYPE_WARNING_CAMPUS,
             self::TYPE_WARNING_ROLES,
-            self::TYPE_WARNING_SCHEDULE,
+            self::TYPE_WARNING_CONDITION,
             self::TYPE_WARNING_ZOOM
         ];
     }
@@ -176,5 +176,26 @@ class ilExamOrgaMessage extends ActiveRecord implements ilExamOrgaFieldValues
         }
 
         return $messages;
+    }
+
+    /**
+     * Get the options for display and selection
+     */
+    public static function getOptions()
+    {
+        $plugin = ilExamOrgaPlugin::getInstance();
+
+        return [
+            self::TYPE_CONFIRM_PRESENCE => $plugin->txt('message_type_confirm_presence'),
+            self::TYPE_CONFIRM_REMOTE => $plugin->txt('message_type_confirm_remote'),
+            self::TYPE_REMINDER1_PRESENCE => $plugin->txt('message_type_reminder1_presence'),
+            self::TYPE_REMINDER1_REMOTE => $plugin->txt('message_type_reminder1_remote'),
+            self::TYPE_REMINDER2_PRESENCE => $plugin->txt('message_type_reminder2_presence'),
+            self::TYPE_REMINDER2_REMOTE => $plugin->txt('message_type_reminder2_remote'),
+            self::TYPE_WARNING_ZOOM => $plugin->txt('message_type_warning_zoom'),
+            self::TYPE_WARNING_CAMPUS => $plugin->txt('message_type_warning_campus'),
+            self::TYPE_WARNING_ROLES => $plugin->txt('message_type_warning_roles'),
+            self::TYPE_WARNING_CONDITION => $plugin->txt('message_type_warning_condition'),
+        ];
     }
 }

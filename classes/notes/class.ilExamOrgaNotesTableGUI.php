@@ -43,7 +43,7 @@ class ilExamOrgaNotesTableGUI extends ilTable2GUI
         parent::__construct($a_parent_obj, $a_parent_cmd);
 
         $this->addColumn($this->plugin->txt('created_at'), 'created_at');
-        $this->addColumn($this->plugin->txt('code'), 'code');
+        //$this->addColumn($this->plugin->txt('code'), 'code');
         $this->addColumn($this->plugin->txt('note'), 'note');
         $this->addColumn('');
 
@@ -99,7 +99,7 @@ class ilExamOrgaNotesTableGUI extends ilTable2GUI
 		/** @var ilExamOrgaNote $note */
 		$note = $data['note'];
 		$this->tpl->setVariable('CREATED_AT', ilDatePresentation::formatDate(new ilDateTime($note->created_at, IL_CAL_UNIX)));
-        $this->tpl->setVariable('CODE', $note->code);
+        //$this->tpl->setVariable('CODE', $note->code);
         $this->tpl->setVariable('NOTE', $note->note);
 
         // show action column

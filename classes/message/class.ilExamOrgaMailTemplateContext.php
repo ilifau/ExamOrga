@@ -80,8 +80,6 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
      */
     public function resolveSpecificPlaceholder($placeholder_id, array $context_parameters, ilObjUser $recipient = null, $html_markup = false)
     {
-        $ref_id = $context_parameters['ref_id'];
-
         /** @var ilExamOrgaRecord $record */
         if (isset($context_parameters['record'])) {
             $record = $context_parameters['record'];
@@ -105,7 +103,9 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
                 return $record->course_link;
 
             case 'record_link':
-                return ilObjExamOrga::_getRecordLink($ref_id, $record->getId());
+                if (isset($context_parameters['ref_id'])) {
+                    return ilObjExamOrga::_getRecordLink($context_parameters['ref_id'], $record->getId());
+                }
         }
 
         return '';

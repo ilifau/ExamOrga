@@ -590,6 +590,15 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
         return sprintf("%02d:%02d", $hour, $minute);
     }
 
+    /**
+     * Check if the exam format is presence
+     * @return bool
+     */
+    public function isPresence()
+    {
+        return ($this->exam_format == 'presence');
+    }
+
 
     /**
      * Get an array of a comma separated string

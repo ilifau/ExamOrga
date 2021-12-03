@@ -118,6 +118,7 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
 
         $form = new ilPropertyFormGUI();
         $form->setTitle($this->plugin->txt('edit_message'));
+        $form->setDescription(nl2br($this->plugin->txt('messages_description')));
         $form->setFormAction($this->ctrl->getFormAction($this));
 
         foreach ($this->object->getMessageFields() as $field) {
@@ -164,7 +165,7 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
         $context = new ilExamOrgaMailTemplateContext();
         $record = $context->getExampleRecord();
 
-        $messenger = new ilExamOrgaMessenger($this->object->getRefId());
+        $messenger = new ilExamOrgaMessenger($this->object);
         if ($messenger->send($record, $_GET['type'], true, false)) {
             ilUtil::sendSuccess($this->plugin->txt('message_sent'), true);
         } else

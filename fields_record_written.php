@@ -299,6 +299,12 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_CHECKBOX,
       'status' => ilExamOrgaField::STATUS_HIDDEN
   ],
+  [
+      'name' => 'sent_messages',
+      'type' => ilExamOrgaField::TYPE_MESSAGES,
+      'status' => ilExamOrgaField::STATUS_FIXED,
+      'filter' => true
+  ],
   /////////////////////////////////////////////////////////////
   [
       'name' => 'head_record',

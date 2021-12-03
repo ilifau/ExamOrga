@@ -389,6 +389,16 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
     public $modified_by;
 
     /**
+     * Get the records for an object
+     * @param int $obj_id
+     * @return self[]
+     */
+    public static function getForObject($obj_id)
+    {
+        return self::where(['obj_id' => (int) $obj_id])->orderBy('exam_date')->get();
+    }
+
+    /**
      * Find a record with a given id that belongs to an orga object
      * @param int $id
      * @param int $obj_id

@@ -149,6 +149,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
     {
         $form = new ilPropertyFormGUI();
         $form->setTitle($this->plugin->txt($condition->isNew() ? 'add_condition' : 'edit_condition'));
+        $form->setDescription(nl2br($this->plugin->txt('conditions_description')));
         $form->setFormAction($this->ctrl->getFormAction($this));
 
         foreach ($this->object->getConditionFields() as $field) {

@@ -283,6 +283,18 @@ class ilObjExamOrga extends ilObjectPlugin
     }
 
     /**
+     * Get the active record conditions
+     */
+    public function getActiveConditions()
+    {
+        if (!isset($this->active_conditions)) {
+            require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
+            $this->active_conditions = ilExamOrgaCondition::getActiveConditions($this->getId());
+        }
+        return $this->active_conditions;
+    }
+
+    /**
      * Get the gui fields for a condition
      */
     public function getMessageFields()
@@ -297,17 +309,6 @@ class ilObjExamOrga extends ilObjectPlugin
         return $this->message_fields;
     }
 
-    /**
-     * Get the active record conditions
-     */
-    public function getActiveConditions() {
-
-        if (!isset($this->active_conditions)) {
-            require_once (__DIR__ . '/condition/class.ilExamOrgaCondition.php');
-            $this->active_conditions = ilExamOrgaCondition::getActiveConditions($this->getId());
-        }
-        return $this->active_conditions;
-    }
 
     /**
      * @return ilExamOrgaMessenger

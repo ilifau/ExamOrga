@@ -96,6 +96,7 @@ semester#:#Semester
 update_languages#:#Sprachen aktualisieren
 load_campus_exams#:#Aus Campus aktualisieren
 campus_exams_loaded#:#Die Daten aus Campus wurden aktualisiert.
+campus_exams_not_loaded#:#Die Daten aus Campus konnten nicht aktualisiert werden.
 generate_db_update#:#Update-Step generieren
 exam_not_found#:#Zur eingegebenen Nummer %s wurde keine Prüfung gefunden!
 notes#:#Hinweise zur Überarbeitung
@@ -118,6 +119,7 @@ idm_accounts_not_found#:#Die folgenden StudOn-Accounts sind mit keinem IdM-Konto
 record_saving_failed#:#Der Eintrag konnte nicht gespeichert werden:
 record_saved_with_warnings#:#Der Eintrag wurde mit Warnungen gespeichert (siehe Hinweise zur Überarbeitung).
 conditions#:#Bedingungen
+conditions_description#:#Erstellen Sie hier Bedingungen, die beim Speichern eines Eintrags getestet werden. Harte Bedingungen verhindern ein Speichern des Datensatzes. Weiche Bedingungen erlauben das Speichern, aber erzeugen einen Eintrag unter "Hinweise zur Überarbeitung". Sind solche Hinweise vorhanden, wird einmalig über Nacht eine Mitteilung vom Typ "Warnung zu nicht erfüllten Bedingungen" an den/die Besitzer/in und die Kontaktadresse des Eintrags verschickt.
 condition_created#:#Die Bedingung wurde erzeugt.
 condition_updated#:#Die Bedingung wurde aktualisiert.
 add_condition#:#Bedingung hinzufügen
@@ -268,7 +270,7 @@ record_link#:#Link zum Eintrag
 record_sent_messages#:#Gesendete Mitteilungen
 please_select#:#-- Bitte auswählen --
 messages#:#Mitteilungen
-messages_description#:#Bearbeiten Sie hier die Vorlagen für automatische Mitteilungs per E-Mail. Empfänger sind der Besitzer eines Eintrags und die unter Mail-Adresse angegebene Addresse des Hauptansprechpartners. Aktive Terminbestätigungen werden sofort beim Speichern oder über Nacht versendet, sobald der Buchungsstatus auf "gestätigt" gesetzt und ein Link zum Prüfungskurs eingetragen ist. Die Warnungen werden einmalig über Nacht verschickt, wenn entsprechende "Hinweise zur Überarbeitung" vorhanden sind. Die Erinnerungen werden einmalig ab ihrer Fälligkeit, aber maximal bis zum Prüfungstag verschickt.
+messages_description#:#Bearbeiten Sie hier die Vorlagen für automatische Mitteilungen per E-Mail. Empfänger sind der Besitzer eines Eintrags und die unter Mail-Adresse angegebene Addresse des Hauptansprechpartners. Aktive Terminbestätigungen werden sofort beim Speichern oder über Nacht versendet, sobald der Buchungsstatus auf "gestätigt" gesetzt und ein Link zum Prüfungskurs eingetragen ist. Die Warnungen werden einmalig über Nacht verschickt, wenn entsprechende "Hinweise zur Überarbeitung" vorhanden sind. Die Erinnerungen werden einmalig ab ihrer Fälligkeit, aber maximal bis zum Prüfungstag verschickt.
 message_type#:#Mitteilungs-Typ
 message_type_confirm_presence#:#Terminbestätigung Präsenz
 message_type_confirm_remote#:#Terminbestätigung Fern
@@ -295,7 +297,8 @@ send_test_message#:#Test-Mitteilung senden
 warning_campus#:#Es ist keine Prüfung aus mein campus ausgewählt.
 warning_roles#:#Es sind keine Prüfer/innen-Accounts oder Korrektor/innen-Accounts ausgewählt.
 confirmation_sent#:#Die Buchungsbestätigung wurde versandt.
-without_confirmation#:#Ohne Bestätigung
-without_reminder1#:#Ohne erste Erinnerung
-without_reminder2#:#Ohne zweite Erinnerung
+without_confirmation#:#Noch ohne Bestätigung
+without_reminder1#:#Noch ohne erste Erinnerung
+without_reminder2#:#Noch ohne zweite Erinnerung
+x_records_checked#:#%s Einträge überprüft
 

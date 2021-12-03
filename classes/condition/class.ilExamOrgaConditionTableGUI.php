@@ -60,6 +60,7 @@ class ilExamOrgaConditionTableGUI extends ilTable2GUI
         $this->addColumn($this->lng->txt('actions'));
 
         $this->setTitle($this->plugin->txt('conditions'));
+        $this->setDescription(nl2br($this->plugin->txt('conditions_description')));
         $this->setFormName('conditions');
         $this->setFormAction($this->ctrl->getFormAction($a_parent_obj, $a_parent_cmd));
 

@@ -76,7 +76,7 @@ class ilExamOrgaMessenger
             $to = $record->mail_address;
         }
 
-        $mail = new ilMail($DIC->user()->getId());
+        $mail = new ilMail(ANONYMOUS_USER_ID);
         $errors = $mail->sendMail($to, $cc, '', $subject, $content, [],['system'], false);
 
         if ($remember) {

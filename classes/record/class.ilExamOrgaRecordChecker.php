@@ -1,6 +1,7 @@
 <?php
 
 require_once (__DIR__ . '/../message/class.ilExamOrgaMessage.php');
+require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
 
 /**
  * Check records for problems
@@ -41,6 +42,10 @@ class ilExamOrgaRecordChecker
      */
     protected $messenger;
 
+    /** @var string */
+    protected $purpose;
+
+
     /** @var string[] */
     protected $failures = [];
 
@@ -67,12 +72,14 @@ class ilExamOrgaRecordChecker
 
     /**
      * Constructor
+     * @param string $purpose
      * @param ilObjExamOrga $object
      * @param ilExamOrgaRecord $record
      * @param ilExamOrgaRecord $original
      */
-    public function __construct($object, $record, $original = null)
+    public function __construct($purpose, $object, $record, $original = null)
     {
+        $this->purpose = $purpose;
         $this->object = $object;
         $this->record = $record;
         $this->original = $original;
@@ -129,9 +136,8 @@ class ilExamOrgaRecordChecker
 
     /**
      * Update the notes and send messages after the record is updated or checked by cron
-     * @param string $purpose
      */
-    public function handleCheckResult($purpose)
+    public function handleCheckResult()
     {
         $this->updateNotes(ilExamOrgaNote::TYPE_CAMPUS, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS]);
         $this->updateNotes(ilExamOrgaNote::TYPE_ROLES, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES]);
@@ -142,7 +148,7 @@ class ilExamOrgaRecordChecker
                 ilExamOrgaMessage::TYPE_CONFIRM_PRESENCE : ilExamOrgaMessage::TYPE_CONFIRM_REMOTE);
         }
 
-        if ($purpose == self::PURPOSE_CRON)
+        if ($this->purpose == self::PURPOSE_CRON)
         {
             foreach ($this->warnings as $type => $warnings)
             if (!empty($warnings)) {
@@ -220,7 +226,7 @@ class ilExamOrgaRecordChecker
     protected function checkRoles()
     {
         if (empty($this->record->admins) && empty($this->record->correctors)) {
-            $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS][] = $this->plugin->txt('warning_roles');
+            $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES][] = $this->plugin->txt('warning_roles');
         }
     }
 
@@ -237,23 +243,30 @@ class ilExamOrgaRecordChecker
 
     /**
      * Check a record against the active conditions
+     * Failures are only created when a record is edited interactively (PURPOSE_SAVE)
+     * They should prevent a saving of the record
      */
     protected function checkConditions()
     {
         foreach ($this->object->getActiveConditions() as $cond) {
             if (!$cond->checkRecord($this->record)) {
 
-                $ok = false;
                 switch ($cond->level) {
 
                     // HARD level: saving is prevented for all
                     case ilExamOrgaCondition::LEVEL_HARD:
-                        $this->failures[] = $cond->failure_message;
+                        if ($this->purpose = self::PURPOSE_SAVE)
+                        {
+                            $this->failures[] = $cond->failure_message;
+                        }
                         break;
 
-                    // SOFT level: admins can create with warning, users can eit with warning
+                    // SOFT level: admins can create with warning, users can edit with warning
                     case ilExamOrgaCondition::LEVEL_SOFT:
-                        if ((!isset($this->original) || $cond->checkRecord($this->original)) && !$this->object->canEditAllRecords()) {
+                        if ($this->purpose == self::PURPOSE_SAVE
+                            && (!isset($this->original) || $cond->checkRecord($this->original))
+                            && !$this->object->canEditAllRecords())
+                        {
                             $this->failures[] = $cond->failure_message;
                         }
                         else {

@@ -173,7 +173,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 }
             }
 
-            $checker = new ilExamOrgaRecordChecker($this->object, $record);
+            $checker = new ilExamOrgaRecordChecker(ilExamOrgaRecordChecker::PURPOSE_SAVE, $this->object, $record);
             $checker->doChecks();
 
             if (!empty($checker->getFailures())) {
@@ -185,7 +185,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
 
             $record->create();
-            $checker->handleCheckResult(ilExamOrgaRecordChecker::PURPOSE_SAVE);
+            $checker->handleCheckResult();
 
             $confirmed_info = "";
             if ($checker->isConfirmationSent()) {
@@ -252,7 +252,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
                 }
             }
 
-            $checker = new ilExamOrgaRecordChecker($this->object, $record, $original);
+            $checker = new ilExamOrgaRecordChecker(ilExamOrgaRecordChecker::PURPOSE_SAVE, $this->object, $record, $original);
             $checker->doChecks();
 
             if (!empty($checker->getFailures())) {
@@ -263,7 +263,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
 
             $record->update();
-            $checker->handleCheckResult(ilExamOrgaRecordChecker::PURPOSE_SAVE);
+            $checker->handleCheckResult();
 
             $confirmed_info = "";
             if ($checker->isConfirmationSent()) {

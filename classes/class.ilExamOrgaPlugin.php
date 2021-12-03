@@ -167,7 +167,6 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
             echo "ExamOrga: handle cron job...\n";
         }
 
-        $done = false;
         $messages = [];
 
         require_once (__DIR__ . '/class.ilExamOrgaCronHandler.php');
@@ -175,18 +174,53 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
 
         // update the list of exams
         if ($handler->updateExams()) {
-            $done = true;
             $messages[] = $this->txt('campus_exams_loaded');
             if (!ilContext::usesHTTP()) {
                 echo $this->txt('campus_exams_loaded') . "\n";
             }
+        }
+        else {
+            $messages[] = $this->txt('campus_exams_not_loaded');
+        }
+
+        $checked = $handler->checkRecords();
+        $messages[] = sprintf($this->txt('x_records_checked'), $checked);
+        if (!ilContext::usesHTTP()) {
+            echo sprintf($this->txt('x_records_checked'), $checked) . "\n";
         }
 
         if (!ilContext::usesHTTP()) {
             echo "ExamOrga: finished.\n";
         }
 
-        return [$done, implode(' | ', $messages)];
+        return [true, implode(' | ', $messages)];
     }
 
+    /**
+     * Get the active objects
+     * @return array    obj_id => title
+     */
+    public function getActiveObjects()
+    {
+        $query = "
+            SELECT o.obj_id, o.title, 
+            d1.param_value AS `online` 
+            FROM object_data o
+            INNER JOIN object_reference r ON r.obj_id = o.obj_id AND r.deleted IS NULL
+            LEFT JOIN xamo_data d1 ON d1.obj_id = o.obj_id AND d1.param_name = 'online'
+            WHERE o.`type` = 'xamo'
+            ";
+
+        $result = $this->db->query($query);
+
+        $objects = [];
+        while ($row = $this->db->fetchAssoc($result)) {
+            if (!isset($row['online']) || !$row['online']) {
+                continue;
+            }
+            $objects[$row['obj_id']] = $row['title'];
+
+        }
+        return $objects;
+    }
 }

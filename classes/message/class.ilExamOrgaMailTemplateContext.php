@@ -62,11 +62,11 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
             ],
             'exam_link' => [
               'placeholder' => 'EXAM_LINK',
-              'label' => $this->plugin->txt('record_link')
+              'label' => $this->plugin->txt('record_course_link')
             ],
             'record_link' => [
                 'placeholder' => 'RECORD_LINK',
-                'label' => $this->plugin->txt('record_course_link')
+                'label' => $this->plugin->txt('record_link')
             ]
         ];
 

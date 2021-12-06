@@ -266,12 +266,13 @@ record_owner_id#:#Besitzer/in
 record_owner_id_info#:#Dieser Account kann den Eintrag bearbeiten
 record_oral_fau_unit#:#Fakultät
 record_oral_head_process_info#:#Die folgenden Angaben werden vom RRZE
-record_link#:#Link zum Eintrag
+record_link#:#Link zum Anmelde-Eintrag
 record_sent_messages#:#Gesendete Mitteilungen
 please_select#:#-- Bitte auswählen --
 messages#:#Mitteilungen
 messages_description#:#Bearbeiten Sie hier die Vorlagen für automatische Mitteilungen per E-Mail. Empfänger sind der Besitzer eines Eintrags und die unter Mail-Adresse angegebene Addresse des Hauptansprechpartners. Aktive Terminbestätigungen werden sofort beim Speichern oder über Nacht versendet, sobald der Buchungsstatus auf "gestätigt" gesetzt und ein Link zum Prüfungskurs eingetragen ist. Die Warnungen werden einmalig über Nacht verschickt, wenn entsprechende "Hinweise zur Überarbeitung" vorhanden sind. Die Erinnerungen werden einmalig ab ihrer Fälligkeit, aber maximal bis zum Prüfungstag verschickt.
 message_type#:#Mitteilungs-Typ
+message_message_type#:#Mitteilungs-Typ
 message_type_confirm_presence#:#Terminbestätigung Präsenz
 message_type_confirm_remote#:#Terminbestätigung Fern
 message_type_reminder1_presence#:#Erste Erinnerung Präsenz (eine Woche vorher)

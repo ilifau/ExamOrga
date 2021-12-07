@@ -161,19 +161,31 @@ class ilExamOrgaRecordChecker
             $this->updateNotes(ilExamOrgaNote::TYPE_CONDITION, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION]);
         }
 
+        // don't send any message if exam date is over
+        if (isset($this->record->exam_date)) {
+            $exam = new ilDate($this->record->exam_date, IL_CAL_DATE);
+            $today = new ilDate(time(), IL_CAL_UNIX);
+            if (ilDate::_before($exam, $today, IL_CAL_DAY)) {
+                return;
+            }
+        }
+
+        // confirm bookins when record is save or or by cron
         if ($this->confirm_booking) {
             $this->confirmation_sent = $this->messenger->send($this->record, $this->record->isPresence() ?
                 ilExamOrgaMessage::TYPE_CONFIRM_PRESENCE : ilExamOrgaMessage::TYPE_CONFIRM_REMOTE);
         }
 
+        // send warnings and reminders only by cron
         if ($this->purpose == self::PURPOSE_CRON)
         {
-            foreach ($this->warnings as $type => $warnings)
-            if (!empty($warnings)) {
-                $this->messenger->send($this->record, $type);
-            }
-            else {
-                $this->messenger->reset($this->record, $type);
+            foreach ($this->warnings as $type => $warnings) {
+                if (!empty($warnings)) {
+                    $this->messenger->send($this->record, $type);
+                }
+                else {
+                    $this->messenger->reset($this->record, $type);
+                }
             }
 
             if ($this->reminder1) {
@@ -196,7 +208,7 @@ class ilExamOrgaRecordChecker
             $exam = new ilDate($this->record->exam_date, IL_CAL_DATE);
             $earliest = new ilDate(self::EARLIEST_CONFIRMATION, IL_CAL_DATE);
 
-            if (ilDate::_before($exam, $earliest)) {
+            if (ilDate::_before($exam, $earliest, IL_CAL_DAY)) {
                 return;
             }
 
@@ -221,7 +233,7 @@ class ilExamOrgaRecordChecker
             $long->increment(IL_CAL_DAY, self::LONG_DAYS);
 
             // too late
-            if (ilDate::_before($exam, $today, IL_CAL_DAY) || ilDate::_equals($exam, $today, IL_CAL_DAY)) {
+            if (ilDate::_before($exam, $today, IL_CAL_DAY)) {
                 return;
             }
             // short reminder is due

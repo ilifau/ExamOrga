@@ -64,6 +64,8 @@ class ilExamOrgaCronHandler
      */
     public function checkRecords()
     {
+        require_once(__DIR__ . '/record/class.ilExamOrgaRecordChecker.php');
+
         $checked = 0;
         foreach($this->plugin->getActiveObjects() as $obj_id => $title) {
 
@@ -84,11 +86,20 @@ class ilExamOrgaCronHandler
 
             foreach (ilExamOrgaRecord::getForObject($object->getId()) as $record) {
 
-                if (!ilContext::usesHTTP()) {
-                    echo $object->getTitle() . "...\n";
+                // don' check records after the exam day
+                if (isset($record->exam_date)) {
+                    $exam = new ilDate($record->exam_date, IL_CAL_DATE);
+                    $today = new ilDate(time(), IL_CAL_UNIX);
+                    if (ilDate::_after($today, $exam, IL_CAL_DAY))
+                    {
+                        continue;
+                    }
                 }
 
-                require_once(__DIR__ . '/record/class.ilExamOrgaRecordChecker.php');
+                if (!ilContext::usesHTTP()) {
+                    echo "Check record " .$record->getTitle() . "...\n";
+                }
+
                 $checker = new ilExamOrgaRecordChecker(ilExamOrgaRecordChecker::PURPOSE_CRON, $object, $record);
                 $checker->doChecks();
                 $checker->handleCheckResult();

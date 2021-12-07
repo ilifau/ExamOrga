@@ -16,6 +16,7 @@ class ilExamOrgaRecordChecker
     const SHORT_DAYS = 3;
     const LONG_DAYS = 7;
 
+    const EARLIEST_CONFIRMATION = '2022-01-01 00:00:00';
 
     /**
      * @var ilExamOrgaPlugin
@@ -55,6 +56,16 @@ class ilExamOrgaRecordChecker
         ilExamOrgaMessage::TYPE_WARNING_CAMPUS => [],
         ilExamOrgaMessage::TYPE_WARNING_ROLES =>[],
         ilExamOrgaMessage::TYPE_WARNING_CONDITION =>[]
+    ];
+
+    /**
+     * @var array
+     */
+    protected $notes_messages_types = [
+        ilExamOrgaNote::TYPE_ZOOM => ilExamOrgaMessage::TYPE_WARNING_ZOOM,
+        ilExamOrgaNote::TYPE_CAMPUS => ilExamOrgaMessage::TYPE_WARNING_CAMPUS,
+        ilExamOrgaNote::TYPE_ROLES => ilExamOrgaMessage::TYPE_WARNING_ROLES,
+        ilExamOrgaNote::TYPE_CONDITION => ilExamOrgaMessage::TYPE_WARNING_CONDITION,
     ];
 
 
@@ -125,10 +136,14 @@ class ilExamOrgaRecordChecker
      */
     public function doChecks()
     {
-        $this->checkZoom();
-        $this->checkCampus();
-        $this->checkRoles();
-        $this->checkConditions();
+        $this->loadWarnings();
+
+        // checks that create notes should only be done when a record is interactively created or updated
+        if ($this->purpose == self::PURPOSE_SAVE) {
+            $this->checkCampus();
+            $this->checkRoles();
+            $this->checkConditions();
+        }
 
         $this->checkConfirmation();
         $this->checkReminder();
@@ -139,9 +154,12 @@ class ilExamOrgaRecordChecker
      */
     public function handleCheckResult()
     {
-        $this->updateNotes(ilExamOrgaNote::TYPE_CAMPUS, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS]);
-        $this->updateNotes(ilExamOrgaNote::TYPE_ROLES, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES]);
-        $this->updateNotes(ilExamOrgaNote::TYPE_CONDITION, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION]);
+        // notes should only be updated when a record is interactively  created or updated
+        if ($this->purpose == self::PURPOSE_SAVE) {
+            $this->updateNotes(ilExamOrgaNote::TYPE_CAMPUS, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS]);
+            $this->updateNotes(ilExamOrgaNote::TYPE_ROLES, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES]);
+            $this->updateNotes(ilExamOrgaNote::TYPE_CONDITION, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION]);
+        }
 
         if ($this->confirm_booking) {
             $this->confirmation_sent = $this->messenger->send($this->record, $this->record->isPresence() ?
@@ -174,9 +192,16 @@ class ilExamOrgaRecordChecker
      */
     protected function checkConfirmation()
     {
-        if ($this->record->booking_status == 'approved' && !empty($this->record->course_link)) {
-                // will only be sent once
-                $this->confirm_booking = true;
+        if ($this->record->booking_status == 'approved' && !empty($this->record->course_link) && !empty($this->record->exam_date)) {
+            $exam = new ilDate($this->record->exam_date, IL_CAL_DATE);
+            $earliest = new ilDate(self::EARLIEST_CONFIRMATION, IL_CAL_DATE);
+
+            if (ilDate::_before($exam, $earliest)) {
+                return;
+            }
+
+            // will only be sent once
+            $this->confirm_booking = true;
         }
     }
 
@@ -196,27 +221,17 @@ class ilExamOrgaRecordChecker
             $long->increment(IL_CAL_DAY, self::LONG_DAYS);
 
             // too late
-            if (ilDate::_equals($exam, $today, IL_CAL_DAY) || ilDate::_after($exam, $today, IL_CAL_DAY)) {
+            if (ilDate::_before($exam, $today, IL_CAL_DAY) || ilDate::_equals($exam, $today, IL_CAL_DAY)) {
                 return;
             }
             // short reminder is due
-            if (ilDate::_before($exam, $short, IL_CAL_DAY)) {
+            if (ilDate::_before($exam, $short, IL_CAL_DAY) || ilDate::_equals($exam, $short, IL_CAL_DAY)) {
                 $this->reminder2 = true;
             }
             // long reminder is due
-            elseif (ilDate::_before($exam, $long, IL_CAL_DAY)) {
+            elseif (ilDate::_before($exam, $long, IL_CAL_DAY) || ilDate::_equals($exam, $long, IL_CAL_DAY)) {
                 $this->reminder1 = true;
             }
-        }
-    }
-
-    /**
-     * Check if zoom notes exist
-     */
-    protected function checkZoom()
-    {
-        foreach (ilExamOrgaNote::getRecordNotesForType($this->record->id, ilExamOrgaNote::TYPE_ZOOM) as $note) {
-            $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ZOOM][] = $note->note;
         }
     }
 
@@ -279,6 +294,18 @@ class ilExamOrgaRecordChecker
                         $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION][] = $cond->failure_message;
                         break;
                 }
+            }
+        }
+    }
+
+    /**
+     * Load the existing warnings
+     */
+    protected function loadWarnings()
+    {
+        foreach ($this->notes_messages_types as $note_type => $message_type) {
+            foreach (ilExamOrgaNote::getRecordNotesForType($this->record->id, $note_type) as $note) {
+                $this->warnings[$message_type][] = $note->note;
             }
         }
     }

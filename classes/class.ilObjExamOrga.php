@@ -241,7 +241,7 @@ class ilObjExamOrga extends ilObjectPlugin
         $fields = [];
         foreach ($names as $name) {
             if (file_exists(__DIR__ . '/../' . $name)) {
-                $fields = include_once(__DIR__ . '/../' . $name);
+                $fields = include(__DIR__ . '/../' . $name);
                 break;
             }
         }

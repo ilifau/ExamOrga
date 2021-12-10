@@ -180,6 +180,19 @@ class ilExamOrgaRecordChecker
         if ($this->purpose == self::PURPOSE_CRON)
         {
             foreach ($this->warnings as $type => $warnings) {
+
+                // send warnings for missing campus ids or roles earliest one month before the exam
+                if (isset($this->record->exam_date) && ($type == ilExamOrgaMessage::TYPE_WARNING_CAMPUS || $type ==ilExamOrgaMessage::TYPE_WARNING_ROLES))
+                {
+                    $exam = new ilDate($this->record->exam_date, IL_CAL_DATE);
+                    $month = new ilDate(time(), IL_CAL_UNIX);
+                    $month->increment(IL_CAL_MONTH, 1);
+
+                    if (!ilDate::_before($exam, $month, IL_CAL_DAY)) {
+                       continue;
+                    }
+                }
+
                 if (!empty($warnings)) {
                     $this->messenger->send($this->record, $type);
                 }

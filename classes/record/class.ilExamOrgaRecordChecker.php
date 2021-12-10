@@ -141,8 +141,11 @@ class ilExamOrgaRecordChecker
         // checks that create notes should only be done when a record is interactively created or updated
         // this will replace the loaded notes of the certain type
         if ($this->purpose == self::PURPOSE_SAVE) {
-            $this->checkCampus();
-            $this->checkRoles();
+
+            if($this->object->data->getPurpose() == ilExamOrgaData::PURPOSE_WRITTEN) {
+                $this->checkCampus();
+                $this->checkRoles();
+            }
             $this->checkConditions();
         }
 

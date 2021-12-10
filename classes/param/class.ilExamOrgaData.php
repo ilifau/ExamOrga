@@ -237,6 +237,15 @@ class ilExamOrgaData
     }
 
     /**
+     * Get the purpose of the object
+     * @return string
+     */
+    public function getPurpose()
+    {
+        return $this->get(self::PARAM_PURPOSE);
+    }
+
+    /**
      * Get the semester as it is stored in mein campus
      * @return string (format: '20201' (summer term) or '20202' (winter term)
      */

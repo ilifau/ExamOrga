@@ -132,7 +132,7 @@ conditions_deleted#:#Die Bedingung(en) wurde(n) gelöscht.
 condition_level#:#Level
 condition_level_info#:#Härtegrad der Bedingung. Warnungen werden als "Hinweise zur Überarbeitung" gespeichert. Sind solche Warnungen vorhanden, wird einmalig über Nacht eine Mitteilung vom Typ "Warnung zu nicht erfüllten Bedingungen" gesendet, falls diese Mitteilung aktiviert ist.
 condition_level_option_hard#:#Verhindert Speicherung
-condition_level_option_soft#:#Erlaubt Erstellung für Admins, danach Bearbeitung durch Nutzer mit Warnung
+condition_level_option_soft#:#Erlaubt Erstellung für Admins mit Warnung, danach Bearbeitung durch Nutzer
 condition_level_option_warn#:#Erlaubt Erstellung und Bearbeitung durch Nutzer mit Warnung
 condition_cond_type#:#Bedingungstyp
 condition_cond_type_require#:#Anforderung - alle festgelegten Einzelbedingungen müssen passen

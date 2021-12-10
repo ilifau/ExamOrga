@@ -139,6 +139,7 @@ class ilExamOrgaRecordChecker
         $this->loadWarnings();
 
         // checks that create notes should only be done when a record is interactively created or updated
+        // this will replace the loaded notes of the certain type
         if ($this->purpose == self::PURPOSE_SAVE) {
             $this->checkCampus();
             $this->checkRoles();
@@ -265,6 +266,8 @@ class ilExamOrgaRecordChecker
      */
     protected function checkRoles()
     {
+        $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES] = [];
+
         if (empty($this->record->admins) && empty($this->record->correctors)) {
             $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES][] = $this->plugin->txt('warning_roles');
         }
@@ -275,6 +278,8 @@ class ilExamOrgaRecordChecker
      */
     protected function checkCampus()
     {
+        $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS] = [];
+
         if (empty($this->record->exam_ids)) {
             $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS][] = $this->plugin->txt('warning_campus');
         }
@@ -282,12 +287,13 @@ class ilExamOrgaRecordChecker
 
 
     /**
-     * Check a record against the active conditions
-     * Failures are only created when a record is edited interactively (PURPOSE_SAVE)
-     * They should prevent a saving of the record
+     * Check a record against the active conditions (called wen a record is saved interactively)
+     * Failures should prevent a saving of the record
      */
     protected function checkConditions()
     {
+        $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION] = [];
+
         foreach ($this->object->getActiveConditions() as $cond) {
             if (!$cond->checkRecord($this->record)) {
 
@@ -295,22 +301,21 @@ class ilExamOrgaRecordChecker
 
                     // HARD level: saving is prevented for all
                     case ilExamOrgaCondition::LEVEL_HARD:
-                        if ($this->purpose = self::PURPOSE_SAVE)
-                        {
-                            $this->failures[] = $cond->failure_message;
-                        }
+                        $this->failures[] = $cond->failure_message;
                         break;
 
-                    // SOFT level: admins can create with warning, users can edit with warning
+                    // SOFT level: admins can create with warning, users can afterwards edit without warning
                     case ilExamOrgaCondition::LEVEL_SOFT:
-                        if ($this->purpose == self::PURPOSE_SAVE
-                            && (!isset($this->original) || $cond->checkRecord($this->original))
-                            && !$this->object->canEditAllRecords())
-                        {
-                            $this->failures[] = $cond->failure_message;
+                        if (isset($this->original) && !$cond->checkRecord($this->original)) {
+                            // no failure/warning if problem existed before
+                        }
+                        elseif ($this->object->canEditAllRecords()) {
+                            // admins get a warning when they hurt the condition the first time
+                            $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION][] = $cond->failure_message;
                         }
                         else {
-                            $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION][] = $cond->failure_message;
+                            // users can't save a record when they they hurt the condition the first time
+                            $this->failures[] = $cond->failure_message;
                         }
                         break;
 

@@ -77,7 +77,7 @@ class ilExamOrgaMessenger
         }
 
         $mail = new ilMail(ANONYMOUS_USER_ID);
-        $errors = $mail->sendMail($to, $cc, '', $subject, $content, [],['system'], false);
+        $errors = $mail->sendMail($to, $cc, '', $subject, $content, [], false);
 
         if ($remember) {
             ilExamOrgaMessageSent::setSent($record->id, $type);

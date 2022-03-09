@@ -17,13 +17,14 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
 
     public function __construct()
     {
+        parent::__construct();
         $this->plugin = ilExamOrgaPlugin::getInstance();
     }
 
     /**
      * @return string
      */
-    public function getId()
+    public function getId() : string
     {
         return self::ID;
     }
@@ -31,7 +32,7 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
     /**
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->plugin->txt('obj_xamo');
     }
@@ -39,7 +40,7 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
     /**
      * @return string
      */
-    public function getDescription()
+    public function getDescription() : string
     {
         return $this->plugin->txt('obj_xamo');
     }
@@ -48,7 +49,7 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
      * Return an array of placeholders
      * @return array
      */
-    public function getSpecificPlaceholders()
+    public function getSpecificPlaceholders() : array
     {
 
         $placeholders = [
@@ -78,7 +79,7 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
      * @inheritdoc
      * @param array $context_parameters ['ref_id' => int, 'record' => ilExamOrgaRecord]
      */
-    public function resolveSpecificPlaceholder($placeholder_id, array $context_parameters, ilObjUser $recipient = null, $html_markup = false)
+    public function resolveSpecificPlaceholder(string $placeholder_id, array $context_parameters, ilObjUser $recipient = null, bool $html_markup = false) : string
     {
         /** @var ilExamOrgaRecord $record */
         if (isset($context_parameters['record'])) {

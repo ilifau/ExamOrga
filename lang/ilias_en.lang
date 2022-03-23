@@ -7,26 +7,26 @@
 //
 
 <!-- language file start -->
-obj_xamo#:#Exam Orga Objekt
-objs_xamo#:#Exam Orga Objekte
-obj_xamo_duplicate#:#Kopieren
-objs_xamo_duplicate#:#Kopiere Exam Orga Objekt
-obj_xamo_select#:#Wähle Exam Orga Objekt
-xamo_add#:#Exam Orga Objekt hinzufügen
-xamo_new#:#Neues Exam Orga Objekt
-xamo_read#:#Lesezugriff auf Exam Orga Objekt
-xamo_write#:#Exam Orga Objekt bearbeiten
-xamo_delete#:#Exam Orga Objekt löschen
-xamo_visible#:#Exam Orga Objekt ist sichtbar
-xamo_edit_permission#:#Zugriffsrecht bearbeiten
-crs_create_xamo#:#Erstelle Exam Orga Objekt
-grp_create_xamo#:#Erstelle Exam Orga Objekt
-fold_create_xamo#:#Erstelle Exam Orga Objekt
-root_create_xamo#:#Erstelle Exam Orga Objekt
-cat_create_xamo#:#Erstelle Exam Orga Objekt
-view_entries#:#Alle Einträge sehen
-title#:#Titel
-description#:#Beschreibung
+obj_xamo#:#Exam Orga Object
+objs_xamo#:#Exam Orga Object
+obj_xamo_duplicate#:#Copy
+objs_xamo_duplicate#:#Copy Exam Orga Object
+obj_xamo_select#:#Select Exam Orga Object
+xamo_add#:#Create Exam Orga Objec
+xamo_new#:#Create Exam Orga Object
+xamo_read#:#Read Contents
+xamo_write#:#Edit Settings
+xamo_delete#:#Delete
+xamo_visible#:#Exam Orga Object is visible
+xamo_edit_permission#:#Edit Permissions
+crs_create_xamo#:#Create Exam Orga Object
+grp_create_xamo#:#Create Exam Orga Object
+fold_create_xamo#:#Create Exam Orga Object
+root_create_xamo#:#Create Exam Orga Object
+cat_create_xamo#:#Create Exam Orga Object
+view_entries#:#View all entries
+title#:#Title
+description#:#Description
 status#:#Status
 online#:#Online
 online_info#:#The tool must be online or it will not be visible to users who cannot edit settings. External tools (Zoom setup, examination platform) can only be queried if the tool is online.

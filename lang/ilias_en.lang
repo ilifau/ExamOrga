@@ -1,0 +1,304 @@
+//
+// Copyright (c) 2019 Institut fuer Lern-Innovation, Friedrich-Alexander-Universitaet Erlangen-Nuernberg
+// GPLv3, see LICENSE
+//
+// @author Fred Neumann <fred.neumann@fau.de>
+// @version $Id$
+//
+
+<!-- language file start -->
+obj_xamo#:#Exam Orga Objekt
+objs_xamo#:#Exam Orga Objekte
+obj_xamo_duplicate#:#Kopieren
+objs_xamo_duplicate#:#Kopiere Exam Orga Objekt
+obj_xamo_select#:#Wähle Exam Orga Objekt
+xamo_add#:#Exam Orga Objekt hinzufügen
+xamo_new#:#Neues Exam Orga Objekt
+xamo_read#:#Lesezugriff auf Exam Orga Objekt
+xamo_write#:#Exam Orga Objekt bearbeiten
+xamo_delete#:#Exam Orga Objekt löschen
+xamo_visible#:#Exam Orga Objekt ist sichtbar
+xamo_edit_permission#:#Zugriffsrecht bearbeiten
+crs_create_xamo#:#Erstelle Exam Orga Objekt
+grp_create_xamo#:#Erstelle Exam Orga Objekt
+fold_create_xamo#:#Erstelle Exam Orga Objekt
+root_create_xamo#:#Erstelle Exam Orga Objekt
+cat_create_xamo#:#Erstelle Exam Orga Objekt
+view_entries#:#Alle Einträge sehen
+title#:#Titel
+description#:#Beschreibung
+status#:#Status
+online#:#Online
+online_info#:#The tool must be online or it will not be visible to users who cannot edit settings. External tools (Zoom setup, examination platform) can only be queried if the tool is online.
+offline#:#Offline
+testdata#:#Test data
+testdata_info#:#The tool contains test data that is treated separately for querying external systems (Zoom setup, examination platform).
+save#:#Save
+update#:#Update
+properties#:#Properties
+content#:#Content
+copy#:#Copy
+edit#:#Edit
+export#:#Export
+basic_configuration#:#Basic configuration
+config_base#:#Basic features
+config_base_info#:#Configure the basic settings of the plugin here
+exam_admin_tab#:#Examination
+overview#:#Overview
+message_no_list_records#:#You do not have permission to access the records.
+message_no_add_record#:#You do not have permission to add a record.
+message_no_edit_record#:#You do not have permission to edit this record.
+message_no_view_record#:#You do not have permission to view this record.
+exams#:#Examinations
+add_record#:#Add examination
+view_details#:#Show details
+edit_record#:#Edit examination
+create_record#:#Save record
+update_record#:#Update record
+record_created#:#The record was created.
+record_updated#:#The record was updated.
+record_updated_warnings#:#The record updated with warning messages:
+delete_records#:#Delete entries
+confirm_delete_records#:#Do you want to delete the selected entries?
+records_deleted#:#The entries have been deleted.
+yes#:#Yes
+no#:#No
+time_delim#:#&nbsp;:&nbsp;
+time_suffix#:#
+filter_all#:#All
+from#:#From
+to#:#Until
+api_token#:#API Token
+api_token_info#:#Token for calling the API
+excel_export#:#Export Excel file
+excel_import#:#Import from Excel file
+excel_file#:#Excel file
+excel_wrong_column_title#:#The column title "%s" does not correspond to a field.
+excel_record_not_found#:#The record with the ID %s was not found.
+excel_record_not_writeable#:#You do not have write permission for the record with the ID %s.
+excel_no_add_permission#:#You cannot add a record with an empty ID.
+excel_wrong_value#:#The value of the "%s" column in the row %s is not valid.
+excel_records_read_error#:#An error was found while reading the Excel file (no data was written):<p class="small">%s</p>
+excel_no_records_read#:#The file does not contain any records.
+excel_records_read#:#The following records have been written:<p class="small"> %s</p>
+introduction#:#Introduction
+introduction_info#:#The introduction is displayed above the examination list
+purpose#:#Purpose
+purpose_info#:#Please enter the type of examination here. This effects which fields are displayed.
+purpose_written#:#On-campus electronic examinations and remote written examination formats
+purpose_oral#:#Oral examinations with video supervision
+campus_soap_url#:#URL of mein campus service
+campus_soap_url_info#:#URL for querying examination and participant data from mein campus via SOAP
+summer_term#:#Summer semester
+winter_term#:#Winter semester
+semester#:#Semester
+update_languages#:#Update languages
+load_campus_exams#:#Update from mein campus
+campus_exams_loaded#:#Data has been updated from mein campus
+campus_exams_not_loaded#:#Data has not been updated from mein campus.
+generate_db_update#:#Generate update step
+exam_not_found#:#Examination not found for ID %s.
+notes#:#A problem occurred
+notes_description#:#The following messages were automatically generated when the record was checked and indicate problems. Please edit your record to fix the error.  You can delete messages for errors that you have fixed. When the next check is carried out, the messages are updated to show which problems still apply.
+created_at#:#Created on
+code#:#Code
+note#:#Message
+delete_note#:#Delete message
+note_deleted#:#The message has been deleted
+users_per_session#:#Meeting size
+users_per_session_info#:#Number of examinees in a Zoom meeting. Several parallel meetings are created for each session. The number of parallel meetings per session is calculated as follows:<br /> (participants / sessions) / meeting size
+notes_filter_zoom_any#:#Zoom: Check error messages
+notes_filter_zoom_meeting#:#Zoom: Meeting issue
+notes_filter_zoom_monitor#:#Zoom: Supervision issue
+back_to_list#:#Back to list
+alert_note#:#Check error messages and revise entry
+login_not_found#:#StudOn account with ID %s not found.
+idm_account_not_found#:#StudOn account %s is not linked to an IdM account.
+idm_accounts_not_found#:#The following StudOn accounts are not linked to an IdM account: %s
+record_saving_failed#:#The record was not saved:
+record_saved_with_warnings#:#The record was saved with warnings (please refer to information about error messages).
+conditions#:#Conditions
+conditions_description#:#Here you can create conditions that are tested when your record is saved. Strict condition levels prevent all users from saving records. Flexible condition levels enable records to be saved, but generate an entry under ‘A problem occurred’. If any conditions are not met and notifications are enabled for ‘Warning about conditions that are not fulfilled’, a notification will be sent once each night to the owner and the e-mail address associated with the record.
+condition_created#:#The condition was created.
+condition_updated#:#The condition was updated.
+add_condition#:#Add condition
+edit_condition#:#Edit condition
+create_condition#:#Create condition
+update_condition#:#Update condition
+delete_conditions#:#Delete conditions
+confirm_delete_conditions#:#Do you want to delete the selected conditions?
+conditions_deleted#:#Condition(s) deleted.
+condition_level#:#Level
+condition_level_info#:#Severity of the condition. Warnings are saved as ‘A problem occurred’. If any conditions are not met and notifications are enabled for ‘ Warning about conditions that are not fulfilled’: a notification will be sent once each night.
+condition_level_option_hard#:#Prevents all users from saving files
+condition_level_option_soft#:#Admins may create objects and these objects can be edited by users with a warning message
+condition_level_option_warn#:#Enables users to create and edit records with a warning message
+condition_cond_type#:#Condition type
+condition_cond_type_require#:#Requirement – all the defined conditions must be fulfilled
+condition_cond_type_exclude#:#Exclude – the combination of defined conditions is not permitted
+condition_failure_message#:#Message
+condition_failure_message_info#:#Message that explains the condition clearly. This message is displayed in the ‘A problem occurred’ category.
+condition_head_filter#:#Application
+condition_head_filter_info#:#Select which entries this condition applies to.
+condition_reg_min_date#:#Valid from
+condition_reg_min_date_info#:#Creation or edit date from which the condition is valid
+condition_reg_max_date#:#Valid until
+condition_reg_max_date_info#:#Creation or edit date until which the condition is valid
+condition_exam_formats#:#Examination formats
+condition_exam_formats_info#:#Examination formats which this condition applies to
+condition_exam_from_date#:#For examinations from
+condition_exam_to_date#:#For examinations until
+condition_head_conditions#:#Conditions
+condition_head_conditions_info#:#Select which conditions are checked
+condition_reg_min_days_before#:#Notice period
+condition_reg_min_days_before_info#:#Minimum number of days between editing the record and the examination date
+condition_exam_types#:#Types
+condition_exam_types_info#:#Examination types
+condition_exam_min_date#:#Earliest examination
+condition_exam_max_date#:#Latest examination
+condition_weekdays#:#Permitted days
+condition_weekdays_info#:#Days of the week when examinations can be held
+condition_weekdays_any#:#Not specified
+condition_weekdays_mo_fr#:#Monday to Friday
+condition_weekdays_mo_sa#:#Monday to Saturday
+condition_min_daytime#:#Earliest start
+condition_min_daytime_info#:#Earliest session start on the day of the examination
+condition_max_daytime#:#Latest end
+condition_max_daytime_info#:#Latest session end on the day of the examination
+condition_max_exams_per_day#:#Maximum per day
+condition_max_exams_per_day_info#:#Maximum number of examinations per day
+condition_max_exams_per_week#:#Maximum per week
+condition_max_exams_per_week_info#:#Maximum number of examinations per week
+condition_max_exams_per_month#:#Per month
+condition_max_exams_per_month_info#:#Maximum number of examinations per month
+exam_formats_presence#:#On-campus electronic examination
+exam_formats_open#:#Open book examination with time limit
+exam_formats_monitored#:#Remote examination with video supervision
+exam_formats_oral#:#Oral examination via video conference
+exam_types_exam#:#Written examination
+exam_types_review#:#Inspection
+exam_types_retry#:#Resit examination
+exam_types_sample#:#Demonstration examination
+exam_methods_test#:#Test (candidates must complete the examination online while connected to the platform)
+exam_methods_exercise#:#Exercise (users complete the examination offline and upload their response)
+record_fau_unit#:#Area
+record_fau_unit_info#:#Select the area of the examination platform where the examination will be created. Areas have been set up for all faculties and subsequent organisational units. This is to avoid lists of examinations that are too long on one organisational level.
+record_fau_chair#:#Chair
+record_fau_chair_info#:#Please specify the full name of the chair
+record_fau_lecturer#:#Lecturer
+record_mail_address#:#E-mail address
+record_mail_address_info#:#Please enter the e-mail address of the main contact.<p><strong>These fields are used for searching and contact details. To manage access permissions for the examination platform and Zoom meetings, please use the examiner, grader and observer account fields below.</strong></p>
+record_exam_format#:#Examination format
+record_exam_format_info#:#Please enter the format of the examination here. If you need help, please contact us.
+record_force_presence#:#Force on-campus examination format
+record_force_presence_info#:#Use the on-campus examination platform regardless of the examination format.
+record_exam_method#:#Examination method
+record_exam_method_info#:#[For remote examinations only] Indicate whether you would like to implement your examination with the <strong>Exercise</strong> object (primarily for essay questions: Students download a task from the examination platform, edit it offline and then upload it again to the exercise on the examination platform) or with the <strong>Test</strong> object (for multiple choice examinations): Students answer all examination questions online while they are connected to the examination platform).
+record_exam_type#:#Type
+record_exam_type_info#:#Please make sure this is always set correctly. Inspections do not require a separate record. The examination record is used for this purpose.
+record_exam_title#:#Exam title
+record_exam_date#:#Date
+record_alternative_dates#:#Alternative date
+record_alternative_dates_info#:#This information is only relevant for on-campus electronic examinations.
+record_head_organisation#:#Organisation
+record_head_organisation_info#:#Information on examination organization and implementation of examinations
+record_exam_runs#:#Sessions
+record_exam_runs_info#:#Start time of the examination or start times of all sessions (if several are planned). For remote examinations, please allow a break of 20 minutes between sessions. For on-campus examinations, please allow a break of 60 minutes between sessions.
+record_run_minutes#:#Duration of examination
+record_run_minutes_info#:#Please indicate the exact duration of the examination per session in minutes. For remote examinations, please add a grace period of 20 minutes for upload and technical delays.
+record_num_participants#:#Number of participants
+record_num_participants_info#:#Please indicate the total number of participants. For load calculation, the system assumes that all sessions will have the same length.
+record_exam_ids#:#Examinations in mein campus
+record_exam_ids_info#:#Enter the Remote Examination ID (ID für Organisation elektronischer Prüfungen) from <em>mein campus</em> under ‘Prüfungsorganisation’. This information is used by the system to automatically query examination participant data from <em>mein campus</em> and generate the correct files for recording grades. <p><strong>Tip: Enter the last name of the examiner to receive examination data from mein campus for the current semester. Other IDs (for resit examinations) can be entered manually.</strong></p>
+record_admins#:#Examiner accounts
+record_admins_info#:#Select the StudOn accounts of the examiners here. You can edit this record and you have full access to all contents of the examination course and can manage access permissions for other users. If you created this record, you automatically have access and do not have to add yourself.
+record_correctors#:#Grader accounts
+record_correctors_info#:#Select the StudOn accounts of the graders here. Graders are granted full access to the content of the examination workshop in the examination platform. Graders can view and evaluate the results in tests and exercises.
+record_monitors#:#Observer accounts
+record_monitors_info#:#Select the StudOn accounts of the observers here. You will automatically receive access to the Zoom meetings for the examination.<p><strong>Important: The selected StudOn accounts must be linked to IdM accounts or at least their e-mail addresses must exist in Zoom and the owners must have logged in to Zoom via single sign-on in advance for this to work.</strong></p>
+record_remarks#:#Remarks
+record_remarks_info#:#Briefly describe any special features of the examination (for example use of video, audio, calculator, random test, various tests, link to survey, etc.)
+record_finally_approved#:#Final confirmation
+record_finally_approved_info#:#You hereby confirm that you have transferred your examination to the examination platform, that participants have been imported, all settings have been checked and no further changes will be made. The final confirmation is the last time you will be able to check the examination before it is live in the system and will generally take place a few days before the examination is held.
+record_head_presence#:#On-campus examinations
+record_head_presence_info#:#The following information is only relevant for on-campus electronic examinations
+record_test_ref_id#:#Test object in StudOn
+record_test_ref_id_info#:#Only relevant for on-campus electronic examinations. Link your test from StudOn here as soon as it is finished. The examination team will then transfer your test from StudOn to the examination platform. If you have multiple tests, please copy their links into the remarks field.
+record_room#:#Room
+record_room_info#:#Only relevant for on-campus examinations: Enter any room preferences here and find the rooms booked for you after completion of the booking process. Please note in brackets if you have already booked the room yourself.
+record_room_approved#:#Room booking
+record_room_approved_info#:#For Examination Team
+record_room_in_univis#:#UnivIS record
+record_room_in_univis_info#:#For Examination Team
+record_head_process#:#Status
+record_head_process_info#:#The following information will be completed by the examination team
+record_booking_status#:#Booking status
+record_booking_status_info#:#Completed by the Examination Team. New records receive the ‘registered’ status On-campus examinations receive the ‘pending’ status while room availability is being checked. Booked dates receive the ‘confirmed’ status.
+record_booking_status_requested#:#Registered
+record_booking_status_in_process#:#Pending (on-campus examination)
+record_booking_status_approved#:#Confirmed
+record_reg_code#:#Registration code
+record_reg_code_info#:#Entered by the Examination Team when available.
+record_course_link#:#Link to the examination course
+record_course_link_info#:#Entered by the Examination Team when available.
+record_run_links#:#Zoom links for remote examinations
+record_run_links_info#:#Transferred by the RRZE after Zoom meetings are created. The configuration check starts one month before the examination date. <strong>The Zoom meetings are created two weeks before the examination date.</strong> Data are synchronized every half hour. Please review any error messages and correct settings if necessary.
+record_notes#:#A problem occurred
+record_head_internal#:#Internal
+record_head_internal_info#:#The following information is only visible to the Examination Team.
+record_team_agent#:#Agent
+record_quality_checked#:#Chromebook check
+record_team_students#:#ILI assistant
+record_team_standby#:#Support
+record_ips_active#:#Allowed IP address(es)
+record_tech_details#:#Technical details
+record_settings_checked#:#Settings check
+record_seb_checked#:#Exam-Check 2 SEB
+record_head_record#:#Information about this record
+record_id#:#ID
+record_id_info#:#Internal ID of this record Has no relation to the examination ID.
+record_created_at#:#Created on
+record_created_by#:#Created by
+record_modified_at#:#Edited on
+record_modified_by#:#Edited by
+record_owner_id#:#Owner
+record_owner_id_info#:#The owner of this account can edit this record
+record_oral_fau_unit#:#Faculty
+record_oral_head_process_info#:#The following information is provided by RRZE
+record_link#:#Link to the booking Record
+record_sent_messages#:#Sent Messages
+please_select#:#-- Please select --
+messages#:#Messages
+messages_description#:#Edit here the templates for automatic messages by e-mail. Recipients are the owner of an entry and the address of the main contact specified under Mail address. Active appointment confirmations are sent immediately upon saving or overnight as soon as the booking status is set to "confirmed" and a link to the exam course is entered. Alerts are sent once overnight if appropriate "notes for revision" are present. Reminders are sent once from their due date, but no later than the day of the exam.
+message_type#:#Message type
+message_message_type#:#Message type
+message_message#:#Content
+message_type_confirm_presence#:#Confirmation of date for on-campus examination
+message_type_confirm_remote#:#Confirmation of date for remote examination
+message_type_reminder1_presence#:#First reminder for on-campus examination (one week in advance)
+message_type_reminder1_remote#:#First reminder for remote examination (one week in advance)
+message_type_reminder2_presence#:#Second reminder for on-campus examination (three days in advance)
+message_type_reminder2_remote#:#Second reminder for remote examination (three days in advance)
+message_type_warning_zoom#:#Warning about errors in setting up Zoom
+message_type_warning_campus#:#Warning about missing mein campus ID
+message_type_warning_roles#:#Warning about missing graders, examiners
+message_type_warning_condition#:#Warning about conditions that are not fulfilled
+message_subject#:#Subject
+message_subject_info#:#The placeholders can also be used here
+message_content#:#Content
+edit_message#:#Edit the message
+update_message#:#Save the message
+message_updated#:#Your message has been saved.
+example_title#:#Example examination
+message_active#:#Active
+message_active_info#:#Activates the message for automatic notifications.
+message_sent#:#Your message has been sent.
+message_not_sent#:#Your message could not be sent.
+send_test_message#:#Send a test message
+warning_campus#:#No examination has been selected from mein campus
+warning_roles#:#No grader accounts or examiner accounts have been selected from mein campus
+confirmation_sent#:#Your booking confirmation has been sent.
+without_confirmation#:#Not yet confirmed
+without_reminder1#:#First reminder has not yet been set
+without_reminder2#:#Second reminder has not yet been set
+x_records_checked#:#%s Entries have been checked

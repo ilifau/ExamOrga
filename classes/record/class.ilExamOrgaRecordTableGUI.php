@@ -145,8 +145,9 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 
         // limit to owned records
         if (!$this->object->canViewAllRecords()) {
-            $cond = $DIC->database()->equals('owner_id', $DIC->user()->getId(), 'integer')
-                . ' OR ' .  $DIC->database()->like('admins', 'text', '%'.$DIC->user()->getLogin().'%', false);
+            $cond = '(' .$DIC->database()->equals('owner_id', $DIC->user()->getId(), 'integer')
+                . ' OR ' .  $DIC->database()->like('admins', 'text', '%'.$DIC->user()->getLogin().'%', false)
+                .')';
             $recordList->where($cond);
         }
 

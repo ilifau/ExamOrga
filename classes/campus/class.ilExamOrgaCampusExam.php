@@ -101,26 +101,46 @@ class ilExamOrgaCampusExam extends ActiveRecord
     /**
      * Get the exam data
      * @param ilExamOrgaPlugin
+     * @todo: multiple examiners are possible, currently the last is taken
      */
     public static function updateExams($plugin)
     {
-        $xml= '
-<SOAPDataService active="y">
-<general>
-<object>getExaminations</object>
-</general>
-</SOAPDataService>
-';
-        $client = new SoapClient($plugin->getConfig()->get('campus_soap_url') . '?wsdl');
-        $result = $client->__call('getDataXML', ['xmlParams' => $xml]);
-        $file = ilUtil::ilTempnam();
-        file_put_contents($file, $result);
-        unset($result);
+        $db = ilDBIdm::getInstance();
 
-        require_once (__DIR__ . '/class.ilExamOrgaCampusExamParser.php');
-        $parser = new ilExamOrgaCampusExamParser($file);
-        $parser->setThrowException(true);
-        $parser->startParsing();
+        $query = "
+            SELECT e.*, i.fau_campo_person_id, i.sn AS nachname, i.given_name AS vorname
+            FROM campo_exam e
+            LEFT JOIN campo_exam_examiner p ON e.porgnr = p.porgnr
+            LEFT JOIN identities i ON p.person_id = i.fau_campo_person_id
+            ORDER BY porgnr            
+            ";
+
+        $exams = [];
+        $result = $db->query($query);
+
+        while ($row = $db->fetchAssoc($result)) {
+
+            /**@var self $exam */
+            if (isset($exams[$row['porgnr']])) {
+                $exam = $exams[$row['porgnr']];
+            }
+            else {
+                $exam = ilExamOrgaCampusExam::findOrGetInstance($row['porgnr']);
+                $exams[$row['porgnr']] = $exam;
+            }
+            $exam->porgnr = $row['porgnr'];
+            $exam->pnr = $row['pnr'];
+            $exam->psem = $row['psem'];
+            $exam->ptermin = sprintf("%02d", $row['ptermin']);
+            $exam->pdatum = $row['pdatum'];
+            $exam->titel = $row['titel'];
+            $exam->veranstaltung = $row['veranstaltung'];
+            if (isset($row['fau_campo_person_id'])) {
+                $exam->nachname = $row['nachname'];
+                $exam->vorname = $row['vorname'];
+            }
+            $exam->save();
+        }
     }
 
     /**

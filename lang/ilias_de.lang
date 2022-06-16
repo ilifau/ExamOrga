@@ -88,15 +88,13 @@ purpose#:#Zweck
 purpose_info#:#Geben Sie hier an, welche Art von Prüfung hier verwaltet werden soll. Danach richtet sich die Auswahl der Eingabefelder.
 purpose_written#:#E-Prüfungen in Präsenz und schriftliche Fernprüfungsformate
 purpose_oral#:#Mündliche Prüfungen mit Videoaufsicht
-campus_soap_url#:#URL des mein campus Services
-campus_soap_url_info#:#Von dieser URL werden per SOAP die Prüfungen und ihre Teilnehmenden abgefragt
 summer_term#:#Sommersemester
 winter_term#:#Wintersemester
 semester#:#Semester
 update_languages#:#Sprachen aktualisieren
-load_campus_exams#:#Aus Campus aktualisieren
-campus_exams_loaded#:#Die Daten aus Campus wurden aktualisiert.
-campus_exams_not_loaded#:#Die Daten aus Campus konnten nicht aktualisiert werden.
+load_campus_exams#:#Aus campo aktualisieren
+campus_exams_loaded#:#Die Daten aus campo wurden aktualisiert.
+campus_exams_not_loaded#:#Die Daten aus campo konnten nicht aktualisiert werden.
 generate_db_update#:#Update-Step generieren
 exam_not_found#:#Zur eingegebenen Nummer %s wurde keine Prüfung gefunden!
 notes#:#Hinweise zur Überarbeitung
@@ -209,8 +207,8 @@ record_run_minutes#:#Prüfungsdauer
 record_run_minutes_info#:#Bitte geben Sie die reine Prüfungsdauer pro Durchgang in Minuten an. Bei Fernprüfungen Angabe bitte inkl. Pufferzeit von 20 Minuten für Upload und technische Verzögerungen.
 record_num_participants#:#Teilnehmer/innen-Zahl
 record_num_participants_info#:#Bitte geben Sie die Gesamtzahl der Teilnehmer/innen an. Zur Lastberechnung nimmt das System eine Gleichverteilung auf die Durchgänge an.
-record_exam_ids#:#Prüfungen in mein campus
-record_exam_ids_info#:#Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>mein campus</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmeer/innen automatisch aus <em>mein campus</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um Prüfungen aus dem Semester dieses Anmeldesystems zu erhalten. Andere IDs (z.B. bei Nachholklausuren) können Sie von Hand eingeben.</strong></p>
+record_exam_ids#:#Prüfungen in campo
+record_exam_ids_info#:#Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>campo</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer/innen automatisch aus <em>campo</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um Prüfungen aus dem Semester dieses Anmeldesystems zu erhalten. Andere IDs (z.B. bei Nachholklausuren) können Sie von Hand eingeben.</strong></p>
 record_admins#:#Prüfer/innen-Accounts
 record_admins_info#:#Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie können diesen Eintrag bearbeiten, bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Wenn Sie diesen Eintrag selbst erstellt haben, bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.
 record_correctors#:#Korrektor/innen-Accounts
@@ -281,7 +279,7 @@ message_type_reminder1_remote#:#Erste Erinnerung Fern (eine Woche vorher)
 message_type_reminder2_presence#:#Zweite Erinnerung Präsenz (drei Tage vorher)
 message_type_reminder2_remote#:#Zweite Erinnerung Fern (drei Tage vorher)
 message_type_warning_zoom#:#Warnung zu Fehlern bei der Zoom-Einrichtung
-message_type_warning_campus#:#Warnung zu fehlender Campus-ID
+message_type_warning_campus#:#Warnung zu fehlender campo-ID
 message_type_warning_roles#:#Warnung zu fehlende Korrektor/innen, Prüfer/innen
 message_type_warning_condition#:#Warnung zu nicht erfüllten Bedingungen
 message_subject#:#Betreff
@@ -296,7 +294,7 @@ message_active_info#:#Mit Aktivierung wird die Mitteilung für automatische Nach
 message_sent#:#Die Mitteilung wurde versandt.
 message_not_sent#:#Die Mitteilung konnte nicht versendet werden!
 send_test_message#:#Test-Mitteilung senden
-warning_campus#:#Es ist keine Prüfung aus mein campus ausgewählt.
+warning_campus#:#Es ist keine Prüfung aus campo ausgewählt.
 warning_roles#:#Es sind keine Prüfer/innen-Accounts oder Korrektor/innen-Accounts ausgewählt.
 confirmation_sent#:#Die Buchungsbestätigung wurde versandt.
 without_confirmation#:#Noch ohne Bestätigung

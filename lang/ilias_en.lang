@@ -87,15 +87,13 @@ purpose#:#Purpose
 purpose_info#:#Please enter the type of examination here. This effects which fields are displayed.
 purpose_written#:#On-campus electronic examinations and remote written examination formats
 purpose_oral#:#Oral examinations with video supervision
-campus_soap_url#:#URL of mein campus service
-campus_soap_url_info#:#URL for querying examination and participant data from mein campus via SOAP
 summer_term#:#Summer semester
 winter_term#:#Winter semester
 semester#:#Semester
 update_languages#:#Update languages
-load_campus_exams#:#Update from mein campus
-campus_exams_loaded#:#Data has been updated from mein campus
-campus_exams_not_loaded#:#Data has not been updated from mein campus.
+load_campus_exams#:#Update from campo
+campus_exams_loaded#:#Data has been updated from campo
+campus_exams_not_loaded#:#Data has not been updated from campo.
 generate_db_update#:#Generate update step
 exam_not_found#:#Examination not found for ID %s.
 notes#:#A problem occurred
@@ -208,8 +206,8 @@ record_run_minutes#:#Duration of examination
 record_run_minutes_info#:#Please indicate the exact duration of the examination per session in minutes. For remote examinations, please add a grace period of 20 minutes for upload and technical delays.
 record_num_participants#:#Number of participants
 record_num_participants_info#:#Please indicate the total number of participants. For load calculation, the system assumes that all sessions will have the same length.
-record_exam_ids#:#Examinations in mein campus
-record_exam_ids_info#:#Enter the Remote Examination ID (ID für Organisation elektronischer Prüfungen) from <em>mein campus</em> under ‘Prüfungsorganisation’. This information is used by the system to automatically query examination participant data from <em>mein campus</em> and generate the correct files for recording grades. <p><strong>Tip: Enter the last name of the examiner to receive examination data from mein campus for the current semester. Other IDs (for resit examinations) can be entered manually.</strong></p>
+record_exam_ids#:#Examinations in campo
+record_exam_ids_info#:#Enter the Remote Examination ID (ID für Organisation elektronischer Prüfungen) from <em>campo</em> under ‘Prüfungsorganisation’. This information is used by the system to automatically query examination participant data from <em>campo</em> and generate the correct files for recording grades. <p><strong>Tip: Enter the last name of the examiner to receive examination data from campo for the current semester. Other IDs (for resit examinations) can be entered manually.</strong></p>
 record_admins#:#Examiner accounts
 record_admins_info#:#Select the StudOn accounts of the examiners here. You can edit this record and you have full access to all contents of the examination course and can manage access permissions for other users. If you created this record, you automatically have access and do not have to add yourself.
 record_correctors#:#Grader accounts
@@ -280,7 +278,7 @@ message_type_reminder1_remote#:#First reminder for remote examination (one week 
 message_type_reminder2_presence#:#Second reminder for on-campus examination (three days in advance)
 message_type_reminder2_remote#:#Second reminder for remote examination (three days in advance)
 message_type_warning_zoom#:#Warning about errors in setting up Zoom
-message_type_warning_campus#:#Warning about missing mein campus ID
+message_type_warning_campus#:#Warning about missing campo ID
 message_type_warning_roles#:#Warning about missing graders, examiners
 message_type_warning_condition#:#Warning about conditions that are not fulfilled
 message_subject#:#Subject
@@ -295,8 +293,8 @@ message_active_info#:#Activates the message for automatic notifications.
 message_sent#:#Your message has been sent.
 message_not_sent#:#Your message could not be sent.
 send_test_message#:#Send a test message
-warning_campus#:#No examination has been selected from mein campus
-warning_roles#:#No grader accounts or examiner accounts have been selected from mein campus
+warning_campus#:#No examination has been selected from campo
+warning_roles#:#No grader accounts or examiner accounts have been selected from campo
 confirmation_sent#:#Your booking confirmation has been sent.
 without_confirmation#:#Not yet confirmed
 without_reminder1#:#First reminder has not yet been set

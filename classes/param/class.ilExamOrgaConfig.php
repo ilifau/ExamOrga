@@ -34,14 +34,6 @@ class ilExamOrgaConfig
             ''
         );
 
-        $params[] = ilExamOrgaParam::_create(
-            'campus_soap_url',
-            $this->plugin->txt('campus_soap_url'),
-            $this->plugin->txt('campus_soap_url_info'),
-            ilExamOrgaParam::TYPE_TEXT,
-            ''
-        );
-
         foreach ($params as $param)
         {
             $this->params[$param->name] = $param;

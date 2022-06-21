@@ -49,13 +49,8 @@ class ilExamOrgaCronHandler
      */
     public function updateExams()
     {
-        if (!empty($this->config->get('campus_soap_url'))) {
-            ilExamOrgaCampusExam::updateExams($this->plugin);
-            return true;
-        }
-        else {
-            return false;
-        }
+        ilExamOrgaCampusExam::updateExams($this->plugin);
+        return true;
     }
 
     /**

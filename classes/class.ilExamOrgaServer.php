@@ -3,7 +3,6 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Http\StatusCode;
 
-require_once('Services/Idm/classes/class.ilDBIdm.php');
 require_once(__DIR__ . '/param/class.ilExamOrgaData.php');
 require_once(__DIR__ . '/record/class.ilExamOrgaRecord.php');
 require_once(__DIR__ . '/notes/class.ilExamOrgaNote.php');
@@ -103,10 +102,7 @@ class ilExamOrgaServer extends Slim\App
         $this->lng = $DIC->language();
         $this->access = $DIC->access();
         $this->plugin = $this->getPlugin();
-
-
-        $this->idm = ilDBIdm::getInstance();
-
+        $this->idm = $DIC->fau()->staging()->database();
 
         parent::__construct($container);
     }

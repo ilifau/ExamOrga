@@ -105,7 +105,8 @@ class ilExamOrgaCampusExam extends ActiveRecord
      */
     public static function updateExams($plugin)
     {
-        $db = ilDBIdm::getInstance();
+        global $DIC;
+        $db = $DIC->fau()->staging()->database();
 
         $query = "
             SELECT e.*, i.fau_campo_person_id, i.sn AS nachname, i.given_name AS vorname

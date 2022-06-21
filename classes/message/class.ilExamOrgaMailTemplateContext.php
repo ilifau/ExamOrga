@@ -82,30 +82,24 @@ class ilExamOrgaMailTemplateContext extends ilMailTemplateContext
     public function resolveSpecificPlaceholder(string $placeholder_id, array $context_parameters, ilObjUser $recipient = null, bool $html_markup = false) : string
     {
         /** @var ilExamOrgaRecord $record */
-        if (isset($context_parameters['record'])) {
-            $record = $context_parameters['record'];
-        }
-        else {
-            $record = $this->getExampleRecord();
-        }
-
+        $record = $context_parameters['record'] ?? $this->getExampleRecord();
 
         switch ($placeholder_id) {
 
             case 'exam_title':
-                return $record->exam_title;
+                return (string) $record->exam_title;
 
             case 'exam_date':
                 $date = new ilDate($record->exam_date, IL_CAL_DATE);
                 ilDatePresentation::setUseRelativeDates(false);
-                return ilDatePresentation::formatDate($date);
+                return (string) ilDatePresentation::formatDate($date);
 
             case 'exam_link':
-                return $record->course_link;
+                return (string) $record->course_link;
 
             case 'record_link':
                 if (isset($context_parameters['ref_id'])) {
-                    return ilObjExamOrga::_getRecordLink($context_parameters['ref_id'], $record->getId());
+                    return (string) ilObjExamOrga::_getRecordLink($context_parameters['ref_id'], $record->getId());
                 }
         }
 

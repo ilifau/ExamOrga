@@ -22,7 +22,10 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getFormItem($record) {
+    public function getFormItem($record)
+    {
+        global $DIC;
+
         $item = new ilExamOrgaLoginsInputGUI($this->title, $this->getPostvar());
 
         $item->setRequired($this->required);
@@ -35,9 +38,6 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
         }
 
         if ($this->check_idm) {
-            require_once('Services/Idm/classes/class.ilIdmData.php');
-            $idmData = new ilIdmData();
-
             $missing = [];
             $logins = ilExamOrgaLoginsInputGUI::_getArray($this->getValue($record));
             foreach ($logins as $login) {
@@ -46,7 +46,7 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
                     $missing[] = $login;
                 }
                 $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
-                if (!$idmData->read($ext_account)) {
+                if (empty($DIC->fau()->staging()->repo()->getIdentity($ext_account))) {
                     $missing[] = $login;
                 }
             }

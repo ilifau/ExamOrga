@@ -69,14 +69,11 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
      */
     public function checkInput()
     {
+        global $DIC;
+
         // will do standard checks and prepare array for multi
         if (!parent::checkInput()) {
             return false;
-        }
-
-        if ($this->isIdmAccountRequired()) {
-            require_once('Services/Idm/classes/class.ilIdmData.php');
-            $idmData = new ilIdmData();
         }
 
         foreach ((array) $_POST[$this->getPostVar()] as $entry) {
@@ -89,7 +86,7 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
                 }
                 elseif ($this->isIdmAccountRequired()) {
                     $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
-                    if (!$idmData->read($ext_account)) {
+                    if (empty($DIC->fau()->staging()->repo()->getIdentity($ext_account))) {
                         $this->setAlert(sprintf(ilExamOrgaPlugin::getInstance()->txt('idm_account_not_found'), $login));
                         return false;
                     }

@@ -46,7 +46,7 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
                     $missing[] = $login;
                 }
                 $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
-                if (empty($DIC->fau()->staging()->repo()->getIdentity($ext_account))) {
+                if (empty($ext_account) || empty($DIC->fau()->staging()->repo()->getIdentity($ext_account))) {
                     $missing[] = $login;
                 }
             }

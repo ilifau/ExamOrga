@@ -1,59 +1,36 @@
 <?php
-chdir('../../../../../../../');
-include_once("./Services/Calendar/classes/class.ilCalendarRemoteAccessHandler.php");
 
 /**
  * Remote access handler for ExamOrgaCalendar 
  *
  * @author Christina Fuchs <christina.fuchs@ili.fau.de>
  */
-class ilExamOrgaCalendarRemoteAccessHandler extends ilCalendarRemoteAccessHandler
-{
+class ilExamOrgaCalendarRemoteAccessHandler{
+    /** @var string */
+    private $token;
+    /** @var string */
+    private $ref_id;    
+    /** @var string */
+    private $client;   
+
     /**
      * Handle Request
      * @return
      */
     public function handleRequest()
-    {
-        session_name('ILCALSESSID');
-        $this->initIlias();
-        $logger = $GLOBALS['DIC']->logger()->cal();
-        $this->initTokenHandler();
-
-        if (!$this->initUser()) {
-            $logger->warning('Calendar token is invalid. Authentication failed.');
+    {    
+        $this->client = $_GET["client_id"]; // TODO: wird der Client benötigt?
+        $this->ref_id = $_GET["ref_id"];
+        $this->token = $_GET["token"];
+        $object = new ilObjExamOrga($this->ref_id);
+        if ($this->token != $object->plugin->getConfig()->get('calendar_api_token')) 
+        {
             return false;
         }
 
-        if ($this->getTokenHandler()->getIcal() and !$this->getTokenHandler()->isIcalExpired()) {
-            $GLOBALS['DIC']['ilAuthSession']->logout();
-            ilUtil::deliverData($this->getTokenHandler(), 'calendar.ics', 'text/calendar', 'utf-8');
-            exit;
-        }
-
-        include_once './Services/Calendar/classes/Export/class.ilCalendarExport.php';
-        include_once './Services/Calendar/classes/class.ilCalendarCategories.php';
-        /*       if ($this->getTokenHandler()->getSelectionType() == ilCalendarAuthenticationToken::SELECTION_CALENDAR) {
-            #$export = new ilCalendarExport(array($this->getTokenHandler()->getCalendar()));
-            $cats = ilCalendarCategories::_getInstance();
-            $cats->initialize(ilCalendarCategories::MODE_REMOTE_SELECTED, $this->getTokenHandler()->getCalendar());
-            $export = new ilCalendarExport($cats->getCategories(true));
-        } else {
-            $cats = ilCalendarCategories::_getInstance();
-            $cats->initialize(ilCalendarCategories::MODE_REMOTE_ACCESS);
-            $export = new ilCalendarExport($cats->getCategories(true));
-        }
- */
-
         require_once(__DIR__ . '/record/class.ilExamOrgaRecordCalendar.php');
         $export = new ilExamOrgaRecordCalendar();
-        $object = new ilObjExamOrga(145); // TODO - get ref_id of Exam Orga Object
         $export->exportToIcs($object);
-
-        $this->getTokenHandler()->setIcal($export->getExportString());
-        $this->getTokenHandler()->storeIcal();
-
-        $GLOBALS['DIC']['ilAuthSession']->logout();
 
         ilUtil::deliverData($export->getExportString(), 'calendar.ics', 'text/calendar', 'utf-8');
         exit;

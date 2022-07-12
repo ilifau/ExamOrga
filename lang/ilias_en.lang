@@ -300,3 +300,5 @@ without_confirmation#:#Not yet confirmed
 without_reminder1#:#First reminder has not yet been set
 without_reminder2#:#Second reminder has not yet been set
 x_records_checked#:#%s Entries have been checked
+calendar_api_token#:#Calendar API Token
+calendar_api_token_info#:#Token for calling the calendar API

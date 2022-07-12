@@ -1,11 +1,12 @@
 <?php
 
 require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
+include_once './Services/Calendar/classes/iCal/class.ilICalWriter.php';
 
 /**
  * Class ilExamOrgaRecordCalendar
  */
-class ilExamOrgaRecordCalendar extends ilCalendarExport
+class ilExamOrgaRecordCalendar
 {
     /** @var ilObjExamOrga */
     protected $object;
@@ -21,6 +22,9 @@ class ilExamOrgaRecordCalendar extends ilCalendarExport
 
     /** @var string */
     protected $error;
+
+    /** @var ilICalWriter */
+    protected $writer;
     
     /**
      * Initialize the data
@@ -30,6 +34,7 @@ class ilExamOrgaRecordCalendar extends ilCalendarExport
     {
         $this->object = $object;
         $this->plugin = $object->plugin;
+        $this->writer = new ilICalWriter();
 
         $fields = $object->getAvailableFields();
 
@@ -56,9 +61,9 @@ class ilExamOrgaRecordCalendar extends ilCalendarExport
         $recordList->where(['obj_id' => $this->object->getId()]);
 
         // limit to owned records
-        if (!$this->object->canViewAllRecords()) {
+    /*    if (!$this->object->canViewAllRecords()) {
             $recordList->where(['owner_id' => $DIC->user()->getId()]);
-        }
+        }*/
 
         $recordList->orderBy('id');
         $this->records = $recordList->get();
@@ -83,7 +88,7 @@ class ilExamOrgaRecordCalendar extends ilCalendarExport
         $this->writer->addLine('VERSION:2.0');
         $this->writer->addLine('METHOD:PUBLISH');
         $this->writer->addLine('PRODID:-//ilias.de/NONSGML ILIAS Calendar V4.4//EN');
-        $this->addTimezone();
+      //  $this->addTimezone(); TODO
         
         $i = 0;
         foreach($records as $record)
@@ -91,9 +96,9 @@ class ilExamOrgaRecordCalendar extends ilCalendarExport
             // calculate start and end time; TODO: implement more than 1 runs
             $start = new DateTime($record->exam_date);
             $runStart = explode(':', $record->exam_runs);
-            $start->modify('+'.$runStart[0]*60+$runStart[1].' minutes');
+            $start->modify('+'.($runStart[0]*60+$runStart[1]).' minutes');
             $end = new DateTime($record->exam_date);
-            $end->modify('+'.$runStart[0]*60+$runStart[1]+$record->run_minutes.' minutes'); 
+            $end->modify('+'.($runStart[0]*60+$runStart[1]+$record->run_minutes).' minutes'); 
             $examStart =  $start->format('Ymd\THis');
             $examEnd =  $end->format('Ymd\THis');
             $now = new DateTime();
@@ -111,11 +116,16 @@ class ilExamOrgaRecordCalendar extends ilCalendarExport
             $this->writer->addLine('DTEND;Europe/Berlin:'.$examEnd);
             $this->writer->addLine('DTSTAMP;;Europe/Berlin:'.$updatedTime);
             $this->writer->addLine('CATEGORIES:Gelbe Kategorie');
-            $this->writer->addLine('DESCRIPTION:Dozierender: Max Mustermann2\nE-Mail: Max.Mustermann@fautest.de\nHiwis & Azubis:\nTeilnehmende: 10\nSelbstregistrieungscode: fgRtz%69\nLink: https://studontest.fautest.de');
+            $this->writer->addLine('DESCRIPTION:Dozierender: Max Mustermann3\nE-Mail: Max.Mustermann@fautest.de\nHiwis & Azubis:\nTeilnehmende: 10\nSelbstregistrieungscode: fgRtz%69\nLink: https://studontest.fautest.de');
             $this->writer->addLine('END:VEVENT');
             $i++;
         }
 
         $this->writer->addLine('END:VCALENDAR');
+    }
+
+    public function getExportString()
+    {
+        return $this->writer->__toString();
     }
 }

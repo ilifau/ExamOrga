@@ -34,6 +34,14 @@ class ilExamOrgaConfig
             ''
         );
 
+        $params[] = ilExamOrgaParam::_create(
+            'calendar_api_token',
+            $this->plugin->txt('calendar_api_token'),
+            $this->plugin->txt('calendar_api_token_info'),
+            ilExamOrgaParam::TYPE_TEXT,
+            ''
+        );
+
         foreach ($params as $param)
         {
             $this->params[$param->name] = $param;

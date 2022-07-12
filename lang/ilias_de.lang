@@ -301,3 +301,5 @@ without_confirmation#:#Noch ohne Bestätigung
 without_reminder1#:#Noch ohne erste Erinnerung
 without_reminder2#:#Noch ohne zweite Erinnerung
 x_records_checked#:#%s Einträge überprüft
+calendar_api_token#:#Kalender API Token
+calendar_api_token_info#:#Token zum Aufruf der Kalender-API

@@ -9,14 +9,23 @@ class ilExamOrgaExamsField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getListHTML($record) {
-        return parent::getListHTML($record);
+
+        $labels = [];
+        foreach ((array) explode(', ', $this->getValue($record)) as $porgnr) {
+            if (!empty($porgnr)) {
+                /** @var ilExamOrgaCampusExam $exam */
+                $exam = ilExamOrgaCampusExam::findOrGetInstance($porgnr);
+                $labels[] = $exam->getLabel();
+            }
+        }
+        return implode('<br />', array_unique($labels));
     }
 
     /**
      * @inheritdoc
      */
     public function getDetailsHTML($record) {
-        return parent::getDetailsHTML($record);
+        return $this->getListHTML($record);
     }
 
     /**

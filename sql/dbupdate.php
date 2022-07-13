@@ -764,3 +764,12 @@ if (! $ilDB->tableExists('xamo_message_sent')) {
     }
 }
 ?>
+<#16>
+<?php
+if (!$ilDB->indexExistsByFields('xamo_campus', ['titel'])) {
+    $ilDB->addIndex('xamo_campus', ['titel'], 'i5');
+}
+if (!$ilDB->indexExistsByFields('xamo_campus', ['veranstaltung'])) {
+    $ilDB->addIndex('xamo_campus', ['veranstaltung'], 'i6');
+}
+?>

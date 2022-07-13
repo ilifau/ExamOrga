@@ -207,7 +207,7 @@ record_run_minutes_info#:#Please indicate the exact duration of the examination 
 record_num_participants#:#Number of participants
 record_num_participants_info#:#Please indicate the total number of participants. For load calculation, the system assumes that all sessions will have the same length.
 record_exam_ids#:#Examinations in campo
-record_exam_ids_info#:#Enter the Remote Examination ID (ID für Organisation elektronischer Prüfungen) from <em>campo</em> under ‘Prüfungsorganisation’. This information is used by the system to automatically query examination participant data from <em>campo</em> and generate the correct files for recording grades. <p><strong>Tip: Enter the last name of the examiner to receive examination data from campo for the current semester. Other IDs (for resit examinations) can be entered manually.</strong></p>
+record_exam_ids_info#:#Select the exam entries in Campo here. This will allow us to automatically query the exam takers and create the correct files for publishing the results. <p><strong>Enter the examiner's last name or the title of the exam/event to get a list.</strong></p>
 record_admins#:#Examiner accounts
 record_admins_info#:#Select the StudOn accounts of the examiners here. You can edit this record and you have full access to all contents of the examination course and can manage access permissions for other users. If you created this record, you automatically have access and do not have to add yourself.
 record_correctors#:#Grader accounts
@@ -300,3 +300,4 @@ without_confirmation#:#Not yet confirmed
 without_reminder1#:#First reminder has not yet been set
 without_reminder2#:#Second reminder has not yet been set
 x_records_checked#:#%s Entries have been checked
+exam_date_number#:#Number

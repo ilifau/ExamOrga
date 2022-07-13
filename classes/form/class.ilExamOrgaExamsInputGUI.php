@@ -26,6 +26,7 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
     {
         parent::__construct($a_title, $a_postvar);
         $this->setMulti(true);
+        $this->setInlineStyle('width: 90%;');
     }
 
     /**
@@ -79,21 +80,25 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
 
         require_once (__DIR__ . '/../campus/class.ilExamOrgaCampusExam.php');
         $exams = ilExamOrgaCampusExam::getCollection()
-            ->where(['nachname' => $term . '%'] ,'LIKE')
-            ->limit(0, $fetchall ? 1000 : 10);
+            ->where(
+                '(nachname LIKE ' . $db->quote($term . '%', 'text')
+                . ' OR titel LIKE ' . $db->quote($term . '%', 'text')
+                . ' OR veranstaltung LIKE ' . $db->quote($term . '%', 'text')
+                . ')'
+            );
 
         if (!empty($semester)) {
-            $exams->where($db->in('psem', ilExamOrgaCampusExam::getNearSemesters($semester), false, 'text'))
-                  ->orderBy('pnr')
-                ->orderBy('psem');
+            $exams->where($db->in('psem', ilExamOrgaCampusExam::getNearSemesters($semester), false, 'text'));
         }
+
+        $exams->orderBy('nachname, titel, veranstaltung, psem, ptermin')->limit(0, $fetchall ? 1000 : 10);
 
         $items = [];
 
         /** @var  ilExamOrgaCampusExam $exam */
         foreach($exams->get() as $exam) {
             $items[] = [
-                'value'=> $exam->porgnr,
+                'value'=> $exam->getLabel(),
                 'label' => $exam->getLabel(),
                 'id' => 'porgnr_' . $exam->porgnr
             ];
@@ -149,7 +154,9 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
         $exams = [];
         foreach (explode(',', (string) $value) as $exam) {
             if (!empty(trim($exam))) {
-                $exams[] = trim($exam);
+                /** @var ilExamOrgaCampusExam $examRecord */
+                $examRecord = ilExamOrgaCampusExam::findOrGetInstance($exam);
+                $exams[] = $examRecord->getLabel();
             }
         }
         return $exams;
@@ -162,8 +169,12 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
      * @param $value
      * @return string
      */
-    public static function _getString($array)
+    public static function _getString($labels)
     {
-        return implode(', ', $array);
+        $keys = [];
+        foreach ((array) $labels as $label) {
+            $keys[] = ilExamOrgaCampusExam::getKeyFromLabel($label);
+        }
+        return implode(', ', $keys);
     }
 }

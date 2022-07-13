@@ -163,7 +163,19 @@ class ilExamOrgaCampusExam extends ActiveRecord
                 break;
         }
 
-        return $this->porgnr . " - " . $this->nachname . ', ' . $this->vorname . ': ' . $this->titel . ' (PNR ' . $this->pnr . ', ' . $semester .  ')';
+        return $this->porgnr . ' - '
+            . (empty($this->nachname) ? '' : $this->nachname . ', ' . $this->vorname .  ': ')
+            . $this->titel . ' ( ' . $semester . ', Termin ' . $this->ptermin. ')'
+            . (empty($this->veranstaltung) ? '' : ': ' . $this->veranstaltung);
+    }
+
+    /**
+     * Extract the key (porgnr) from a generated label
+     */
+    public static function getKeyFromLabel($label)
+    {
+        $dashpos = strpos($label, ' - ');
+        return (int) substr($label, 0, $dashpos);
     }
 
     /**

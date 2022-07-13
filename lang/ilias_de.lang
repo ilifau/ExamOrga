@@ -208,7 +208,7 @@ record_run_minutes_info#:#Bitte geben Sie die reine Prüfungsdauer pro Durchgang
 record_num_participants#:#Teilnehmer/innen-Zahl
 record_num_participants_info#:#Bitte geben Sie die Gesamtzahl der Teilnehmer/innen an. Zur Lastberechnung nimmt das System eine Gleichverteilung auf die Durchgänge an.
 record_exam_ids#:#Prüfungen in campo
-record_exam_ids_info#:#Geben Sie hier die "ID für Organisation elektronischer Prüfungen" die Ihnen in <em>campo</em> im Bereich "Prüfungsorganisation" angezeigt wird an. Mit diese Angabe können wir die Prüfungs-Teilnehmer/innen automatisch aus <em>campo</em> abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Tipp: Geben Sie den Nachnamen des Prüfers/der Prüferin ein, um Prüfungen aus dem Semester dieses Anmeldesystems zu erhalten. Andere IDs (z.B. bei Nachholklausuren) können Sie von Hand eingeben.</strong></p>
+record_exam_ids_info#:#Wählen Sie hier die Prüfungseinträge in Campo aus. Damit können wir die Prüfungs-Teilnehmer/innen automatisch abfragen und die richtigen Dateien zur Ergebnisverbuchung generieren. <p><strong>Geben Sie den Nachnamen des Prüfers/der Prüferin oder den Titel der Prüfung/Veranstaltung ein, um eine Liste zu erhalten.</strong></p>
 record_admins#:#Prüfer/innen-Accounts
 record_admins_info#:#Wählen Sie hier die StudOn-Accounts der Prüfer/innen aus. Sie können diesen Eintrag bearbeiten, bekommen in der Prüfungsplattform Vollzugriff auf alle Inhalte des Prüfungs-Kurses und können die Zugriffe für andere Personen verwalten. Wenn Sie diesen Eintrag selbst erstellt haben, bekommen Sie automatisch Zugriff und müssen sich nicht extra hinzufügen.
 record_correctors#:#Korrektor/innen-Accounts
@@ -301,3 +301,4 @@ without_confirmation#:#Noch ohne Bestätigung
 without_reminder1#:#Noch ohne erste Erinnerung
 without_reminder2#:#Noch ohne zweite Erinnerung
 x_records_checked#:#%s Einträge überprüft
+exam_date_number#:#Termin

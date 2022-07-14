@@ -165,7 +165,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
 
         return $this->porgnr . ' - '
             . (empty($this->nachname) ? '' : $this->nachname . ', ' . $this->vorname .  ': ')
-            . $this->titel . ' ( ' . $semester . ', Termin ' . $this->ptermin. ')'
+            . $this->titel . ' ( ' . $this->pnr . ', '. $semester . ', Termin ' . $this->ptermin. ')'
             . (empty($this->veranstaltung) ? '' : ': ' . $this->veranstaltung);
     }
 

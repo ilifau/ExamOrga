@@ -91,7 +91,7 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
             $exams->where($db->in('psem', ilExamOrgaCampusExam::getNearSemesters($semester), false, 'text'));
         }
 
-        $exams->orderBy('nachname, titel, veranstaltung, psem, ptermin')->limit(0, $fetchall ? 1000 : 10);
+        $exams->orderBy('nachname, titel, psem, ptermin, veranstaltung')->limit(0, $fetchall ? 1000 : 10);
 
         $items = [];
 

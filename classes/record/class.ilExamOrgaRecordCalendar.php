@@ -1,8 +1,5 @@
 <?php
 
-require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
-include_once './Services/Calendar/classes/iCal/class.ilICalWriter.php';
-
 /**
  * Class ilExamOrgaRecordCalendar
  */
@@ -20,20 +17,14 @@ class ilExamOrgaRecordCalendar
     /** @var ilExamOrgaPlugin */
     protected $plugin;
 
-    /** @var ilExamOrgaField[] */
-    protected $fields;
-
     /** @var ilExamOrgaRecord[] */
     protected $records = [];
-
-    /** @var string */
-    protected $error;
 
     /** @var string */
     private $ical = '';
     
     /**
-     * Initialize the data
+     * Initialize object data
      * @param ilObjExamOrga $object
      */
     public function init( $object)
@@ -41,43 +32,20 @@ class ilExamOrgaRecordCalendar
         $this->object = $object;
         $this->plugin = $object->plugin;
         $this->ical = '';
-
-        $fields = $object->getAvailableFields();
-
-        // put id at the beginning
-        $this->fields['id'] = $fields['id'];
-        unset($fields['id']);
-
-        foreach ($fields as $field) {
-            if ($field->isForCalendar()) {
-               $this->fields[$field->name] = $field;
-            }
-       }
+        $this->initRecords();
     }
 
     /**
-     * Init the data of the exercise members
+     * Init exam records
      */
     protected function initRecords()
     {
-        global $DIC;
-
         /** @var ilExamOrgaRecord $record */
         $recordList = ilExamOrgaRecord::getCollection();
         $recordList->where(['obj_id' => $this->object->getId()]);
 
-        // limit to owned records
-    /*    if (!$this->object->canViewAllRecords()) {
-            $recordList->where(['owner_id' => $DIC->user()->getId()]);
-        }*/
-
         $recordList->orderBy('id');
         $this->records = $recordList->get();
-
-        // preload field data
-        foreach ($this->fields as $field) {
-            $field->preload($this->records);
-        }
     }
 
     /**
@@ -85,49 +53,65 @@ class ilExamOrgaRecordCalendar
      * @param ilObjExamOrga $object
      */
     public function exportToIcs($object) {
-        $this->init($object);
-        $this->initRecords();
-        $fields = $this->fields;
-        $records = $this->records;
+        try{
+                $this->init($object);
+                $records = $this->records;
 
-        $this->addLine('BEGIN:VCALENDAR');
-        $this->addLine('VERSION:2.0');
-        $this->addLine('METHOD:PUBLISH');
-        $this->addLine('PRODID:-//ilias.de/NONSGML ILIAS Calendar V4.4//EN');
-      //  $this->addTimezone(); TODO
-        
-        $i = 0;
-        foreach($records as $record)
-        {
-            // calculate start and end time; TODO: implement more than 1 runs
-            $start = new DateTime($record->exam_date);
-            $runStart = explode(':', $record->exam_runs);
-            $start->modify('+'.($runStart[0]*60+$runStart[1]).' minutes');
-            $end = new DateTime($record->exam_date);
-            $end->modify('+'.($runStart[0]*60+$runStart[1]+$record->run_minutes).' minutes'); 
-            $examStart =  $start->format('Ymd\THis');
-            $examEnd =  $end->format('Ymd\THis');
-            $now = new DateTime();
-            $updatedTime = $now->format('Ymd\THis');
+                $this->addLine('BEGIN:VCALENDAR');
+                $this->addLine('VERSION:2.0');
+                $this->addLine('METHOD:PUBLISH');
+                $this->addLine('PRODID:-//ilias.de/NONSGML ILIAS Calendar V4.4//EN');
+                //  $this->addTimezone(); TODO
+            
+                foreach($records as $record)
+                {
+                    try
+                    {
+                        // calculate start and end time; TODO: implement more than 1 runs
+                        $start = new DateTime($record->exam_date);
+                        $end = new DateTime($record->exam_date);
+                        if(!isset($record->exam_runs)||empty($record->exam_runs)) 
+                            throw new ExamCalendarException();
+                        $runStart = explode(',', $record->exam_runs);
+                        if(sizeof($runStart) != 1) 
+                            throw new ExamCalendarException();
+                        else $runStart = explode(':', $record->exam_runs);
 
-            // TODO: calculate category 
+                        $start->modify('+'.($runStart[0]*60+$runStart[1]).' minutes');
+                        $end->modify('+'.($runStart[0]*60+$runStart[1]+$record->run_minutes).' minutes'); 
+                        $examStart =  $start->format('Ymd\THis');
+                        $examEnd =  $end->format('Ymd\THis');
+                        $now = new DateTime();
+                        $updatedTime = $now->format('Ymd\THis');
+                    }catch(ExamCalendarException $e){
+                        // daily event if runs not correct
+                        $examStart =  $start->format('Ymd\THis');
+                        $start->modify("+24 hours");
+                        $examEnd =  $start->format('Ymd\THis');
+                    }
+                    $now = new DateTime();
+                    $updatedTime = $now->format('Ymd\THis');
+                    // TODO: implement category 
+                    // TODO: implement description
+                   
+                    $this->addLine('BEGIN:VEVENT');
+                    $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
+                    $this->addLine('UID:studon-'.$record->obj_id);
+                    $this->addLine('SEQUENCE:0'); // TODO: implement more than 1 runs
+                    $this->addLine('LOCATION:'.$record->room);
+                    $this->addLine('DTSTART;Europe/Berlin:'.$examStart);
+                    $this->addLine('DTEND;Europe/Berlin:'.$examEnd);
+                    $this->addLine('DTSTAMP;Europe/Berlin:'.$updatedTime);
+                    $this->addLine('CATEGORIES:Gelbe Kategorie');
+                    $this->addLine('DESCRIPTION:Dozierender: Max Mustermann2\nE-Mail: Max.Mustermann@fautest.de\nHiwis & Azubis:\nTeilnehmende: 10\nSelbstregistrieungscode: fgRtz%69\nLink: https://studontest.fautest.de');
+                    $this->addLine('END:VEVENT');
+            }
 
-            // example event; TODO: write records from Exam Orga
-            $this->addLine('BEGIN:VEVENT');
-            $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
-            $this->addLine('UID:studon-c7614cff-3549-4a00-9152-d25cc1fe077d'.$i); // TODO UID generieren
-            $this->addLine('SEQUENCE:0'); // TODO: implement more than 1 runs
-            $this->addLine('LOCATION:'.$record->room);
-            $this->addLine('DTSTART;Europe/Berlin:'.$examStart);
-            $this->addLine('DTEND;Europe/Berlin:'.$examEnd);
-            $this->addLine('DTSTAMP;;Europe/Berlin:'.$updatedTime);
-            $this->addLine('CATEGORIES:Gelbe Kategorie');
-            $this->addLine('DESCRIPTION:Dozierender: Max Mustermann3\nE-Mail: Max.Mustermann@fautest.de\nHiwis & Azubis:\nTeilnehmende: 10\nSelbstregistrieungscode: fgRtz%69\nLink: https://studontest.fautest.de');
-            $this->addLine('END:VEVENT');
-            $i++;
-        }
-
-        $this->addLine('END:VCALENDAR');
+            $this->addLine('END:VCALENDAR');
+    }catch(Exception $e)
+    {
+      echo $e->getMessage();  
+    }
     }
 
     public function getExportString()
@@ -185,3 +169,5 @@ class ilExamOrgaRecordCalendar
         $this->ical .= self::LINEBREAK;
     }
 }
+
+class ExamCalendarException extends Exception{}

@@ -9,23 +9,20 @@ class ilExamOrgaCalendarRemoteAccessHandler{
     /** @var string */
     private $token;
     /** @var string */
-    private $ref_id;    
-    /** @var string */
-    private $client;   
+    private $ref_id;  
 
     /**
-     * Handle Request
+     * Handle remote calendar request
      * @return
      */
     public function handleRequest()
     {    
-        $this->client = $_GET["client_id"]; // TODO: wird der Client benötigt?
         $this->ref_id = $_GET["ref_id"];
         $this->token = $_GET["token"];
         $object = new ilObjExamOrga($this->ref_id);
         if ($this->token != $object->plugin->getConfig()->get('calendar_api_token')) 
         {
-            return false;
+            throw new ExamCalendarException("Unknown API Token");
         }
 
         require_once(__DIR__ . '/record/class.ilExamOrgaRecordCalendar.php');

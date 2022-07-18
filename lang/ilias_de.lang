@@ -279,7 +279,7 @@ message_type_reminder1_remote#:#Erste Erinnerung Fern (eine Woche vorher)
 message_type_reminder2_presence#:#Zweite Erinnerung Präsenz (drei Tage vorher)
 message_type_reminder2_remote#:#Zweite Erinnerung Fern (drei Tage vorher)
 message_type_warning_zoom#:#Warnung zu Fehlern bei der Zoom-Einrichtung
-message_type_warning_campus#:#Warnung zu fehlender campo-ID
+message_type_warning_campus#:#Warnung zu fehlender Prüfungs-Auswahl
 message_type_warning_roles#:#Warnung zu fehlende Korrektor/innen, Prüfer/innen
 message_type_warning_condition#:#Warnung zu nicht erfüllten Bedingungen
 message_subject#:#Betreff

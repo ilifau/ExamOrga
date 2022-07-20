@@ -76,7 +76,7 @@ class ilExamOrgaRecordCalendar
     }
 
     /**
-     * Export to one event to ics file
+     * Export one event to ics file
      * @param ilObjExamOrgaRecord $object
      * @param int $sequence
      */
@@ -102,7 +102,7 @@ class ilExamOrgaRecordCalendar
                     break;
             }
 
-            // calculate start and end time; TODO: implement more than 1 runs
+            // calculate start and end time; 
             $start = new DateTime($record->exam_date);
             $end = new DateTime($record->exam_date);
             $numRuns = 1;
@@ -152,12 +152,11 @@ class ilExamOrgaRecordCalendar
                 }
                 $now = new DateTime();
                 $updatedTime = $now->format('Ymd\THis');
-                // TODO: implement description
             
                 $this->addLine('BEGIN:VEVENT');
                 $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
                 $this->addLine('UID:studon-'.$record->id.'seq'.$sequence);
-                $this->addLine('SEQUENCE:0'); // TODO: implement more than 1 runs
+                $this->addLine('SEQUENCE:0'); 
                 $this->addLine('LOCATION:'.$record->room);
                 $this->addLine('DTSTART;TZID="Europe/Berlin":'.$examStart);
                 $this->addLine('DTEND;TZID="Europe/Berlin":'.$examEnd);
@@ -239,9 +238,7 @@ class ilExamOrgaRecordCalendar
         $tzid_file = ilCalendarUtil::getZoneInfoFile('Europe/Berlin');
         $reader = fopen($tzid_file, 'r');
         while ($line = fgets($reader)) {
-            // fau: fixIcalLines - remove also carriage returns
             $line = str_replace("\r", '', $line);
-            // fau.
             $line = str_replace("\n", '', $line);
             $this->addLine($line);
         }

@@ -2,7 +2,7 @@
 chdir('../../../../../../../');
 
 //require_once('./Services/Context/classes/class.ilContext.php');
-//ilContext::init(ilContext::CONTEXT_RSS); // TODO: wird das benötigt
+//ilContext::init(ilContext::CONTEXT_SOAP_NO_AUTH);
 
 require_once("./Services/Init/classes/class.ilInitialisation.php");
 ilInitialisation::initILIAS();

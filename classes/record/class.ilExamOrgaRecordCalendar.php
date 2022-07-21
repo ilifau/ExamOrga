@@ -80,7 +80,7 @@ class ilExamOrgaRecordCalendar
      * @param ilObjExamOrgaRecord $object
      * @param int $sequence
      */
-    protected function exportEventToIcs($record, $sequence=0)
+    public function exportEventToIcs($record, $sequence=0)
     {
         try
         {
@@ -141,8 +141,6 @@ class ilExamOrgaRecordCalendar
                     $examEnd =  $end->format('Ymd\THis');
                     $now = new DateTime();
                     $updatedTime = $now->format('Ymd\THis');
-            
-                
                 }catch(ExamCalendarException $e){
                         // daily event if run not correct
                         $examStart =  $start->format('Ymd\THis');
@@ -152,7 +150,6 @@ class ilExamOrgaRecordCalendar
                 }
                 $now = new DateTime();
                 $updatedTime = $now->format('Ymd\THis');
-            
                 $this->addLine('BEGIN:VEVENT');
                 $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
                 $this->addLine('UID:studon-'.$record->id.'seq'.$sequence);
@@ -203,16 +200,15 @@ class ilExamOrgaRecordCalendar
     protected function addLine($a_line)
     {
         //$chunks = str_split($a_line, self::LINE_SIZE);
-
-        include_once './Services/Utilities/classes/class.ilStr.php';
-
+        //include_once './Services/Utilities/classes/class.ilStr.php';
+  
         // use multibyte split
         $chunks = array();
-        $len = ilStr::strLen($a_line);
+        $len = $this->strLen($a_line);
         while ($len) {
-            $chunks[] = ilStr::subStr($a_line, 0, self::LINE_SIZE);
-            $a_line = ilStr::subStr($a_line, self::LINE_SIZE, $len);
-            $len = ilStr::strLen($a_line);
+            $chunks[] = $this->subStr($a_line, 0, self::LINE_SIZE);
+            $a_line = $this->subStr($a_line, self::LINE_SIZE, $len);
+            $len = $this->strLen($a_line);
         }
 
         for ($i = 0; $i < count($chunks); $i++) {
@@ -244,6 +240,31 @@ class ilExamOrgaRecordCalendar
         }
     }
     
+    public static function strLen($a_string)
+    {
+        if (function_exists("mb_strlen")) {
+            return mb_strlen($a_string, "UTF-8");
+        } else {
+            return strlen($a_string);
+        }
+    }
+
+    public static function subStr($a_str, $a_start, $a_length = null)
+    {
+        if (function_exists("mb_substr")) {
+            // bug in PHP < 5.4.12: null is not supported as length (if encoding given)
+            // https://github.com/php/php-src/pull/133
+            if ($a_length === null) {
+                $a_length = mb_strlen($a_str, "UTF-8");
+            }
+            
+            return mb_substr($a_str, $a_start, $a_length, "UTF-8");
+        } else {
+            return substr($a_str, $a_start, $a_length);
+        }
+    }    
+
 }
+
 
 class ExamCalendarException extends Exception{}

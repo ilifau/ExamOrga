@@ -157,7 +157,7 @@ class ilExamOrgaRecordCalendar
                 $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
                 $this->addLine('UID:studon-'.$record->id.'seq'.$sequence);
                 $this->addLine('SEQUENCE:0'); 
-                $this->addLine('LOCATION:'.$record->room);
+                $this->addLine('LOCATION:'.preg_replace("/\r|\n/", " ", $record->room)); // location needs to be 1 line
                 $this->addLine('DTSTART;TZID="Europe/Berlin":'.$examStart);
                 $this->addLine('DTEND;TZID="Europe/Berlin":'.$examEnd);
                 $this->addLine('DTSTAMP;TZID="Europe/Berlin":'.$updatedTime);

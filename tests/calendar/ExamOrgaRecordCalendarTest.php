@@ -35,6 +35,7 @@ final class ExamOrgaRecordCalendarTest extends TestCase
         $correctICS = preg_replace('^DTSTAMP(.)*\\r\\n^', '', $correctICS);
         $actualICS = $eorCalendarObj->getExportString();
         $actualICS = preg_replace('^DTSTAMP(.)*\\r\\n^', '', $actualICS);
+        //var_dump($actualICS);
         $this->assertEquals($correctICS, $actualICS);  
     }
 }

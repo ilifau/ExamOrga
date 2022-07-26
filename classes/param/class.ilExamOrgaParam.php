@@ -18,6 +18,7 @@ class ilExamOrgaParam
 	const TYPE_REF_ID = 'ref_id';
 	const TYPE_ROLE = 'role';
     const TYPE_SELECT = 'select';
+    const TYPE_NONEDITABLE = 'noneditable';
 
 
 	/**
@@ -109,6 +110,9 @@ class ilExamOrgaParam
             case self::TYPE_SELECT:
                 $this->value = $value;
                 break;
+            case self::TYPE_NONEDITABLE:
+                $this->value = (string) $value;
+                break;
         }
     }
 
@@ -177,6 +181,10 @@ class ilExamOrgaParam
             case self::TYPE_SELECT:
                 $item = new ilSelectInputGUI($title, $postvar);
                 $item->setOptions($this->options);
+                $item->setValue($this->value);
+                break;
+            case self::TYPE_NONEDITABLE:
+                $item = new ilNonEditableValueGUI($title);
                 $item->setValue($this->value);
                 break;
         }

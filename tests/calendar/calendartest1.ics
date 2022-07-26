@@ -1,0 +1,14 @@
+BEGIN:VEVENT
+SUMMARY:Med / Klinische Einrichtungen-Kursus der Zahnerhaltung und Parodon
+ tologie II Klausur 2
+UID:studon-2645seq0
+SEQUENCE:0
+LOCATION:
+DTSTART;TZID="Europe/Berlin":20220701T072000
+DTEND;TZID="Europe/Berlin":20220701T075000
+DTSTAMP;TZID="Europe/Berlin":20220721T150050
+CATEGORIES:Open-Book-Prüfung mit Zeitbegrenzung
+DESCRIPTION:Dozierender: Prof. Dr. M. Pelka\nE-Mail: pelka@dent.uni-erlang
+ en.de\nHiwis & Azubis: \nTeilnehmende: 60\nSelbstregistrierungscode: X7wjv
+ g\nLink: https://www.studon-exam.fau.de/summer22/goto.php?target=crs_1108
+END:VEVENT

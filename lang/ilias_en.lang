@@ -300,4 +300,11 @@ without_confirmation#:#Not yet confirmed
 without_reminder1#:#First reminder has not yet been set
 without_reminder2#:#Second reminder has not yet been set
 x_records_checked#:#%s Entries have been checked
+<<<<<<< HEAD
 exam_date_number#:#Number
+=======
+calendar_api_token#:#Calendar API Token
+calendar_api_token_info#:#Token for calling the calendar API
+ics_export_url#:#ICS Export URL
+ics_export_url_info#:#Calling this URL generates an ics file from the exams of an Exam Orga object. You can import the ics file into a calendar tool (e.g. Outlook). Each exam is represented as an event in the calendar. 
+>>>>>>> origin/calendar

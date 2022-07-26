@@ -15,6 +15,7 @@ class ilExamOrgaData
     const PARAM_TESTDATA = 'testdata';
     const PARAM_USERS_PER_SESSION = 'users_per_session';
     const PARAM_INTRO = 'intro';
+    const PARAM_ICS = 'icsurl';
 
     const PURPOSE_WRITTEN = 'written';
     const PURPOSE_ORAL = 'oral';
@@ -81,6 +82,10 @@ class ilExamOrgaData
         // introduction
         $params[] = ilExamOrgaParam::_create(
             self::PARAM_INTRO, $this->plugin->txt('introduction'), $this->plugin->txt('introduction_info'), ilExamOrgaParam::TYPE_RICHTEXT, null
+        );
+        // ics export url
+        $params[] = ilExamOrgaParam::_create(
+            self::PARAM_ICS, $this->plugin->txt('ics_export_url'), $this->plugin->txt('ics_export_url_info'), ilExamOrgaParam::TYPE_NONEDITABLE, ILIAS_HTTP_PATH.'/Customizing/global/plugins/Services/Repository/RepositoryObject/ExamOrga/examcalendar.php?ref_id='.$_GET["ref_id"].'&token='.$this->plugin->getConfig()->get('calendar_api_token')
         );
 
 

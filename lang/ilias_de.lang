@@ -301,4 +301,11 @@ without_confirmation#:#Noch ohne Bestätigung
 without_reminder1#:#Noch ohne erste Erinnerung
 without_reminder2#:#Noch ohne zweite Erinnerung
 x_records_checked#:#%s Einträge überprüft
+<<<<<<< HEAD
 exam_date_number#:#Termin
+=======
+calendar_api_token#:#Kalender API Token
+calendar_api_token_info#:#Token zum Aufruf der Kalender-API
+ics_export_url#:#ICS Export URL
+ics_export_url_info#:#Der Aufruf dieser URL generiert eine ics-Datei aus den Prüfungen eines Exam Orga Objektes und ermöglicht somit, die Prüfungen als Termine in einen Kalender zu importieren.
+>>>>>>> origin/calendar

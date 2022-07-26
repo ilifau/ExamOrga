@@ -402,4 +402,12 @@ class ilExamOrgaField
     public function isForExcel() {
         return true;
     }
+    
+    /**
+     * Check if the field can be used in calendar export
+     * @return bool
+     */
+    public function isForCalendar() {
+        return true;
+    } 
 }

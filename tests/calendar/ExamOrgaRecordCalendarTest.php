@@ -18,15 +18,15 @@ final class ExamOrgaRecordCalendarTest extends TestCase
         $records[0]->exam_runs = "07:20";
         $records[0]->run_minutes = 30;
         $records[0]->fau_unit = "Med / Klinische Einrichtungen";
-        $records[0]->exam_title = "Kursus der Zahnerhaltung und Parodontologie II Klausur 2";
+        $records[0]->exam_title = "Kursus der XXX und YYY II Klausur 2";
         $records[0]->id = 2645;
         $records[0]->room = "";
-        $records[0]->fau_lecturer = "Prof. Dr. M. Pelka";
-        $records[0]->mail_address = "pelka@dent.uni-erlangen.de";
+        $records[0]->fau_lecturer = "Prof. Dr. M. ZZZ";
+        $records[0]->mail_address = "xxx@yyyy.yyy-yyyyyy";
         $records[0]->team_students = "";
         $records[0]->num_participants = 60;
-        $records[0]->reg_code = "X7wjvg";
-        $records[0]->course_link = "https://www.studon-exam.fau.de/summer22/goto.php?target=crs_1108";
+        $records[0]->reg_code = "yyyyy";
+        $records[0]->course_link = "https://test.fau.de/meinkurslink";
         
         $eorCalendarObj->exportEventToIcs($records[0]);
 

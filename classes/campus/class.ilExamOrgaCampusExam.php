@@ -165,7 +165,9 @@ class ilExamOrgaCampusExam extends ActiveRecord
 
         return $this->porgnr . ' - '
             . (empty($this->nachname) ? '' : $this->nachname . ', ' . $this->vorname .  ': ')
-            . $this->titel . ' ( ' . $this->pnr . ', '. $semester . ', Termin ' . $this->ptermin. ')'
+            . $this->titel . ' ( ' . $this->pnr . ', '. $semester . ', Termin ' . $this->ptermin
+            . (empty($this->pdatum) ? '' : ', ' . $this->pdatum)
+            . ')'
             . (empty($this->veranstaltung) ? '' : ': ' . $this->veranstaltung);
     }
 
@@ -190,12 +192,14 @@ class ilExamOrgaCampusExam extends ActiveRecord
 
         switch ($num) {
             case 1:
+                // current semester is summer
                 return [
                     ($year - 1) . '2',
                     $semester,
                     $year . '2'
                 ];
             case 2:
+                // current semester is winter
                 return [
                     $year . '1',
                     $semester,

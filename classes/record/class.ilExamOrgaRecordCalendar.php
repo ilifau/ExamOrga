@@ -150,6 +150,12 @@ class ilExamOrgaRecordCalendar
                 }
                 $now = new DateTime();
                 $updatedTime = $now->format('Ymd\THis');
+                // build record link. Record link looks like http://localhost/studon7/goto.php?target=xamo_145_430&client_id=myilias
+                $tmp = ilObjExamOrga::_getRecordLink($this->object->getRefId(), $record->getId());
+                $record_link = substr($tmp, strpos($tmp, "?"));
+                $path = substr(ILIAS_HTTP_PATH, 0, strpos(ILIAS_HTTP_PATH, "Customizing"));
+                $record_link = $path . "goto.php". $record_link;
+
                 $this->addLine('BEGIN:VEVENT');
                 $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
                 $this->addLine('UID:studon-'.$record->id.'seq'.$sequence);
@@ -159,7 +165,7 @@ class ilExamOrgaRecordCalendar
                 $this->addLine('DTEND;TZID="Europe/Berlin":'.$examEnd);
                 $this->addLine('DTSTAMP;TZID="Europe/Berlin":'.$updatedTime);
                 $this->addLine('CATEGORIES:'.$examCategory);
-                $this->addLine('DESCRIPTION:Dozierender: '.$record->fau_lecturer.'\nE-Mail: '.$record->mail_address.'\nHiwis & Azubis: '.$record->team_students.'\nTeilnehmende: '.$record->num_participants.'\nSelbstregistrierungscode: '.$record->reg_code.'\nLink: '.$record->course_link);
+                $this->addLine('DESCRIPTION:Dozierender: '.$record->fau_lecturer.'\nE-Mail: '.$record->mail_address.'\nHiwis & Azubis: '.$record->team_students.'\nTeilnehmende: '.$record->num_participants.'\nSelbstregistrierungscode: '.$record->reg_code.'\nLink: '.$record->course_link.'\nAnmeldung: '.$record_link);
                 $this->addLine('END:VEVENT');
             }
         }catch(Exception $e)

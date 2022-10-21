@@ -215,7 +215,9 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 		$description->setValue($this->object->getDescription());
 		$form->addItem($description);
 
-        // items will already have the param values
+        // set ics download url
+		$this->object->data->set(ilExamOrgaData::PARAM_ICS, ILIAS_HTTP_PATH.'/Customizing/global/plugins/Services/Repository/RepositoryObject/ExamOrga/examcalendar.php?ref_id='.$this->object->getRefId().'&token='.$this->plugin->getConfig()->get('calendar_api_token'));
+		// other items will already have the param values
 		$this->object->data->addFormItems($form);
 
 		$form->setFormAction($this->ctrl->getFormAction($this, "saveProperties"));

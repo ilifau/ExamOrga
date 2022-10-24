@@ -151,10 +151,9 @@ class ilExamOrgaRecordCalendar
                 $now = new DateTime();
                 $updatedTime = $now->format('Ymd\THis');
                 // build record link. Record link looks like http://localhost/studon7/goto.php?target=xamo_145_430&client_id=myilias
-                $tmp = ilObjExamOrga::_getRecordLink($this->object->getRefId(), $record->getId());
-                $record_link = substr($tmp, strpos($tmp, "?"));
-                $path = substr(ILIAS_HTTP_PATH, 0, strpos(ILIAS_HTTP_PATH, "Customizing"));
-                $record_link = $path . "goto.php". $record_link;
+                $record_link = ilObjExamOrga::_getRecordLink($this->object->getRefId(), $record->getId());
+                $tmp = "Customizing/global/plugins/Services/Repository/RepositoryObject/ExamOrga/";
+                $record_link = str_replace($tmp, '', $record_link);
 
                 $this->addLine('BEGIN:VEVENT');
                 $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);

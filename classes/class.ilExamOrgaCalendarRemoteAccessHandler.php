@@ -9,14 +9,34 @@ class ilExamOrgaCalendarRemoteAccessHandler{
     /** @var string */
     private $token;
     /** @var string */
-    private $ref_id;  
+    private $ref_id;
+
+    /**
+     * @see \ilCalendarRemoteAccessHandler::initIlias
+     */
+    protected function initIlias()
+    {
+        include_once "Services/Context/classes/class.ilContext.php";
+        ilContext::init(ilContext::CONTEXT_ICAL);
+
+        include_once './Services/Authentication/classes/class.ilAuthFactory.php';
+        ilAuthFactory::setContext(ilAuthFactory::CONTEXT_CALENDAR_TOKEN);
+
+        require_once("Services/Init/classes/class.ilInitialisation.php");
+        ilInitialisation::initILIAS();
+
+        $GLOBALS['DIC']['lng']->loadLanguageModule('dateplaner');
+    }
 
     /**
      * Handle remote calendar request
-     * @return
+     * @see \ilCalendarRemoteAccessHandler::handleRequest
      */
     public function handleRequest()
-    {    
+    {
+        session_name('ILCALSESSID');
+        $this->initIlias();
+
         $this->ref_id = $_GET["ref_id"];
         $this->token = $_GET["token"];
         $object = new ilObjExamOrga($this->ref_id);

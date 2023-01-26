@@ -161,7 +161,7 @@ class ilExamOrgaRecordCalendar
                 }
 
                 $this->addLine('BEGIN:VEVENT');
-                $this->addLine('SUMMARY:'.$record->fau_unit.'-'.$record->exam_title);
+                $this->addLine('SUMMARY:'.$record->fau_unit.' - '.$record->exam_title);
                 $this->addLine('UID:studon-'.$record->id.'seq'.$sequence);
                 $this->addLine('SEQUENCE:0'); 
                 $this->addLine('LOCATION:'.preg_replace("/\r|\n/", " ", $record->room)); // location needs to be 1 line

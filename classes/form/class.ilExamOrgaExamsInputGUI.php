@@ -100,7 +100,7 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
             $items[] = [
                 'value'=> $exam->getLabel(),
                 'label' => $exam->getLabel(),
-                'id' => 'porgnr_' . $exam->porgnr
+                'id' => 'xamo_campus_id_' . $exam->id
             ];
         }
 
@@ -130,10 +130,6 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
             }
 
             $exams = ilExamOrgaCampusExam::where(['porgnr' => (int) $value]);
-//            if (!empty($this->semester)) {
-//                $exams->where(['psem' => $this->semester]);
-//            }
-
             if (!$exams->hasSets()) {
                 $this->setAlert(sprintf(ilExamOrgaPlugin::getInstance()->txt('exam_not_found'), $value));
                 return false;
@@ -152,14 +148,14 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
     public static function _getArray($value)
     {
         $exams = [];
-        foreach (explode(',', (string) $value) as $exam) {
-            if (!empty(trim($exam))) {
+        foreach (explode(',', (string) $value) as $porgnr) {
+            if (!empty(trim($porgnr))) {
                 /** @var ilExamOrgaCampusExam $examRecord */
-                $examRecord = ilExamOrgaCampusExam::findOrGetInstance($exam);
+                foreach(ilExamOrgaCampusExam::where(['porgnr' => $porgnr])->get() as $examRecord)
                 $exams[] = $examRecord->getLabel();
             }
         }
-        return $exams;
+        return array_unique($exams);
     }
 
 
@@ -175,6 +171,6 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
         foreach ((array) $labels as $label) {
             $keys[] = ilExamOrgaCampusExam::getKeyFromLabel($label);
         }
-        return implode(', ', $keys);
+        return implode(', ', array_unique($keys));
     }
 }

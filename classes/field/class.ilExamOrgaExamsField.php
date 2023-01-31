@@ -11,11 +11,12 @@ class ilExamOrgaExamsField extends ilExamOrgaField
     public function getListHTML($record) {
 
         $labels = [];
-        foreach ((array) explode(', ', $this->getValue($record)) as $porgnr) {
+        foreach ((array) explode(',', $this->getValue($record)) as $porgnr) {
             if (!empty($porgnr)) {
                 /** @var ilExamOrgaCampusExam $exam */
-                $exam = ilExamOrgaCampusExam::findOrGetInstance($porgnr);
-                $labels[] = $exam->getLabel();
+                foreach(ilExamOrgaCampusExam::where(['porgnr' => trim($porgnr)])->get() as $exam) {
+                    $labels[] = $exam->getLabel();
+                }
             }
         }
         return implode('<br />', array_unique($labels));

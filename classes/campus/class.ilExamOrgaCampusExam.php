@@ -15,6 +15,18 @@ class ilExamOrgaCampusExam extends ActiveRecord
      * @var integer
      * @con_has_field        true
      * @con_is_primary       true
+     * @con_sequence         true
+     * @con_is_notnull       true
+     * @con_fieldtype        integer
+     * @con_length           4
+     */
+    public $id;
+
+
+    /**
+     * @var integer
+     * @con_has_field        true
+     * @con_is_primary       false
      * @con_sequence         false
      * @con_is_notnull       true
      * @con_fieldtype        integer
@@ -99,14 +111,18 @@ class ilExamOrgaCampusExam extends ActiveRecord
 
 
     /**
-     * Get the exam data
-     * @param ilExamOrgaPlugin
-     * @todo: multiple examiners are possible, currently the last is taken
+     * Update the exam data
      */
-    public static function updateExams($plugin)
+    public static function updateExams()
     {
         global $DIC;
         $db = $DIC->fau()->staging()->database();
+
+        $existing = [];
+        /** @var self $exam */
+        foreach (self::get() as $exam) {
+            $existing[$exam->getDataHash()] = $exam;
+        }
 
         $query = "
             SELECT e.*, i.fau_campo_person_id, i.sn AS nachname, i.given_name AS vorname
@@ -115,20 +131,11 @@ class ilExamOrgaCampusExam extends ActiveRecord
             LEFT JOIN identities i ON p.person_id = i.fau_campo_person_id
             ORDER BY porgnr            
             ";
-
-        $exams = [];
         $result = $db->query($query);
 
         while ($row = $db->fetchAssoc($result)) {
 
-            /**@var self $exam */
-            if (isset($exams[$row['porgnr']])) {
-                $exam = $exams[$row['porgnr']];
-            }
-            else {
-                $exam = ilExamOrgaCampusExam::findOrGetInstance($row['porgnr']);
-                $exams[$row['porgnr']] = $exam;
-            }
+            $exam = new self;
             $exam->porgnr = $row['porgnr'];
             $exam->pnr = $row['pnr'];
             $exam->psem = $row['psem'];
@@ -140,8 +147,37 @@ class ilExamOrgaCampusExam extends ActiveRecord
                 $exam->nachname = $row['nachname'];
                 $exam->vorname = $row['vorname'];
             }
-            $exam->save();
+            if (isset($existing[$exam->getDataHash()])) {
+                // existing record matches the data from campo
+                unset($existing[$exam->getDataHash()]);
+            }
+            else {
+                // save a non-existing record
+                $exam->save();
+            }
+
+            // delete the remaining existing records that no longer match with campo
+            foreach ($existing as $exam) {
+                $exam->delete();
+            }
         }
+    }
+
+    /**
+     * Get a hash over all data except the id
+     */
+    public function getDataHash() {
+        return md5(serialize([
+            $this->porgnr,
+            $this->pnr,
+            $this->psem,
+            $this->ptermin,
+            $this->pdatum,
+            $this->titel,
+            $this->veranstaltung,
+            $this->vorname,
+            $this->nachname
+        ]));
     }
 
     /**

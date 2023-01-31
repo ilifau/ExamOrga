@@ -49,7 +49,7 @@ class ilExamOrgaCronHandler
      */
     public function updateExams()
     {
-        ilExamOrgaCampusExam::updateExams($this->plugin);
+        ilExamOrgaCampusExam::updateExams();
         return true;
     }
 

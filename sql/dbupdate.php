@@ -773,3 +773,29 @@ if (!$ilDB->indexExistsByFields('xamo_campus', ['veranstaltung'])) {
     $ilDB->addIndex('xamo_campus', ['veranstaltung'], 'i6');
 }
 ?>
+<#17>
+<?php
+    if ($ilDB->sequenceExists('xamo_campus')) {
+        $ilDB->dropSequence('xamo_campus');
+    }
+    $ilDB->createSequence('xamo_campus');
+
+    $ilDB->manipulate('ALTER TABLE xamo_campus ADD COLUMN id INT(11) NOT NULL AFTER porgnr');
+    $ilDB->manipulate('ALTER TABLE xamo_campus ADD COLUMN porgnr2 INT(11) NOT NULL AFTER id');
+    $ilDB->manipulate('UPDATE xamo_campus SET porgnr2 = porgnr' );
+
+    $query = "SELECT porgnr FROM xamo_campus";
+    $result = $ilDB->query($query);
+    while ($row = $ilDB->fetchAssoc($result)) {
+        $id = $ilDB->nextId('xamo_campus');
+        $manip = "UPDATE xamo_campus set id = " . $ilDB->quote($id, 'integer')
+            . " WHERE porgnr = " . $ilDB->quote($row['porgnr'], 'integer');
+        $ilDB->manipulate($manip);
+    }
+
+    $ilDB->dropTableColumn('xamo_campus', 'porgnr');
+    $ilDB->renameTableColumn('xamo_campus', 'porgnr2', 'porgnr');
+
+    $ilDB->addPrimaryKey('xamo_campus', ['id']);
+    $ilDB->addIndex('xamo_campus', ['porgnr'], 'i7');
+?>

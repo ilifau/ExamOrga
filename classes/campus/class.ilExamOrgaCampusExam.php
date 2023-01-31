@@ -155,11 +155,11 @@ class ilExamOrgaCampusExam extends ActiveRecord
                 // save a non-existing record
                 $exam->save();
             }
+        }
 
-            // delete the remaining existing records that no longer match with campo
-            foreach ($existing as $exam) {
-                $exam->delete();
-            }
+        // delete the remaining existing records that no longer match with campo
+        foreach ($existing as $exam) {
+            $exam->delete();
         }
     }
 

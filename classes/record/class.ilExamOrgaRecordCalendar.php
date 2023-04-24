@@ -91,6 +91,9 @@ class ilExamOrgaRecordCalendar
                 case "presence":
                     $examCategory = "E-Prüfung in Präsenz";
                     break;
+                case "presence_self":
+                    $examCategory = "E-Prüfung in Präsenz (selbstorganisiert)";
+                    break;
                 case "open":
                     $examCategory = "Open-Book-Prüfung mit Zeitbegrenzung";
                     break;

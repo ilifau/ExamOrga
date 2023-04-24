@@ -606,7 +606,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
      */
     public function isPresence()
     {
-        return ($this->exam_format == 'presence');
+        return ($this->exam_format == 'presence' || $this->exam_format == 'presence_self');
     }
 
 

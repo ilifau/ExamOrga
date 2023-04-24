@@ -170,6 +170,7 @@ condition_max_exams_per_week_info#:#Maximum number of examinations per week
 condition_max_exams_per_month#:#Per month
 condition_max_exams_per_month_info#:#Maximum number of examinations per month
 exam_formats_presence#:#On-campus electronic examination
+exam_formats_presence_self#:#On-campus electronic examination (self-organised)
 exam_formats_open#:#Open book examination with time limit
 exam_formats_monitored#:#Remote examination with video supervision
 exam_formats_oral#:#Oral examination via video conference

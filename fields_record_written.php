@@ -87,6 +87,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_RADIO,
       'options' => [
           'presence' => $plugin->txt('exam_formats_presence'),
+          'presence_self' => $plugin->txt('exam_formats_presence_self'),
           'open' => $plugin->txt('exam_formats_open'),
           'monitored' => $plugin->txt('exam_formats_monitored'),
       ],

@@ -171,6 +171,7 @@ condition_max_exams_per_week_info#:#Maximale Anzahl an Prüfungen pro Woche
 condition_max_exams_per_month#:#Pro Monat
 condition_max_exams_per_month_info#:#Maximale Anzahl an Prüfungen pro Monat
 exam_formats_presence#:#E-Prüfung in Präsenz
+exam_formats_presence_self#:#E-Prüfung in Präsenz (selbstorganisiert)
 exam_formats_open#:#Open-Book-Prüfung mit Zeitbegrenzung
 exam_formats_monitored#:#Fernklausur mit Videoaufsicht
 exam_formats_oral#:#Mündliche Prüfung per Videokonferenz

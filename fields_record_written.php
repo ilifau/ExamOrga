@@ -54,7 +54,8 @@ $fields = [
           'Tech / Informatik (INF)',
           'Tech / Maschinenbau (MB)',
           'Tech / Werkstoffwissenschaften (WW)',
-          'Zentrale / Sprachenzentrum'
+          'Zentrale / Sprachenzentrum',
+          'Zentrale / Profilzentrum Medizintechnik'
       ],
       'default' => true,
       'filter' => true,

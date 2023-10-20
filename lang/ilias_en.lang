@@ -173,6 +173,7 @@ exam_formats_presence#:#On-campus electronic examination
 exam_formats_presence_self#:#On-campus electronic examination (self-organised)
 exam_formats_open#:#Open book examination with time limit
 exam_formats_monitored#:#Remote examination with video supervision
+exam_formats_admission#:#Admission test
 exam_formats_oral#:#Oral examination via video conference
 exam_types_exam#:#Written examination
 exam_types_review#:#Inspection

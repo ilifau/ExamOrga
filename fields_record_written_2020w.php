@@ -88,6 +88,7 @@ $fields = [
           'presence' => $plugin->txt('exam_formats_presence'),
           'open' => $plugin->txt('exam_formats_open'),
           'monitored' => $plugin->txt('exam_formats_monitored'),
+          'admission' => $plugin->txt('exam_formats_admission'),
       ],
       'required' => true,
       'default' => true,

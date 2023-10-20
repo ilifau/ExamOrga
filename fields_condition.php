@@ -53,6 +53,7 @@ $fields = [
             'presence_self' => $plugin->txt('exam_formats_presence_self'),
             'open' => $plugin->txt('exam_formats_open'),
             'monitored' => $plugin->txt('exam_formats_monitored'),
+            'admission' => $plugin->txt('exam_formats_admission'),
         ],
         'default' => true
     ],

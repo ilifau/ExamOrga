@@ -10,8 +10,7 @@ require_once (__DIR__ . '/class.ilExamOrgaRecord.php');
  */
 class ilExamOrgaRecordExcel extends ilExcel
 {
-    /** @var string */
-    protected $format = self::FORMAT_XML;
+    protected string $format = self::FORMAT_XML;
 
     /** @var ilObjExamOrga */
     protected $object;
@@ -81,7 +80,7 @@ class ilExamOrgaRecordExcel extends ilExcel
      *
      * @return array
      */
-    public function getValidFormats() {
+    public function getValidFormats(): array {
         return array(self::FORMAT_XML, self::FORMAT_BIFF);
     }
 
@@ -108,7 +107,7 @@ class ilExamOrgaRecordExcel extends ilExcel
      * @param  $a_file
      * @return boolean
      */
-    public function writeToFile($a_file) {
+    public function writeToFile(string $a_file): void {
         try {
             $this->initRecords();
             $this->writeSheet();
@@ -116,11 +115,9 @@ class ilExamOrgaRecordExcel extends ilExcel
             /** @var  PhpOffice\PhpSpreadsheet\Writer\Xlsx  $writer */
             $writer = IOFactory::createWriter($this->workbook, $this->format);
             $writer->save($a_file);
-            return true;
         }
         catch (Exception $e) {
             $this->error = $e->getMessage();
-            return false;
         }
     }
 
@@ -153,7 +150,7 @@ class ilExamOrgaRecordExcel extends ilExcel
      * @param  $filename
      * @return bool
      */
-    public function loadFromFile($filename) {
+    public function loadFromFile(string $filename): void {
         $this->error = false;
         $this->records = [];
         try {
@@ -163,13 +160,10 @@ class ilExamOrgaRecordExcel extends ilExcel
                 foreach ($this->records as $record) {
                     $record->save();
                 }
-                return true;
             }
-            return false;
         }
         catch (Exception $e) {
             $this->error = $e->getMessage();
-            return false;
         }
     }
 

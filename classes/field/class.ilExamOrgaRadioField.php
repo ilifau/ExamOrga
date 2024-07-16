@@ -39,7 +39,7 @@ class ilExamOrgaRadioField extends ilExamOrgaField
         if (isset($this->info)) {
             $item->setInfo($this->info);
         }
-        $item->setValue($this->getValue($record));
+        $item->setValue((string) $this->getValue($record));
         return $item;
     }
 

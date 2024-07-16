@@ -21,7 +21,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
      * must correspond to the plugin subdirectory
      * @return string
      */
-    public function getPluginName()
+    public function getPluginName(): string
 	{
 		return "ExamOrga";
 	}
@@ -29,7 +29,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     /**
      * @inheritdoc
      */
-    public function getParentTypes()
+    public function getParentTypes(): array
     {
         return array("cat", "crs", "grp", "fold");
     }
@@ -37,7 +37,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     /**
      * @inheritdoc
      */
-    public function allowCopy()
+    public function allowCopy(): bool
     {
         return false;
     }
@@ -45,7 +45,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     /**
      * Uninstall custom data of this plugin
      */
-    protected function uninstallCustom()
+    protected function uninstallCustom(): void
     {
         global $DIC;
         $ilDB = $DIC->database();
@@ -59,16 +59,18 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
         $ilDB->dropTable('xamo_record');
     }
 
-    /**
-     * Get the plugin instance
-     * @return ilExamOrgaPlugin
-     */
-    public static function getInstance() {
-        if (!isset(self::$instance)) {
-            self::$instance = new self();
-        }
-        return self::$instance;
-    }
+	/**
+	 * Get the plugin instance
+	 */
+	public static function getInstance(): self {
+		global $DIC;
+
+		if (!isset(self::$instance)) {
+			self::$instance = new self($DIC->database(), $DIC["component.repository"], "xamo");
+		}
+		return self::$instance;
+	}
+
 
     /**
      * Get the data set for an object

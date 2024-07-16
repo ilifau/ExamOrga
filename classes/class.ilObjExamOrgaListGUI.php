@@ -20,7 +20,7 @@ class ilObjExamOrgaListGUI extends ilObjectPluginListGUI
 	/**
 	 * Get name of gui class handling the commands
 	 */
-	function getGuiClass()
+	function getGuiClass(): string
 	{
 		return "ilObjExamOrgaGUI";
 	}
@@ -28,7 +28,7 @@ class ilObjExamOrgaListGUI extends ilObjectPluginListGUI
 	/**
 	 * Get commands
 	 */
-	function initCommands()
+	function initCommands(): array
 	{
 		return array
 		(
@@ -52,7 +52,7 @@ class ilObjExamOrgaListGUI extends ilObjectPluginListGUI
 	 *                                "property" (string) => property name
 	 *                                "value" (string) => property value
 	 */
-	function getProperties()
+	function getProperties(): array
 	{
 		$props = array();
 

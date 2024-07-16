@@ -80,7 +80,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
      *
      * @return	boolean		Input ok, true/false
      */
-    public function checkInput()
+    public function checkInput(): bool
     {
         $_POST[$this->getPostVar()]["hh"] = ilUtil::stripSlashes($_POST[$this->getPostVar()]["hh"]);
         $_POST[$this->getPostVar()]["mm"] = ilUtil::stripSlashes($_POST[$this->getPostVar()]["mm"]);

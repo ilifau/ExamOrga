@@ -8,9 +8,6 @@ class ilObjExamOrga extends ilObjectPlugin
     /** @var ilAccess */
     public $access;
 
-    /** @var ilExamOrgaPlugin */
-    public $plugin;
-
     /**
      * Properties of the Object
      * @var ilExamOrgaData	$data;
@@ -67,7 +64,7 @@ class ilObjExamOrga extends ilObjectPlugin
     /**
 	 * Get type.
 	 */
-	final function initType()
+	final function initType(): void
 	{
 		$this->setType(ilExamOrgaPlugin::ID);
 	}
@@ -75,7 +72,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	/**
 	 * Create object
 	 */
-	protected function doCreate()
+	protected function doCreate(bool $clone_mode = false): void
 	{
         $this->data = $this->plugin->getData($this->getId());
 		$this->data->write();
@@ -84,7 +81,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	/**
 	 * Read data from db
 	 */
-    protected function doRead()
+    protected function doRead(): void
 	{
         $this->data = $this->plugin->getData($this->getId());
 	    $this->data->read();
@@ -94,7 +91,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	/**
 	 * Update data
 	 */
-    protected function doUpdate()
+    protected function doUpdate(): void
 	{
         $this->data->write();
 	}
@@ -102,7 +99,7 @@ class ilObjExamOrga extends ilObjectPlugin
 	/**
 	 * Delete data from db
 	 */
-    protected function doDelete()
+    protected function doDelete(): void
 	{
 		$this->data->delete();
 	}
@@ -113,7 +110,7 @@ class ilObjExamOrga extends ilObjectPlugin
      * @param int $a_target_id
      * @param int $a_copy_id
 	 */
-    protected function doCloneObject($new_obj, $a_target_id, $a_copy_id = null)
+    protected function doCloneObject(ilObject2 $new_obj, int $a_target_id, int|null $a_copy_id = null): void
 	{
 		$new_obj->data = clone $this->data;
 		$new_obj->data->setObjId($new_obj->getId());

@@ -30,7 +30,7 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
      *
      * @return bool|void
      */
-    public function checkInput()
+    public function checkInput(): bool
     {
         global $DIC;
 

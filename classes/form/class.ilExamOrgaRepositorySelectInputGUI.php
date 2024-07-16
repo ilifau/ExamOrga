@@ -11,11 +11,6 @@ require_once(__DIR__ . '/class.ilExamOrgaSelectionExplorerGUI.php');
 class ilExamOrgaRepositorySelectInputGUI extends ilExplorerSelectInputGUI
 {
     /**
-     * @var ilExamOrgaSelectionExplorerGUI
-     */
-    protected $explorer_gui;
-
-    /**
      * {@inheritdoc}
      */
     public function __construct($title, $a_postvar, $a_explorer_gui = null, $a_multi = false)
@@ -49,7 +44,7 @@ class ilExamOrgaRepositorySelectInputGUI extends ilExplorerSelectInputGUI
     /**
      * {@inheritdoc}
      */
-    public function getTitleForNodeId($a_id)
+    public function getTitleForNodeId($a_id): string
     {
         return ilObject::_lookupTitle(ilObject::_lookupObjId($a_id));
     }

@@ -33,7 +33,7 @@ class ilExamOrgaSelectionExplorerGUI extends ilRepositoryExplorerGUI
     /**
      * {@inheritdoc}
      */
-    protected function isNodeSelectable($a_node)
+    protected function isNodeSelectable($a_node): bool
     {
         if (!empty($this->selectableTypes))
         {
@@ -42,7 +42,7 @@ class ilExamOrgaSelectionExplorerGUI extends ilRepositoryExplorerGUI
         return true;
     }
 
-    public function getNodeHref($a_node)
+    public function getNodeHref($a_node): string
 	{
 		return '';
 	}

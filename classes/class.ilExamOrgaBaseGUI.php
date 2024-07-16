@@ -37,8 +37,8 @@ abstract class ilExamOrgaBaseGUI
 		global $DIC;
 
 		$this->parent = $a_parent_gui;
-		$this->object = $this->parent->object;
-		$this->plugin = $this->parent->plugin;
+		$this->object = $this->parent->getObject();
+		$this->plugin = $this->parent->getPlugin();
 		$this->ctrl = $DIC->ctrl();
 		$this->tabs = $DIC->tabs();
 		$this->toolbar = $DIC->toolbar();

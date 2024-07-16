@@ -5,6 +5,7 @@
  * ExamOrga configuration user interface class
  *
  * @ilCtrl_Calls: ilExamOrgaConfigGUI: ilPropertyFormGUI
+ * @ilCtrl_isCalledBy ilExamOrgaConfigGUI: ilObjComponentSettingsGUI
  *
  * @author Fred Neumann <fred.neumann@fau.de>
  */
@@ -35,7 +36,7 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 	 * Handles all commands, default is "configure"
      * @throws Exception
 	 */
-	public function performCommand($cmd)
+	public function performCommand(string $cmd): void
 	{
         global $DIC;
 
@@ -69,7 +70,6 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
                 {
                     case "configure":
                     case "saveBasicSettings":
-                    case "updateLanguages":
                     case "loadCampusExams":
                     case "generateDBUpdate":
                         $this->tabs->activateTab('basic');
@@ -85,11 +85,6 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
     protected function setToolbar()
     {
         $this->toolbar->setFormAction($this->ctrl->getFormAction($this));
-
-        $button = ilLinkButton::getInstance();
-        $button->setUrl($this->ctrl->getLinkTarget($this, 'updateLanguages'));
-        $button->setCaption($this->plugin->txt('update_languages'), false);
-        $this->toolbar->addButtonInstance($button);
 
         $button = ilLinkButton::getInstance();
         $button->setUrl($this->ctrl->getLinkTarget($this, 'loadCampusExams'));
@@ -113,15 +108,6 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 	}
 
     /**
-     * Update Languages
-     */
-    protected function updateLanguages()
-    {
-        $this->plugin->updateLanguages();
-        $this->ctrl->redirect($this, 'configure');
-    }
-
-    /**
      * Generate the db update steps for active record
      */
     protected function loadCampusExams()
@@ -129,10 +115,10 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
         require_once (__DIR__ . '/campus/class.ilExamOrgaCampusExam.php');
         try {
             ilExamOrgaCampusExam::updateExams();
-            ilUtil::sendSuccess($this->plugin->txt('campus_exams_loaded'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt('campus_exams_loaded'), true);
         }
         catch (Exception $e) {
-            ilUtil::sendFailure($e->getMessage(), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $e->getMessage(), true);
         }
         $this->ctrl->redirect($this, 'configure');
     }
@@ -175,6 +161,8 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
 	 */
 	protected function saveBasicSettings()
 	{
+        global $DIC;
+
 		$form = $this->initBasicConfigurationForm();
 		if ($form->checkInput())
 		{
@@ -184,7 +172,7 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
             }
             $this->config->write();
 
-			ilUtil::sendSuccess($this->lng->txt("settings_saved"), true);
+			$DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->lng->txt("settings_saved"), true);
 			$this->ctrl->redirect($this, 'configure');
 		}
 		else

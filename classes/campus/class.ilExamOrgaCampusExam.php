@@ -6,7 +6,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
      * @return string
      * @description Return the Name of your Database Table
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return 'xamo_campus';
     }
@@ -113,7 +113,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
     /**
      * Update the exam data
      */
-    public static function updateExams()
+    public static function updateExams(): void
     {
         global $DIC;
         $db = $DIC->fau()->staging()->database();
@@ -166,7 +166,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
     /**
      * Get a hash over all data except the id
      */
-    public function getDataHash() {
+    public function getDataHash(): string {
         return md5(serialize([
             $this->porgnr,
             $this->pnr,
@@ -184,7 +184,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
      * Get the label of the exam
      * @return string
      */
-    public function getLabel()
+    public function getLabel(): string
     {
         $semester = $this->psem;
         $year = (int)  substr($semester, 0, 4);
@@ -210,7 +210,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
     /**
      * Extract the key (porgnr) from a generated label
      */
-    public static function getKeyFromLabel($label)
+    public static function getKeyFromLabel($label): int
     {
         $dashpos = strpos($label, ' - ');
         return (int) substr($label, 0, $dashpos);
@@ -221,7 +221,7 @@ class ilExamOrgaCampusExam extends ActiveRecord
      * @param $semester
      * @return array
      */
-    public static function getNearSemesters($semester)
+    public static function getNearSemesters($semester): array
     {
         $year = (int)  substr($semester, 0, 4);
         $num = (int) substr($semester, 4, 1);

@@ -79,6 +79,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
      */
     protected function createCondition()
     {
+        global $DIC;
         $condition = new ilExamOrgaCondition();
         $condition->obj_id = $this->object->getId();
 
@@ -91,7 +92,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
             }
             $condition->create();
 
-            ilUtil::sendSuccess($this->plugin->txt("condition_created"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt("condition_created"), true);
             $this->ctrl->setParameter($this, 'id', $condition->id);
             $this->ctrl->redirect($this, "editCondition");
         }
@@ -118,6 +119,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
      */
     protected function updateCondition()
     {
+        global $DIC;
         $this->ctrl->saveParameter($this, 'id');
 
         /** @var ilExamOrgaCondition $condition */
@@ -132,7 +134,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
 
             $condition->update();
 
-            ilUtil::sendSuccess($this->plugin->txt("condition_updated"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt("condition_updated"), true);
             $this->ctrl->redirect($this, "editCondition");
         }
 
@@ -197,8 +199,9 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
      */
     protected function confirmDeleteConditions()
     {
+        global $DIC;
         if (empty($_POST['ids'])) {
-            ilUtil::sendFailure($this->lng->txt('select_at_least_one_object'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->lng->txt('select_at_least_one_object'), true);
             $this->ctrl->redirect($this,'listConditions');
         }
 
@@ -223,6 +226,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
      */
     protected function deleteConditions()
     {
+        global $DIC;
         /** @var ilExamOrgaCondition[] $conditions */
         $conditions = ilExamOrgaCondition::where(['id' => $_POST['ids']])->get();
 
@@ -230,7 +234,7 @@ class ilExamOrgaConditionGUI extends ilExamOrgaBaseGUI
             $condition->delete();
         }
 
-        ilUtil::sendSuccess($this->plugin->txt('conditions_deleted'), true);
+        $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt('conditions_deleted'), true);
         $this->ctrl->redirect($this, 'listConditions');
     }
 }

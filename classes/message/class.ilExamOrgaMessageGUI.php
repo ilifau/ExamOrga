@@ -79,6 +79,7 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
      */
     protected function updateMessage()
     {
+        global $DIC;
         $this->ctrl->saveParameter($this, 'type');
 
         /** @var ilExamOrgaMessage $message */
@@ -94,7 +95,7 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
             // create or update the message
             $message->save();
 
-            ilUtil::sendSuccess($this->plugin->txt("message_updated"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt("message_updated"), true);
             $this->ctrl->redirect($this, "editMessage");
         }
 
@@ -160,6 +161,7 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
      */
     protected function sendTestMessage()
     {
+        global $DIC;
         $this->ctrl->saveParameter($this, 'type');
 
         $context = new ilExamOrgaMailTemplateContext();
@@ -167,10 +169,10 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
 
         $messenger = new ilExamOrgaMessenger($this->object);
         if ($messenger->send($record, $_GET['type'], true, false)) {
-            ilUtil::sendSuccess($this->plugin->txt('message_sent'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt('message_sent'), true);
         } else
         {
-            ilUtil::sendFailure($this->plugin->txt('message_not_sent'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt('message_not_sent'), true);
         }
 
         $this->ctrl->redirect($this, "editMessage");

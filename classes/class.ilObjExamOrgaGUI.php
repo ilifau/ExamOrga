@@ -11,17 +11,11 @@ require_once(__DIR__ . "/record/class.ilExamOrgaRecord.php");
  */
 class ilObjExamOrgaGUI extends ilObjectPluginGUI
 {
-    /** @var ilObjExamOrga */
-	public $object;
-
-	/** @var ilExamOrgaPlugin */
-	public $plugin;
-
     /**
      * Extended to go to a specific record
      * @param $a_target
      */
-    public static function _goto($a_target)
+    public static function _goto(array $a_target): void
     {
         global $DIC;
 
@@ -58,7 +52,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	/**
 	 * Initialisation
 	 */
-	protected function afterConstructor()
+	protected function afterConstructor(): void
 	{
         // Description is not shown by ilObjectPluginGUI
         if (isset($this->object))
@@ -68,8 +62,8 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
             if (!$this->object->isOnline())
             {
                 array_push($alerts, array(
-                        'property' => $this->object->plugin->txt('status'),
-                        'value' => $this->object->plugin->txt('offline'))
+                        'property' => $this->getPlugin()->txt('status'),
+                        'value' => $this->getPlugin()->txt('offline'))
                 );
             }
             $this->tpl->setAlertProperties($alerts);
@@ -79,7 +73,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	/**
 	 * Get type.
 	 */
-	final function getType()
+	final function getType(): string
 	{
 		return ilExamOrgaPlugin::ID;
 	}
@@ -88,7 +82,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	/**
 	 * Handles all commands of this class, centralizes permission checks
 	 */
-	function performCommand($cmd)
+	function performCommand(string $cmd): void
 	{
         $next_class = $this->ctrl->getNextClass();
         if (!empty($next_class)) {
@@ -144,7 +138,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	/**
 	 * After object has been created -> jump to this command
 	 */
-	function getAfterCreationCmd()
+	function getAfterCreationCmd(): string
 	{
 		return "editProperties";
 	}
@@ -152,7 +146,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	/**
 	 * Get standard command
 	 */
-	function getStandardCmd()
+	function getStandardCmd(): string
 	{
 		return "showContent";
 	}
@@ -161,7 +155,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	/**
 	 * Set tabs
 	 */
-	function setTabs()
+	function setTabs(): void
 	{
 		// tab for the "show content" command
 		if ($this->access->checkAccess("read", "", $this->object->getRefId()))
@@ -231,6 +225,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 	 */
 	protected function saveProperties()
     {
+		global $DIC;
 		$form = $this->initPropertiesForm();
 		$form->setValuesByPost();
 		if ($form->checkInput()) {
@@ -240,7 +235,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
             $this->object->data->setByForm($form);
 			$this->object->update();
 
-			ilUtil::sendSuccess($this->lng->txt("settings_saved"), true);
+			$DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->lng->txt("settings_saved"), true);
 			$this->ctrl->redirect($this, "editProperties");
 		}
 		$this->tpl->setContent($form->getHTML());
@@ -266,6 +261,14 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 
 		return;
 	}
+
+    /**
+     * Get plugin object
+     */
+    public function getPlugin(): ilPlugin
+    {
+        return parent::getPlugin();
+    }	
 
 
 

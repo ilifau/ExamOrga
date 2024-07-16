@@ -6,12 +6,6 @@
  */
 class ilExamOrgaMessageTableGUI extends ilTable2GUI
 {
-    /** @var ilExamOrgaMessageGUI */
-    protected $parent_obj;
-
-    /** @var string $parent_cmd */
-    protected $parent_cmd;
-
     /** @var ilObjExamOrga */
     protected $object;
 
@@ -53,7 +47,7 @@ class ilExamOrgaMessageTableGUI extends ilTable2GUI
                 '',
                 false,
                 '',
-                $settings['tooltip']
+                $settings['tooltip'] ?? ""
             );
         }
 
@@ -112,7 +106,7 @@ class ilExamOrgaMessageTableGUI extends ilTable2GUI
      * @param string $a_field
 	 * @return boolean  numeric ordering; default is false
 	 */
-	function numericOrdering($a_field)
+	function numericOrdering(string $a_field): bool
 	{
 	    if (isset($this->fields[$a_field]) && $this->fields[$a_field]->type == ilExamOrgaField::TYPE_INTEGER) {
 	        return true;
@@ -124,7 +118,7 @@ class ilExamOrgaMessageTableGUI extends ilTable2GUI
 	 * fill row
 	 * @param array $data
 	 */
-	public function fillRow($data)
+	public function fillRow($data): void
 	{
         /** @var ilExamOrgaMessage $message */
 		$message = $data['message_object'];

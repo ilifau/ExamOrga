@@ -12,7 +12,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
      * @return string
      * @description Return the Name of your Database Table
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return 'xamo_record';
     }
@@ -471,7 +471,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
     /**
      * Set creation info and create record
      */
-    public function create()
+    public function create(): void
     {
         global $DIC;
 
@@ -499,7 +499,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
     /**
      * Set modification info and update record
      */
-    public function update()
+    public function update(): void
     {
         global $DIC;
 

@@ -6,12 +6,6 @@
  */
 class ilExamOrgaRecordTableGUI extends ilTable2GUI
 {
-    /** @var ilExamOrgaRecordGUI */
-    protected $parent_obj;
-
-    /** @var string $parent_cmd */
-    protected $parent_cmd;
-
     /** @var ilObjExamOrga */
     protected $object;
 
@@ -62,7 +56,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
                     '',
                     false,
                     '',
-                    $settings['tooltip']
+                    $settings['tooltip'] ?? ""
                 );
             }
         }
@@ -94,7 +88,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
     /**
      * Get selectable columns
      */
-    public function getSelectableColumns()
+    public function getSelectableColumns(): array
     {
         $columns = [];
         foreach($this->fields as $name => $field) {
@@ -113,7 +107,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
     /**
      * Initialize the filter controls
      */
-    public function initFilter()
+    public function initFilter(): void
     {
         // needed for filter reset with select fields
         $this->filters = [];
@@ -194,7 +188,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
      * @param string $a_field
 	 * @return boolean  numeric ordering; default is false
 	 */
-	function numericOrdering($a_field)
+	function numericOrdering(string $a_field): bool
 	{
 	    if (isset($this->fields[$a_field]) && $this->fields[$a_field]->type == ilExamOrgaField::TYPE_INTEGER) {
 	        return true;
@@ -206,7 +200,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
 	 * fill row
 	 * @param array $data
 	 */
-	public function fillRow($data)
+	public function fillRow(array $data): void
 	{
 	    global $DIC;
 

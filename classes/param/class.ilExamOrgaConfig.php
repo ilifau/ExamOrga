@@ -13,16 +13,17 @@ class ilExamOrgaConfig
 	 * @var ilExamOrgaParam[]	$params		parameters: 	name => ilExamOrgaParam
 	 */
 	protected $params = array();
+    private ilExamOrgaPlugin $plugin;
+
 
 	/**
 	 * Constructor.
-	 * @param ilPlugin|string $a_plugin_object
+	 * @param ilExamOrgaPlugin|string $a_plugin_object
 	 */
 	public function __construct($a_plugin_object = "")
 	{
 		$this->plugin = $a_plugin_object;
-		$this->plugin->includeClass('param/class.ilExamOrgaParam.php');
-
+		
 		/** @var ilExamOrgaParam[] $params */
 		$params = array();
 

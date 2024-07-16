@@ -6,12 +6,6 @@
  */
 class ilExamOrgaNotesTableGUI extends ilTable2GUI
 {
-    /** @var ilExamOrgaRecordGUI */
-    protected $parent_obj;
-
-    /** @var string $parent_cmd */
-    protected $parent_cmd;
-
     /** @var ilObjExamOrga */
     protected $object;
 
@@ -92,7 +86,7 @@ class ilExamOrgaNotesTableGUI extends ilTable2GUI
 	 * fill row
 	 * @param array $data
 	 */
-	public function fillRow($data)
+	public function fillRow(array $data): void
 	{
 		$id = $data['id'];
 

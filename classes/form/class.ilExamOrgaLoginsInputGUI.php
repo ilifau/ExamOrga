@@ -67,7 +67,7 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
      *
      * @return bool|void
      */
-    public function checkInput()
+    public function checkInput(): bool
     {
         global $DIC;
 

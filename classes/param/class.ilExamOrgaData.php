@@ -44,8 +44,6 @@ class ilExamOrgaData
 		$this->plugin = $a_plugin_object;
 		$this->obj_id = $a_obj_id;
 
-        $this->plugin->includeClass('param/class.ilExamOrgaParam.php');
-
         /** @var ilExamOrgaParam[] $params */
         $params = [];
 

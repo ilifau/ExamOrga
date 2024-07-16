@@ -160,6 +160,8 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function createRecord()
     {
+        global $DIC;
+
         $this->checkAddRecord();
         $record = new ilExamOrgaRecord();
         $record->obj_id = $this->object->getId();
@@ -177,7 +179,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $checker->doChecks();
 
             if (!empty($checker->getFailures())) {
-                ilUtil::sendFailure($this->plugin->txt("record_saving_failed")
+                $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt("record_saving_failed")
                     . '<p class="small">' . implode('<br />', $checker->getFailures()) . '</p>' , false);
                 $this->setRecordToolbar();
                 $this->tpl->setContent($form->getHTML());
@@ -193,10 +195,10 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
 
             if (!empty($checker->getWarnings())) {
-                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings") . $confirmed_info , true);
+                $this->tpl->setOnScreenMessage('question', $this->plugin->txt("record_saved_with_warnings") . $confirmed_info , true);
             }
             else {
-                ilUtil::sendSuccess($this->plugin->txt("record_created") . $confirmed_info, true);
+                $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt("record_created") . $confirmed_info, true);
             }
 
             $this->ctrl->setParameter($this, 'id', $record->id);
@@ -235,6 +237,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function updateRecord()
     {
+        global $DIC;
         $this->ctrl->saveParameter($this, 'id');
 
         /** @var ilExamOrgaRecord $record */
@@ -256,7 +259,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $checker->doChecks();
 
             if (!empty($checker->getFailures())) {
-                ilUtil::sendFailure($this->plugin->txt("record_saving_failed")
+                $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt("record_saving_failed")
                     . '<p class="small">' . implode('<br />', $checker->getFailures()) . '</p>' , false);
                 $this->tpl->setContent($form->getHTML());
                 return;
@@ -271,10 +274,10 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
 
             if (!empty($checker->getWarnings())) {
-                ilUtil::sendQuestion($this->plugin->txt("record_saved_with_warnings") . $confirmed_info, true);
+                $DIC->ui()->mainTemplate()->setOnScreenMessage('question',$this->plugin->txt("record_saved_with_warnings") . $confirmed_info, true);
             }
             else {
-                ilUtil::sendSuccess($this->plugin->txt("record_updated") . $confirmed_info, true);
+                $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt("record_updated") . $confirmed_info, true);
             }
 
             $this->ctrl->redirect($this, "editRecord");
@@ -326,6 +329,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function deleteNote()
     {
+        global $DIC;
         $this->ctrl->saveParameter($this, 'id');
 
         /** @var ilExamOrgaRecord $record */
@@ -336,7 +340,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $note = ilExamOrgaNote::find((int) $_GET['note_id']);
         if (isset($note)) {
             $note->delete();
-            ilUtil::sendSuccess($this->plugin->txt("note_deleted"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt("note_deleted"), true);
         }
         $this->ctrl->redirect($this, "editRecord");
     }
@@ -384,8 +388,9 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function confirmDeleteRecords()
     {
+        global $DIC;
         if (empty($_POST['ids'])) {
-            ilUtil::sendFailure($this->lng->txt('select_at_least_one_object'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->lng->txt('select_at_least_one_object'), true);
             $this->ctrl->redirect($this,'listRecords');
         }
 
@@ -412,6 +417,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function deleteRecords()
     {
+        global $DIC;
         /** @var ilExamOrgaRecord[] $records */
         $records = ilExamOrgaRecord::where(['id' => $_POST['ids']])->get();
 
@@ -421,7 +427,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             }
         }
 
-        ilUtil::sendSuccess($this->plugin->txt('records_deleted'), true);
+        $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt('records_deleted'), true);
         $this->redirectToList();
     }
 
@@ -466,10 +472,10 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
         $temp = $_FILES["excel_file"]["tmp_name"];
 
         if ($excel->loadFromFile($temp)) {
-            ilUtil::sendSuccess($excel->getInfo(), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $excel->getInfo(), true);
         }
         else {
-            ilUtil::sendFailure($excel->getInfo(), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $excel->getInfo(), true);
         }
         $this->redirectToList();
     }
@@ -516,8 +522,9 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function checkAddRecord()
     {
+        global $DIC;
         if (!$this->object->canAddRecord()) {
-            ilUtil::sendFailure($this->plugin->txt('message_no_add_record'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt('message_no_add_record'), true);
             $this->redirectToList();
         }
         return true;
@@ -530,12 +537,13 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function checkViewRecord($record)
     {
+        global $DIC;
         if (!isset($record)) {
-            ilUtil::sendFailure($this->plugin->txt("message_record_not_found"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt("message_record_not_found"), true);
             $this->redirectToList();
         }
         if (!$this->object->canViewRecord($record)) {
-            ilUtil::sendFailure($this->plugin->txt('message_no_view_record'), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt('message_no_view_record'), true);
             $this->redirectToList();
         }
         return true;
@@ -549,12 +557,13 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function checkEditRecord($record)
     {
+        global $DIC;
         if (!isset($record)) {
-            ilUtil::sendFailure($this->plugin->txt("message_record_not_found"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt("message_record_not_found"), true);
             $this->redirectToList();
         }
         if (!$this->object->canEditRecord($record)) {
-            ilUtil::sendFailure($this->plugin->txt("message_no_edit_record"), true);
+            $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt("message_no_edit_record"), true);
             $this->redirectToList();
         }
         return true;

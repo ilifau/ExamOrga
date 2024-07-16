@@ -179,19 +179,18 @@ class ilExamOrgaField
     public function __construct($object, $definition, $lang_prefix = 'field')
     {
         $this->object = $object;
-        $this->plugin = $object->plugin;
+        $this->plugin = $object->getPluginObjectByType('xamo');
 
         $this->name = (string) $definition['name'];
         $this->type =  (string) $definition['type'];
-        $this->size = (int) $definition['size'];
-        $this->limit = (int) $definition['limit'];
-        $this->required = (bool) $definition['required'];
-        $this->multi = (bool) $definition['multi'];
-        $this->filter = (bool) $definition['filter'];
-        $this->default = (bool) $definition['default'];
-        $this->check_idm = (bool) $definition['check_idm'];
-        $this->require_idm = (bool) $definition['require_idm'];
-
+        $this->size = isset($definition['size']) ? (int) $definition['size'] : 0;
+        $this->limit = isset($definition['limit']) ? (int) $definition['limit'] : 0;
+        $this->required = isset($definition['required']) ? (bool) $definition['required']: false;
+        $this->multi = isset($definition['multi']) ? (bool) $definition['multi']: false;
+        $this->filter = isset($definition['filter']) ? (bool) $definition['filter']: false;
+        $this->default = isset($definition['default']) ? (bool) $definition['default']: false;
+        $this->check_idm = isset($definition['check_idm']) ? (bool) $definition['check_idm']: false;
+        $this->require_idm = isset($definition['require_idm']) ? (bool) $definition['require_idm']: false;
 
         if (isset($definition['lang_prefix'])) {
             $lang_prefix = $definition['lang_prefix'];
@@ -214,11 +213,14 @@ class ilExamOrgaField
         }
 
         // select or radio options
-        foreach ((array) $definition['options'] as $key => $option) {
-            if (is_int($key)) {
-                $key = (string) $option;
+        if(isset($definition['options']))
+        {
+            foreach ((array) $definition['options'] as $key => $option) {
+                if (is_int($key)) {
+                    $key = (string) $option;
+                }
+                $this->options[$key] = $this->plugin->txt($option);
             }
-            $this->options[$key] = $this->plugin->txt($option);
         }
 
         // status

@@ -45,7 +45,7 @@ class ilExamOrgaCondition extends ActiveRecord implements ilExamOrgaFieldValues
      * @return string
      * @description Return the Name of your Database Table
      */
-    public static function returnDbTableName()
+    public static function returnDbTableName(): string
     {
         return 'xamo_cond';
     }

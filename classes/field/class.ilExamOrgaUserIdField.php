@@ -32,7 +32,7 @@ class ilExamOrgaUserIdField extends ilExamOrgaField
             $item->setInfo($this->info);
         }
 
-        $login = ilObjUser::_lookupLogin($this->getValue($record));
+        $login = ilObjUser::_lookupLogin((int) $this->getValue($record));
         $item->setValue(ilExamOrgaLoginsInputGUI::_addNames($login)[0]);
         return $item;
     }

@@ -18,16 +18,14 @@ abstract class ilExamOrgaBaseGUI
 
 	/** @var  ilTabsGUI */
 	public $tabs;
-
-	/** @var ilTemplate */
-	public $tpl;
+	public ilGlobalTemplateInterface $tpl;
 
 	/** @var ilLanguage */
 	public $lng;
 
 	/** @var ilToolbarGUI */
 	protected $toolbar;
-
+	protected ilPropertyFormGUI $form;
 	/**
 	 * Constructor
 	 * @param ilObjExamOrgaGUI     $a_parent_gui

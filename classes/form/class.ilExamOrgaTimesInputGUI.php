@@ -72,6 +72,10 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
         // ilDclGenericMultiInputGUI starts counting of its inputs with 2
         $i = 2;
         $times = [];
+        
+        if(!isset($value))
+            return $times;
+        
         foreach (explode(',', (string) $value) as $time) {
             $times[$i++] = [
                 'daytime' => ilExamOrgaDayTimeInputGUI::_getArray($time)

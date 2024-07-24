@@ -30,7 +30,7 @@ class ilExamOrgaRecordCalendar
     public function init( $object)
     {
         $this->object = $object;
-        $this->plugin = $object->plugin;
+        $this->plugin = $object->getPluginObjectByType('xamo');
         $this->ical = '';
         $this->initRecords();
     }

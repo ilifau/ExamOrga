@@ -6,8 +6,8 @@ class ilExamOrgaHeadLineField extends ilExamOrgaField
     /**
      * @inheritdoc
      */
-    public function getValue($record) {
-        return $this->title;
+    public function getValue($record): string {
+        return (string) $this->title;
     }
 
     /**

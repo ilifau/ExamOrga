@@ -40,7 +40,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
         }
         $tpl->setVariable(
             "SELECT_HOURS",
-            ilUtil::formSelect(
+            ilLegacyFormElementsUtil::formSelect(
                 $this->hours,
                 $this->getPostVar() . "[hh]",
                 $val,
@@ -48,7 +48,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
                 true,
                 0,
                 '',
-                '',
+                [],
                 $this->getDisabled()
             )
         );
@@ -59,7 +59,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
         }
         $tpl->setVariable(
             "SELECT_MINUTES",
-            ilUtil::formSelect(
+            ilLegacyFormElementsUtil::formSelect(
                 $this->minutes,
                 $this->getPostVar() . "[mm]",
                 $val,
@@ -67,7 +67,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
                 true,
                 0,
                 '',
-                '',
+                [],
                 $this->getDisabled()
             )
         );
@@ -169,6 +169,12 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
     public static function _getArray($a_string)
     {
         $parts = explode(':', trim($a_string));
+
+        if(!array_key_exists(0, $parts)) 
+            $parts[0] = "";
+        if(!array_key_exists(1, $parts)) 
+            $parts[1] = "";
+
         return [
             'hh' => $parts[0],
             'mm' => $parts[1]

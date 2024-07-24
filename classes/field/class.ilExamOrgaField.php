@@ -245,8 +245,8 @@ class ilExamOrgaField
      * @param ilExamOrgaFieldValues $record
      * @return mixed
      */
-    public function getValue($record) {
-        return $record->getValue($this->name);
+    public function getValue($record): string {
+        return (string) $record->getValue($this->name);
     }
 
     /**

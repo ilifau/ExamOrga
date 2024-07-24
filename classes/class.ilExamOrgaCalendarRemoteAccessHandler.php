@@ -40,7 +40,7 @@ class ilExamOrgaCalendarRemoteAccessHandler{
         $this->ref_id = $_GET["ref_id"];
         $this->token = $_GET["token"];
         $object = new ilObjExamOrga($this->ref_id);
-        if ($this->token != $object->plugin->getConfig()->get('calendar_api_token')) 
+        if ($this->token != $object->getPluginObjectByType('xamo')->getConfig()->get('calendar_api_token')) 
         {
             throw new ExamCalendarException("Unknown API Token");
         }

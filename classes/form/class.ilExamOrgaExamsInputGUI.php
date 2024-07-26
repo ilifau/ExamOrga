@@ -76,7 +76,7 @@ class ilExamOrgaExamsInputGUI extends ilTextInputGUI
 
         $term = $_REQUEST['term'];
         $semester = $_REQUEST['semester'];
-        $fetchall = $_REQUEST['fetchall'];
+        $fetchall = isset($_REQUEST['fetchall']) ? $_REQUEST['fetchall'] : true;
 
         require_once (__DIR__ . '/../campus/class.ilExamOrgaCampusExam.php');
         $exams = ilExamOrgaCampusExam::getCollection()

@@ -214,7 +214,7 @@ class ilExamOrgaNote extends ActiveRecord
 
         foreach ($data as $row) {
 
-            if (is_array($existing[$row['note']])) {
+            if (isset($existing[$row['note']]) && is_array($existing[$row['note']])) {
                 // first note with the same text should not be deleted
                 array_shift($existing[$row['note']]);
             } else {

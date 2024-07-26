@@ -48,7 +48,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
                 true,
                 0,
                 '',
-                [],
+                ["hh" => ""],
                 $this->getDisabled()
             )
         );
@@ -67,7 +67,7 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
                 true,
                 0,
                 '',
-                [],
+                ["mm" => ""],
                 $this->getDisabled()
             )
         );

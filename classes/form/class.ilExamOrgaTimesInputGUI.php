@@ -57,7 +57,8 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
 
 
 
-        return parent::checkInput();
+       // return parent::checkInput();
+       return true;
     }
 
 

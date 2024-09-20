@@ -34,7 +34,7 @@ class ilExamOrgaRecordExcel extends ilExcel
     public function init( $object)
     {
         $this->object = $object;
-        $this->plugin = $object->plugin;
+        $this->plugin = $object->getPluginObjectByType('xamo');
 
         $fields = $object->getAvailableFields();
 
@@ -91,7 +91,7 @@ class ilExamOrgaRecordExcel extends ilExcel
      */
     public function getFilename()
     {
-        $name = ilUtil::getASCIIFilename($this->object->getTitle());
+        $name = ilFileUtils::getASCIIFilename($this->object->getTitle());
         switch($this->format) {
             case self::FORMAT_BIFF:
                 return $name . ".xls";

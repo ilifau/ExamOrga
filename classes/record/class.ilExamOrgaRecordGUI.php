@@ -437,11 +437,11 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
     protected function excelExport()
     {
         require_once (__DIR__ . '/class.ilExamOrgaRecordExcel.php');
-        $file = ilUtil::ilTempnam();
+        $file = ilFileUtils::ilTempnam();
         $excel = new ilExamOrgaRecordExcel();
         $excel->init($this->object);
         $excel->writeToFile($file);
-        ilUtil::deliverFile($file, $excel->getFilename(), '', false, true, true);
+        ilFileDelivery::deliverFileLegacy($file, $excel->getFilename(), '', false, true, true);
     }
 
     /**

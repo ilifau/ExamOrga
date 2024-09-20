@@ -31,8 +31,8 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getListHTML($record) {
-        require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return ilExamOrgaLink::getRecordLinksHtml($record->getId(), $this->links[$record->getId()]);
+        $links = isset($this->links) ? $this->links[$record->getId()] : null;
+        return ilExamOrgaLink::getRecordLinksHtml($record->getId(), $links);
     }
 
     /**

@@ -112,7 +112,8 @@ class ilExamOrgaConfigGUI extends ilPluginConfigGUI
      */
     protected function loadCampusExams()
     {
-        require_once (__DIR__ . '/campus/class.ilExamOrgaCampusExam.php');
+        global $DIC;
+
         try {
             ilExamOrgaCampusExam::updateExams();
             $DIC->ui()->mainTemplate()->setOnScreenMessage('success', $this->plugin->txt('campus_exams_loaded'), true);

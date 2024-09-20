@@ -23,7 +23,7 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
 
         $t = explode("_", $a_target[0]);
         $ref_id = (int) $t[0];
-        $record_id = (int) $t[1];
+        $record_id = isset($t[1]) ? (int) $t[1] : null;
 
         if (empty($record_id)) {
             parent::_goto($a_target);

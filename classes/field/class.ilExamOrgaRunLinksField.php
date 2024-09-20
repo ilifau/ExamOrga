@@ -91,8 +91,8 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getExcelValue($record, $excel) {
-        require_once (__DIR__ . '/../links/class.ilExamOrgaLink.php');
-        return ilExamOrgaLink::getRecordLinksText($record->getId(), $this->links[$record->getId()]);
+        $links = isset($this->links) ? $this->links[$record->getId()] : null;
+        return ilExamOrgaLink::getRecordLinksText($record->getId(), $links);
     }
 
     /**

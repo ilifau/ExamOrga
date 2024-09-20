@@ -436,7 +436,6 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function excelExport()
     {
-        require_once (__DIR__ . '/class.ilExamOrgaRecordExcel.php');
         $file = ilFileUtils::ilTempnam();
         $excel = new ilExamOrgaRecordExcel();
         $excel->init($this->object);
@@ -458,7 +457,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
      */
     protected function excelImport()
     {
-        require_once (__DIR__ . '/class.ilExamOrgaRecordExcel.php');
+        global $DIC;
         $excel = new ilExamOrgaRecordExcel();
         $excel->init($this->object);
 

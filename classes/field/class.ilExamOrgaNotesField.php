@@ -121,8 +121,9 @@ class ilExamOrgaNotesField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getExcelValue($record, $excel) {
-        require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
-        return ilExamOrgaNote::getRecordNotesText($record->getId(), $this->notes[$record->getId()]);
+
+        $notes = isset($this->notes[$record->getId()]) ?  $this->notes[$record->getId()] : null;
+        return ilExamOrgaNote::getRecordNotesText($record->getId(), $notes);
     }
 
     /**

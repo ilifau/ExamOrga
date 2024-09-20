@@ -57,12 +57,12 @@ class ilExamOrgaMessenger
         $context = new ilExamOrgaMailTemplateContext();
         $params = ['ref_id' => $this->getRefId(), 'record' => $record];
 
+        $mustache = new Mustache_Engine();
+        $resolver = new ilMailTemplatePlaceholderResolver($mustache);
+        $subject = $resolver->resolve($context, $message->subject ?? "", $user);
 
-        $resolver = new ilMailTemplatePlaceholderResolver($context, strip_tags($message->subject));
-        $subject = $resolver->resolve($user, $params);
-
-        $resolver = new ilMailTemplatePlaceholderResolver($context, strip_tags($message->content));
-        $content = $resolver->resolve($user, $params);
+        $resolver = new ilMailTemplatePlaceholderResolver($mustache);
+        $content = $resolver->resolve($context, $message->content ?? "", $user);
 
         $to = "";
         $cc = "";
@@ -77,7 +77,17 @@ class ilExamOrgaMessenger
         }
 
         $mail = new ilMail(ANONYMOUS_USER_ID);
-        $errors = $mail->sendMail($to, $cc, '', $subject, $content, [], false);
+        $mail_data = new MailDeliveryData(
+            $to,
+            $cc,
+            '',
+            $subject,
+            $content,
+            [],
+            false
+        );
+
+        $errors = $mail->sendMail($mail_data);
 
         if ($remember) {
             ilExamOrgaMessageSent::setSent($record->id, $type);

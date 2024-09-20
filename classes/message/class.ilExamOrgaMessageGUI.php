@@ -130,7 +130,7 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
 
         $DIC->language()->loadLanguageModule('mail');
 
-        $placeholders = new ilManualPlaceholderInputGUI('m_message');
+        $placeholders = new ilManualPlaceholderInputGUI('m_message','m_placeholders','m_message');
         $placeholders->setInstructionText('x');
         foreach ($context->getPlaceholders() as $key => $value) {
             $placeholders->addPlaceholder($value['placeholder'], $value['label']);
@@ -142,13 +142,15 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
         $form->addItem($header);
 
         $item = new ilNonEditableValueGUI($this->plugin->txt('message_subject'), '', true);
-        $resolver = new ilMailTemplatePlaceholderResolver($context, strip_tags($message->subject));
-        $item->setValue('<div class="small">'. nl2br($resolver->resolve($user, $params)).'</div>');
+        $mustache = new Mustache_Engine();
+    
+        $resolver = new ilMailTemplatePlaceholderResolver($mustache);
+        $item->setValue('<div class="small">'. nl2br($resolver->resolve($context, $message->subject ?? "", $user)).'</div>');
         $form->addItem($item);
 
         $item = new ilNonEditableValueGUI($this->plugin->txt('message_message'), '', true);
-        $resolver = new ilMailTemplatePlaceholderResolver($context, strip_tags($message->content));
-        $item->setValue('<div class="small">'. nl2br($resolver->resolve($user, $params)).'</div>');
+        $resolver = new ilMailTemplatePlaceholderResolver($mustache);
+        $item->setValue('<div class="small">'. nl2br($resolver->resolve($context, $message->content ?? "", $user)).'</div>');
         $form->addItem($item);
 
         $form->addCommandButton('updateMessage', $this->plugin->txt('update_message'));

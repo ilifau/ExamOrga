@@ -246,6 +246,7 @@ $fields = [
   ],
   [
       'name' => 'notes',
+      'type' => ilExamOrgaField::TYPE_NOTES,
       'size' => 10,
       'status' => ilExamOrgaField::STATUS_FIXED,
       'filter' => true,

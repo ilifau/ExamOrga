@@ -1,7 +1,9 @@
 Copyright (c) 2020 Institut fuer Lern-Innovation, Friedrich-Alexander-Universitaet Erlangen-Nuernberg, GPLv3, see LICENSE
 GPLv3, see LICENSE
 
-Author Fred Neumann <fred.neumann@fau.de>
+Author 
+* Fred Neumann <fred.neumann@fau.de>
+* Christina Fuchs <chr.fuchs@fau.de>
 
 INSTALLATION
 ------------

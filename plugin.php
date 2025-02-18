@@ -12,8 +12,8 @@ $ilias_min_version = '9.0';
 $ilias_max_version = '9.999';
  
 // optional, but useful: Add one or more responsible persons and a contact email
-$responsible = 'Fred Neumann';
-$responsible_mail = 'fred.neumann@fau.de';
+$responsible = 'Christina Fuchs';
+$responsible_mail = 'chr.fuchs@fau.de';
 
 // features
 $supports_export = false;

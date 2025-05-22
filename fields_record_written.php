@@ -165,7 +165,7 @@ $fields = [
       'type' => ilExamOrgaField::TYPE_EXAMS,
       'status' => ilExamOrgaField::STATUS_PUBLIC
   ],
- /* [
+  [
       'name' => 'admins',
       'type' => ilExamOrgaField::TYPE_LOGINS,
   ],
@@ -177,12 +177,12 @@ $fields = [
       'name' => 'monitors',
       'type' => ilExamOrgaField::TYPE_LOGINS,
       'check_idm' => true
-  ],*/
+  ],/*
   [
       'name' => 'note_add_roles',
       'type' => ilExamOrgaField::TYPE_TEXTAREA,
       'status' => ilExamOrgaField::STATUS_FIXED
-  ],
+  ],*/
   [
       'name' => 'remarks',
       'type' => ilExamOrgaField::TYPE_TEXTAREA,

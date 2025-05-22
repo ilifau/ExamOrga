@@ -226,7 +226,8 @@ $fields = [
       ],
       'required' => true,
       'default' => true,
-      'filter' => true
+      'filter' => true,
+      'status' => ilExamOrgaField::STATUS_LOCKED
   ],
   [
       'name' => 'reg_code',

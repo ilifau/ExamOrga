@@ -394,7 +394,7 @@ class ilExamOrgaRecord extends ActiveRecord implements ilExamOrgaFieldValues
      * @con_fieldtype        text
      * @con_length           100
      */
-    public $note_add_roles = "Bitte fügen Sie Personen für die Personengruppen Korrektor/innen, Prüfer/innen und Aufsichten direkt in Ihrem Prüfungskurs über den Reiter \"Prüfungsorganisation\" ein, sobald der Kurs erstellt wurde. Vielen Dank!";
+    public $note_add_roles = "Bitte fügen Sie Personen für die Personengruppen Korrektor/innen und Prüfer/innen direkt in Ihrem Prüfungskurs über den Reiter \"Prüfungsorganisation\" ein, sobald der Kurs erstellt wurde. Vielen Dank!";
 
     /**
      * Get the records for an object

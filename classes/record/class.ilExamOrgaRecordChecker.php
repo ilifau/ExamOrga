@@ -161,7 +161,7 @@ class ilExamOrgaRecordChecker
         // notes should only be updated when a record is interactively  created or updated
         if ($this->purpose == self::PURPOSE_SAVE) {
             $this->updateNotes(ilExamOrgaNote::TYPE_CAMPUS, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CAMPUS]);
-           // $this->updateNotes(ilExamOrgaNote::TYPE_ROLES, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES]);
+            $this->updateNotes(ilExamOrgaNote::TYPE_ROLES, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_ROLES]);
             $this->updateNotes(ilExamOrgaNote::TYPE_CONDITION, $this->warnings[ilExamOrgaMessage::TYPE_WARNING_CONDITION]);
         }
 

@@ -32,7 +32,7 @@ class ilExamOrgaTimesField extends ilExamOrgaField
             $item->setInfo($this->info);
         }
 
-        $item->setValueByArray([$this->getPostvar() => ilExamOrgaTimesInputGUI::_getArray($this->getValue($record))]);
+        $item->setValueByArray([$this->getPostvar() => [$this->getValue($record)]]);
         return $item;
     }
 

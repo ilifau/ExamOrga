@@ -106,8 +106,20 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
      */
     public function setValue($a_value)
     {
-        $hours = trim($a_value['hh']);
-        $minutes = trim($a_value['mm']);
+        $time = explode(':', $a_value);
+        //$hours = trim($a_value['hh']);
+        //$minutes = trim($a_value['mm']);
+        
+        if(isset($time[0])) {
+            $hours = trim($time[0]);
+        } else {
+            $hours = '';
+        }
+        if(isset($time[1])) {
+            $minutes = trim($time[1]);
+        } else {
+            $minutes = '';
+        }
 
         $this->hours = (($hours != '') ? (int) $hours : null);
         $this->minutes = (($minutes != '') ? (int) $minutes : null);

@@ -21,8 +21,8 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
         $timeInput = new ilExamOrgaDayTimeInputGUI('', 'daytime');
         $timeInput->setRequired($this->required);
 
-        $this->setMulti(true);
-        $this->addInput($timeInput);
+        //$this->setMulti(true);
+        $this->setInput($timeInput);
     }
 
 

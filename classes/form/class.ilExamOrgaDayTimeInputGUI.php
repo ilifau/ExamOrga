@@ -167,8 +167,8 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
             $minutes = '';
         }
         else{
-            $hours = trim($a_array['hh']);
-            $minutes = trim($a_array['mm']);
+            $hours = isset($a_array['hh']) ? trim($a_array['hh']) : "";
+            $minutes = isset($a_array['mm']) ? trim($a_array['mm']) : "";
         }
 
         if ($hours != '') {

@@ -162,8 +162,14 @@ class ilExamOrgaDayTimeInputGUI extends ilFormPropertyGUI
      */
     public static function _getString($a_array)
     {
-        $hours = trim($a_array['hh']);
-        $minutes = trim($a_array['mm']);
+        if (!is_array($a_array)){
+            $hours = '';
+            $minutes = '';
+        }
+        else{
+            $hours = trim($a_array['hh']);
+            $minutes = trim($a_array['mm']);
+        }
 
         if ($hours != '') {
             return sprintf("%02d:%02d", (int) $hours, (int) $minutes);

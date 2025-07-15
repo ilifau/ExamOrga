@@ -43,8 +43,8 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
         if ($this->required) {
             $found = false;
             foreach ($_POST[$this->getPostVar()] as $entry) {
-                if (is_array($entry['daytime'])) {
-                    if (!empty(ilExamOrgaDayTimeInputGUI::_getString($entry['daytime']))) {
+                if (is_array($entry)) {
+                    if (!empty(ilExamOrgaDayTimeInputGUI::_getString($entry))) {
                         $found = true;
                     }
                 }
@@ -78,9 +78,7 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
             return $times;
         
         foreach (explode(',', (string) $value) as $time) {
-            $times[$i++] = [
-                'daytime' => ilExamOrgaDayTimeInputGUI::_getArray($time)
-            ];
+            $times[$i++] = $time;
         }
         return $times;
     }
@@ -96,12 +94,22 @@ class ilExamOrgaTimesInputGUI extends ilDclGenericMultiInputGUI
     {
         $times = [];
         foreach ((array) $array as $entry) {
-            $time = ilExamOrgaDayTimeInputGUI::_getString($entry['daytime']);
+            $time = ilExamOrgaDayTimeInputGUI::_getString($entry);
             if (isset($time)) {
                 $times[] = $time;
             }
         }
         sort($times);
         return implode(', ', $times);
+    }
+
+    /**
+     * Get the line values
+     *
+     * @return array|null
+     */    
+    public function getLineValues(): ?array
+    {
+        return $this->line_values;
     }
 }

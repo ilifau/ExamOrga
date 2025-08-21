@@ -82,10 +82,13 @@ class ilExamOrgaData
             self::PARAM_INTRO, $this->plugin->txt('introduction'), $this->plugin->txt('introduction_info'), ilExamOrgaParam::TYPE_RICHTEXT, null
         );
         // ics export url
-        $params[] = ilExamOrgaParam::_create(
-            self::PARAM_ICS, $this->plugin->txt('ics_export_url'), $this->plugin->txt('ics_export_url_info'), ilExamOrgaParam::TYPE_NONEDITABLE, ILIAS_HTTP_PATH.'/Customizing/global/plugins/Services/Repository/RepositoryObject/ExamOrga/examcalendar.php?ref_id='.$_GET["ref_id"].'&token='.$this->plugin->getConfig()->get('calendar_api_token')
-        );
-
+        $ref_id = $_GET["ref_id"] ?? 0;
+        if($ref_id)
+        {
+            $params[] = ilExamOrgaParam::_create(
+                self::PARAM_ICS, $this->plugin->txt('ics_export_url'), $this->plugin->txt('ics_export_url_info'), ilExamOrgaParam::TYPE_NONEDITABLE, ILIAS_HTTP_PATH.'/Customizing/global/plugins/Services/Repository/RepositoryObject/ExamOrga/examcalendar.php?ref_id='.$ref_id.'&token='.$this->plugin->getConfig()->get('calendar_api_token')
+            );
+        }
 
         foreach ($params as $param)
         {

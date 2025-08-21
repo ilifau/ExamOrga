@@ -166,7 +166,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
     public function handleCronJob()
     {
         if (!ilContext::usesHTTP()) {
-            echo "ExamOrga: handle cron job...\n";
+        //    echo "ExamOrga: handle cron job...\n";
         }
 
         $messages = [];
@@ -178,7 +178,7 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
         if ($handler->updateExams()) {
             $messages[] = $this->txt('campus_exams_loaded');
             if (!ilContext::usesHTTP()) {
-                echo $this->txt('campus_exams_loaded') . "\n";
+            //    echo $this->txt('campus_exams_loaded') . "\n";
             }
         }
         else {
@@ -188,11 +188,11 @@ class ilExamOrgaPlugin extends ilRepositoryObjectPlugin
         $checked = $handler->checkRecords();
         $messages[] = sprintf($this->txt('x_records_checked'), $checked);
         if (!ilContext::usesHTTP()) {
-            echo sprintf($this->txt('x_records_checked'), $checked) . "\n";
+           // echo sprintf($this->txt('x_records_checked'), $checked) . "\n";
         }
 
         if (!ilContext::usesHTTP()) {
-            echo "ExamOrga: finished.\n";
+           // echo "ExamOrga: finished.\n";
         }
 
         return [true, implode(' | ', $messages)];

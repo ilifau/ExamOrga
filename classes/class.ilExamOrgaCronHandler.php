@@ -76,7 +76,7 @@ class ilExamOrgaCronHandler
             }
 
             if (!ilContext::usesHTTP()) {
-                echo "Checking records of object " . $object->getTitle() . "...\n";
+            //    echo "Checking records of object " . $object->getTitle() . "...\n";
             }
 
             foreach (ilExamOrgaRecord::getForObject($object->getId()) as $record) {
@@ -92,7 +92,7 @@ class ilExamOrgaCronHandler
                 }
 
                 if (!ilContext::usesHTTP()) {
-                    echo "Check record " .$record->getTitle() . "...\n";
+                 //   echo "Check record " .$record->getTitle() . "...\n";
                 }
 
                 $checker = new ilExamOrgaRecordChecker(ilExamOrgaRecordChecker::PURPOSE_CRON, $object, $record);

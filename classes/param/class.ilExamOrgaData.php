@@ -162,7 +162,7 @@ class ilExamOrgaData
      */
     public function set($name, $value = null)
     {
-       $param = $this->params[$name];
+       $param = $this->params[$name] ?? null;
 
        if (isset($param))
        {

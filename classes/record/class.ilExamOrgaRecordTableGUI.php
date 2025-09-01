@@ -37,7 +37,7 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $this->object = $a_parent_obj->object;
         $this->plugin = $a_parent_obj->plugin;
         $this->fields = $this->object->getAvailableFields();
-        $this->icon_alert = ilUtil::getImagePath('icon_alert.svg');
+        $this->icon_alert = ilUtil::getImagePath('/standard/icon_alert_exam_orga.svg');
 
         $this->setId('ilExamOrgaRecordTableGUI');
         $this->setPrefix('ilExamOrgaRecordTableGUI');

@@ -262,6 +262,7 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             if (!empty($checker->getFailures())) {
                 $DIC->ui()->mainTemplate()->setOnScreenMessage('failure', $this->plugin->txt("record_saving_failed")
                     . '<p class="small">' . implode('<br />', $checker->getFailures()) . '</p>' , false);
+                $form = $this->initRecordForm($record);
                 $this->tpl->setContent($form->getHTML());
                 return;
             }

@@ -34,7 +34,8 @@ class ilExamOrgaNotesField extends ilExamOrgaField
      */
     public function getListHTML($record) {
         require_once (__DIR__ . '/../notes/class.ilExamOrgaNote.php');
-        return nl2br(ilExamOrgaNote::getRecordNotesText($record->getId(), $this->notes[$record->getId()]));
+        $notes = isset($this->notes[$record->getId()]) ? $this->notes[$record->getId()] : null;
+        return nl2br(ilExamOrgaNote::getRecordNotesText($record->getId(), $notes));
     }
 
     /**

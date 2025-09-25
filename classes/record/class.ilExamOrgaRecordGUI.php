@@ -205,6 +205,13 @@ class ilExamOrgaRecordGUI extends ilExamOrgaBaseGUI
             $this->ctrl->setParameter($this, 'id', $record->id);
             $this->ctrl->redirect($this, "editRecord");
         }
+
+        foreach ($this->object->getAvailableFields() as $field) {
+            if ($this->object->canEditField($field)) {
+                $field->setByForm($record, $form);
+            }
+        }
+        $form = $this->initRecordForm($record);
         $this->tpl->setContent($form->getHTML());
     }
 

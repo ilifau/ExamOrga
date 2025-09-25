@@ -7,6 +7,7 @@ class ilExamOrgaCheckboxField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getListHTML($record) {
+        global $DIC;
         if ($this->getValue($record)) {
             $icon = ilUtil::getImagePath('/standard/icon_ok.svg');
             $alt = $this->plugin->txt('yes');
@@ -15,7 +16,7 @@ class ilExamOrgaCheckboxField extends ilExamOrgaField
             $icon = ilUtil::getImagePath('/standard/icon_not_ok.svg');
             $alt = $this->plugin->txt('no');
         }
-        return '<img src="'. $icon . '" alt="' . $alt . '" />';
+        return $DIC['ui.renderer']->render($DIC->ui()->factory()->symbol()->icon()->custom($icon, $alt));
     }
 
     /**

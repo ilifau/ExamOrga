@@ -8,11 +8,11 @@ class ilExamOrgaCheckboxField extends ilExamOrgaField
      */
     public function getListHTML($record) {
         if ($this->getValue($record)) {
-            $icon = ilUtil::getImagePath('icon_ok.svg');
+            $icon = ilUtil::getImagePath('/standard/icon_ok.svg');
             $alt = $this->plugin->txt('yes');
         }
         else {
-            $icon = ilUtil::getImagePath('icon_not_ok.svg');
+            $icon = ilUtil::getImagePath('/standard/icon_not_ok.svg');
             $alt = $this->plugin->txt('no');
         }
         return '<img src="'. $icon . '" alt="' . $alt . '" />';

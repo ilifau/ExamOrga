@@ -44,7 +44,9 @@ class ilExamOrgaMessagesField extends ilExamOrgaField
      */
     public function getListHTML($record)
     {
-        return nl2br(ilExamOrgaMessageSent::getRecordMessagesText($record->getId(), $this->sent_messages[$record->getId()]));
+        $recordId = $record->getId();
+        $messages = isset($this->sent_messages[$recordId]) ? $this->sent_messages[$recordId] : null;
+        return nl2br(ilExamOrgaMessageSent::getRecordMessagesText($recordId, $messages));
     }
 
     /**

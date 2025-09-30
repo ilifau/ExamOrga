@@ -606,7 +606,15 @@ class ilExamOrgaServer extends Slim\App
      * Get the external content plugin object
      */
     protected function getPlugin() {
-        return ilPlugin::getPluginObject(IL_COMP_SERVICE, 'Repository','robj', 'ExamOrga');
+            global $DIC;
+
+            $component_repository = $DIC["component.repository"];
+
+            $info = $component_repository->getPluginByName("ExamOrga");
+
+            $component_factory = $DIC["component.factory"];
+            
+            return $plugin_obj = $component_factory->getPlugin($info->getId());
     }
 
 

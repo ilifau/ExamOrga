@@ -93,12 +93,25 @@ class ilExamOrgaRecordTableGUI extends ilTable2GUI
         $columns = [];
         foreach($this->fields as $name => $field) {
             if ($field->isForList()) {
-                $columns[$name] = [
-                    'txt' => $field->title,
-                    'tooltip' => $field->info,
-                    'default' => $field->default,
-                    'sortable' => true
-                ];
+                if($name == "run_links")
+                {
+                    $columns[$name] = [
+                        'txt' => $field->title,
+                        'tooltip' => $field->info,
+                        'default' => $field->default,
+                        'sortable' => false
+                    ];
+                }
+                else
+                {
+                    $columns[$name] = [
+                        'txt' => $field->title,
+                        'tooltip' => $field->info,
+                        'default' => $field->default,
+                        'sortable' => true
+                    ];
+                }
+
             }
         }
         return $columns;

@@ -145,12 +145,12 @@ class ilExamOrgaMessageGUI extends ilExamOrgaBaseGUI
         $mustache = new Mustache_Engine();
     
         $resolver = new ilMailTemplatePlaceholderResolver($mustache);
-        $item->setValue('<div class="small">'. nl2br($resolver->resolve($context, $message->subject ?? "", $user)).'</div>');
+        $item->setValue('<div class="small">'. nl2br($resolver->resolve($context, $message->subject ?? "", $user, $params)).'</div>');
         $form->addItem($item);
 
         $item = new ilNonEditableValueGUI($this->plugin->txt('message_message'), '', true);
         $resolver = new ilMailTemplatePlaceholderResolver($mustache);
-        $item->setValue('<div class="small">'. nl2br($resolver->resolve($context, $message->content ?? "", $user)).'</div>');
+        $item->setValue('<div class="small">'. nl2br($resolver->resolve($context, $message->content ?? "", $user, $params)).'</div>');
         $form->addItem($item);
 
         $form->addCommandButton('updateMessage', $this->plugin->txt('update_message'));

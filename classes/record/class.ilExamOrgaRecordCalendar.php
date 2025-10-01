@@ -156,14 +156,7 @@ class ilExamOrgaRecordCalendar
                 $now = new DateTime();
                 $updatedTime = $now->format('Ymd\THis');
                 // build record link. 
-                $record_link_orig = ilObjExamOrga::_getRecordLink($this->object->getRefId(), $record->getId());
-                $tmp = "Customizing/global/plugins/Services/Repository/RepositoryObject/ExamOrga/";
-                $record_link = str_replace($tmp, '', $record_link_orig);
-                if(!strcmp($record_link, $record_link_orig)) // shortened url
-                {
-                    $tmp = "xamo/".$this->object->getRefId()."/";
-                    $record_link = str_replace($tmp, '', $record_link_orig);
-                }
+                $record_link = ilObjExamOrga::_getRecordLink($this->object->getRefId(), $record->getId());
 
                 $this->addLine('BEGIN:VEVENT');
                 $this->addLine('SUMMARY:'.$record->fau_unit.' - '.$record->exam_title);

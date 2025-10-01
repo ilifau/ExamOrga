@@ -59,10 +59,10 @@ class ilExamOrgaMessenger
 
         $mustache = new Mustache_Engine();
         $resolver = new ilMailTemplatePlaceholderResolver($mustache);
-        $subject = $resolver->resolve($context, $message->subject ?? "", $user);
+        $subject = $resolver->resolve($context, $message->subject ?? "", $user, $params);
 
         $resolver = new ilMailTemplatePlaceholderResolver($mustache);
-        $content = $resolver->resolve($context, $message->content ?? "", $user);
+        $content = $resolver->resolve($context, $message->content ?? "", $user, $params);
 
         $to = "";
         $cc = "";

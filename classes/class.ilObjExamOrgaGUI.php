@@ -33,8 +33,8 @@ class ilObjExamOrgaGUI extends ilObjectPluginGUI
         $record = ilExamOrgaRecord::findOrGetInstance($record_id);
         $object = new ilObjExamOrga($ref_id);
 
-        $ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
-        $ilCtrl->getCallStructure('ilObjPluginDispatchGUI');
+        //$ilCtrl->initBaseClass("ilObjPluginDispatchGUI");
+        //$ilCtrl->getCallStructure('ilObjPluginDispatchGUI');
 
         $ilCtrl->setParameterByClass('ilexamorgarecordgui', "ref_id", $ref_id);
         $ilCtrl->setParameterByClass('ilexamorgarecordgui', "id", $record_id);

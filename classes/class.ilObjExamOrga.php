@@ -58,7 +58,7 @@ class ilObjExamOrga extends ilObjectPlugin
      */
     public static function _getRecordLink($ref_id, $record_id)
     {
-        return ilLink::_getStaticLink($ref_id, 'xamo', true, '_' . $record_id);
+        return ilLink::_getStaticLink($ref_id, 'xamo', true, $record_id);
     }
 
     /**

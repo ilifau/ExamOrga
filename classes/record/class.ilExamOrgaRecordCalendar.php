@@ -102,6 +102,7 @@ class ilExamOrgaRecordCalendar
                     break;
                 case "admission":
                     $examCategory = "Admissiontest";
+                    break;
                 default: 
                     $examCategory = "Fehlerhafter Termin";
                     break;

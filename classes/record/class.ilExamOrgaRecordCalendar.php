@@ -101,7 +101,7 @@ class ilExamOrgaRecordCalendar
                     $examCategory = "Fernklausur mit Videoaufsicht";
                     break;
                 case "admission":
-                    $examCategory = "Zulassungstest";
+                    $examCategory = "Admissiontest";
                 default: 
                     $examCategory = "Fehlerhafter Termin";
                     break;

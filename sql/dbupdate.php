@@ -799,3 +799,7 @@ if (!$ilDB->indexExistsByFields('xamo_campus', ['veranstaltung'])) {
     $ilDB->addPrimaryKey('xamo_campus', ['id']);
     $ilDB->addIndex('xamo_campus', ['porgnr'], 'i7');
 ?>
+<#18>
+<?php
+$ilDB->manipulate('ALTER TABLE xamo_data MODIFY COLUMN param_value VARCHAR(8000)');
+?>

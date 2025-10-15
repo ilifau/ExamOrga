@@ -38,15 +38,20 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
         }
 
         if ($this->check_idm) {
-            $missing_idm = [];
+            $missing = [];
             $logins = ilExamOrgaLoginsInputGUI::_getArray($this->getValue($record));
             foreach ($logins as $login) {
-                if (empty($DIC->fau()->staging()->repo()->getIdentity($login))) {
-                    $missing_idm[] = $login;
+                $usr_id = ilObjUser::_loginExists($login);
+                if (!$usr_id) {
+                    $missing[] = $login;
                 }
-            }        
-            if (!empty($missing_idm)) {
-                $info[] = '<p class="warning">' .sprintf($this->plugin->txt('idm_accounts_not_found'), implode(', ', $missing_idm)) . '</p>';
+                $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
+                if (empty($ext_account) || empty($DIC->fau()->staging()->repo()->getIdentity($ext_account))) {
+                    $missing[] = $login;
+                }
+            }
+            if (!empty($missing)) {
+                $info[] = '<p class="warning">' .sprintf($this->plugin->txt('idm_accounts_not_found'), implode(', ', $missing)) . '</p>';
             }
         }
 

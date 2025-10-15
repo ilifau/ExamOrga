@@ -42,11 +42,10 @@ class ilExamOrgaLoginsField extends ilExamOrgaField
             $logins = ilExamOrgaLoginsInputGUI::_getArray($this->getValue($record));
             foreach ($logins as $login) {
                 $usr_id = ilObjUser::_loginExists($login);
-                if (!$usr_id) {
-                    $missing[] = $login;
-                }
-                $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
-                if (empty($ext_account) || empty($DIC->fau()->staging()->repo()->getIdentity($ext_account))) {
+                $ext_account = "";
+                if(isset($usr_id))
+                    $ext_account = ilObjUser::_lookupExternalAccount($usr_id);
+                if (empty($DIC->fau()->staging()->repo()->getIdentity($ext_account) && empty($DIC->fau()->staging()->repo()->getIdentity($login)))) {
                     $missing[] = $login;
                 }
             }

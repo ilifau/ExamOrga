@@ -75,7 +75,7 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
         if (!parent::checkInput()) {
             return false;
         }
-
+/*
         foreach ((array) $_POST[$this->getPostVar()] as $entry) {
             if (!empty(trim($entry))) {
                 $login = self::_removeNames([$entry])[0];
@@ -92,7 +92,7 @@ class ilExamOrgaLoginsInputGUI extends ilTextInputGUI
                     }
                 }
             }
-        }
+        } */
         return parent::checkInput();
     }
 

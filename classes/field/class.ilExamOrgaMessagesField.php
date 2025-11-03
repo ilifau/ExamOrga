@@ -147,7 +147,7 @@ class ilExamOrgaMessagesField extends ilExamOrgaField
      */
     public function getExcelValue($record, $excel) {
         $this->requireMessages();
-        $messages = isset($this->sent_messages) ? $this->sent_messages[$record->getId()] : null;
+        $messages = (isset($this->sent_messages ) && isset($this->sent_messages[$record->getId()]))? $this->sent_messages[$record->getId()] : null;
         return ilExamOrgaMessageSent::getRecordMessagesText($record->getId(), $messages);
     }
 

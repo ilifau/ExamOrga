@@ -91,7 +91,7 @@ class ilExamOrgaRunLinksField extends ilExamOrgaField
      * @inheritdoc
      */
     public function getExcelValue($record, $excel) {
-        $links = isset($this->links) ? $this->links[$record->getId()] : null;
+        $links = (isset($this->links) && isset($this->links[$record->getId()]))? $this->links[$record->getId()] : null;
         return ilExamOrgaLink::getRecordLinksText($record->getId(), $links);
     }
 

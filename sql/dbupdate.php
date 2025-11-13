@@ -803,3 +803,7 @@ if (!$ilDB->indexExistsByFields('xamo_campus', ['veranstaltung'])) {
 <?php
 $ilDB->manipulate('ALTER TABLE xamo_data MODIFY COLUMN param_value VARCHAR(8000)');
 ?>
+<#19>
+<?php
+$ilDB->manipulate('ALTER TABLE xamo_campus MODIFY COLUMN veranstaltung VARCHAR(1000)');
+?>

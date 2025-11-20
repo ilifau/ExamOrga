@@ -211,7 +211,12 @@ class ilObjExamOrga extends ilObjectPlugin
      * @var ilExamOrgaField $field
      * @return bool
      */
-    public function canEditField($field) {
+    public function canEditField($field, $record = null) {
+        global $DIC;
+        $isAdmin = $DIC['rbacreview']->isAssigned($DIC->user()->getId(), SYSTEM_ROLE_ID);
+        if ($record != null && $field->name == 'exam_date' && $record->booking_status == 'approved' && !$isAdmin) {
+            return false;
+        }
         switch ($field->status) {
             case ilExamOrgaField::STATUS_PUBLIC:
                 return true;

@@ -29,7 +29,7 @@ class ilExamOrgaDateField extends ilExamOrgaField
         $item = new ilDateTimeInputGUI($this->title, $this->getPostvar());
         $item->setShowTime(false);
         $item->setRequired($this->required);
-        $item->setDisabled(!$this->object->canEditField($this));
+        $item->setDisabled(!$this->object->canEditField($this, $record));
 
         if (isset($this->info)) {
             $item->setInfo($this->info);
